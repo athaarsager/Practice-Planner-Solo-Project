@@ -5,4 +5,9 @@ const {
     rejectUnauthenticated,
   } = require('../modules/authentication-middleware');
 
+  // GET practice plans from database
+  router.get("/", rejectUnauthenticated, (req, res) => {
+    const queryText = `SELECT * FROM "practice_plans" WHERE `
+  })
+
   module.exports = router;
