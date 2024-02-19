@@ -52,7 +52,7 @@ CREATE TABLE "calendar_events" (
 	"start" timestamp NOT NULL,
 	"end" timestamp NOT NULL,
 	"user_id" integer  REFERENCES "users" ("id") ON DELETE CASCADE NOT NULL,
-	"practice_plan_id" integer REFERENCES "practice_plans" ("id") ON DELETE CASCADE NOT NULL
+	"practice_plan_id" integer REFERENCES "practice_plans" ("id") ON DELETE CASCADE
 );
 
 
