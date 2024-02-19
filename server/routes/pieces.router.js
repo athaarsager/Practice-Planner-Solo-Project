@@ -12,7 +12,21 @@ router.get("/", rejectUnauthenticated, (req, res) => {
     .then((result) => {
         res.send(result.rows);
     }).catch((error) => {
-        console.log("ERROR in pieces GET:", error);
+        res.sendStatus(500);
+    });
+});
+
+// POST new piece to the database
+router.post("/", rejectUnauthenticated, (req, res) => {
+    const queryText = `
+    INSERT INTO "pieces" ("title", "composer", "user_id")
+    VALUES ($1, $2, $3);
+    `;
+    pool.query(queryText, [req.body.title, req.body.composer, req.user.id])
+    .then((result) => {
+        res.sendStatus(201);
+    }).catch((error) => {
+        console.log("ERROR in pieces POST:", error);
         res.sendStatus(500);
     });
 });
