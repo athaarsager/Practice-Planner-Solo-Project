@@ -5,8 +5,8 @@
 -- database name = "practice_planner"
 CREATE TABLE "users" (
 	"id" serial NOT NULL,
-	"username" varchar(30) NOT NULL UNIQUE,
-	"password" varchar(50) NOT NULL,
+	"username" varchar(250) NOT NULL UNIQUE,
+	"password" varchar(250) NOT NULL,
 	CONSTRAINT "users_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
