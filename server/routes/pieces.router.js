@@ -31,6 +31,9 @@ router.post("/", rejectUnauthenticated, (req, res) => {
     });
 });
 
+// DELETE piece from database
+
+
 // Lookup cascade delete because all the other tables are tied to this one
 
 module.exports = router;
