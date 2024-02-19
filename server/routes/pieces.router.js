@@ -32,8 +32,17 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 });
 
 // DELETE piece from database
-
-
-// Lookup cascade delete because all the other tables are tied to this one
+router.delete("/:id", rejectUnauthenticated, (req, res) => {
+    const pieceId = req.params.id;
+    const queryText =  `DELETE FROM "pieces" WHERE "id" = $1 AND "user_id" = $2;`;
+    pool.query(queryText, [pieceId, req.user.id])
+    .then((result) => {
+        res.sendStatus(204);
+    }).catch((error) => {
+        console.log("ERROR in pieces DELETE:", error);
+        res.sendStatus(500);
+    });
+});
+// Test further once multiple users have been created
 
 module.exports = router;
