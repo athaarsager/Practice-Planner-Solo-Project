@@ -32,7 +32,7 @@ function* addPlan(action) {
 function* editPlan(action) {
     try {
         // payload needs to be plan's id 
-        yield axios.put(`/api/practice_plans/${action.payload}`);
+        yield axios.put(`/api/practice_plans/${action.payload.id}`, action.payload);
         yield put({ type: "FETCH_PLANS" });// This may need to be FETCH_SELECTED_PLAN...based on how I do front-end rendering
     } catch(error) {
         console.error("ERROR in editPlan saga:", error);

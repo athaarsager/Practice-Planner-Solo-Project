@@ -30,6 +30,15 @@ function* addReferenceRecording(action) {
     }
 }
 
+function* editReferenceRecording(action) {
+    try {
+        yield axios.put(`/api/reference_recordings`)
+
+    } catch(error) {
+        console.error("ERROR in editReferenceRecording saga:", error);
+    }
+}
+
 function* referenceRecordingsSaga() {
     yield takeLatest("FETCH_REFERENCE_RECORDINGS", fetchReferenceRecordings);
     yield takeLatest("FETCH_SELECTED_RECORDING", fetchSelectedRecording);
