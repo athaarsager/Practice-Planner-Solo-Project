@@ -5,6 +5,7 @@ import userSaga from './user.saga';
 import piecesSaga from './pieces.saga';
 import practicePlansSaga from './practicePlans.saga';
 import referenceRecordingsSaga from './referenceRecordings.saga';
+import practiceRecordingsSaga from './practiceRecordings.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -20,6 +21,7 @@ export default function* rootSaga() {
     userSaga(),
     piecesSaga(),
     practicePlansSaga(),
-    referenceRecordingsSaga()
+    referenceRecordingsSaga(),
+    practiceRecordingsSaga(),
   ]);
 }

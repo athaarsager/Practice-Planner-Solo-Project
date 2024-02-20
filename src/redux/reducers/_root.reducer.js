@@ -6,6 +6,8 @@ import plans from "./plans.reducer";
 import selectedPlan from "./selectedPlan.reducer";
 import referenceRecordings from "./referenceRecordings.reducer";
 import selectedReferenceRecording from "./selectedReferenceRecording.reducer";
+import selectedPracticeRecording from './selectedPracticeRecording.reducer';
+import latestPracticeRecording from './latestPracticeRecording.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -21,6 +23,8 @@ const rootReducer = combineReducers({
   selectedPlan,
   referenceRecordings,
   selectedReferenceRecording,
+  selectedPracticeRecording,
+  latestPracticeRecording,
 });
 
 export default rootReducer;

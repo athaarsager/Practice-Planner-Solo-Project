@@ -11,7 +11,8 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const piecesRouter = require("./routes/pieces.router");
 const practicePlansRouter = require("./routes/practice_plans.router");
-const referenceRecordingsRouter = require("./routes/reference_recordings.router")
+const referenceRecordingsRouter = require("./routes/reference_recordings.router");
+const practiceRecordingsRouter = require("./routes/practice_recordings.router");
 
 // Express Middleware
 app.use(express.json());
@@ -30,6 +31,7 @@ app.use('/api/user', userRouter);
 app.use("/api/pieces", piecesRouter);
 app.use("/api/practice_plans", practicePlansRouter);
 app.use("/api/reference_recordings", referenceRecordingsRouter);
+app.use("/api/practice_recordings", practiceRecordingsRouter);
 
 // Listen Server & Port
 app.listen(PORT, () => {
