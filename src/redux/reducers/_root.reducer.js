@@ -3,7 +3,9 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import pieces from "./pieces.reducer";
 import plans from "./plans.reducer";
-import selectedPlan from "./selectedPlan.reducer"
+import selectedPlan from "./selectedPlan.reducer";
+import referenceRecordings from "./referenceRecordings.reducer";
+import selectedReferenceRecording from "./selectedReferenceRecording.reducer";
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -17,6 +19,8 @@ const rootReducer = combineReducers({
   pieces,
   plans,
   selectedPlan,
+  referenceRecordings,
+  selectedReferenceRecording,
 });
 
 export default rootReducer;

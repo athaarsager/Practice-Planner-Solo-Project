@@ -70,6 +70,7 @@ router.put("/:id", rejectUnauthenticated, (req, res) => {
         });
 });
 
+// Delete route for practice_plans
 router.delete("/:id", rejectUnauthenticated, (req, res) => {
     const planId = req.params.id;
     const queryText = `
