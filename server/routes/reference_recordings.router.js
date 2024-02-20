@@ -25,8 +25,8 @@ router.get("/:piece_id", rejectUnauthenticated, (req, res) => {
 });
 
 // GET selected reference recording for editing coments
-router.get("/:recording_id", rejectUnauthenticated, (req, res) => {
-    const recordingId = req.params.recording_id;
+router.get("/edit/:id", rejectUnauthenticated, (req, res) => {
+    const recordingId = req.params.id;
     const queryText = `SELECT "reference_recordings"."url", "reference_recordings"."interpretation_likes", "reference_recordings"."interpretation_changes"
     FROM "reference_recordings" WHERE "reference_recordings"."id" = $1;
     `;

@@ -13,7 +13,7 @@ function* fetchReferenceRecordings(action) {
 
 function* fetchSelectedRecording(action) {
     try {
-        const recordingResponse = yield axios.get(`/api/reference_recordings/${action.payload}`);
+        const recordingResponse = yield axios.get(`/api/reference_recordings/edit/${action.payload}`);
         yield put({ type: "SET_SELECTED_RECORDING", payload: recordingResponse.data });
 
     } catch(error) {
