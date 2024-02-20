@@ -30,10 +30,20 @@ function* editPlan(action) {
     }
 }
 
+function deletePlan(action) {
+    try {
+        yield axios.delete(`/api/practice_plans/${action.payload}`);
+        yield put({ type: "FETCH_PLANS"});
+    } catch(error) {
+        console.error("ERROR in deletePlan saga:", error);
+    }
+}
+
 function* practicePlansSaga() {
     yield takeLatest("FETCH_PLANS", fetchPlans);
     yield takeLatest("ADD_PLAN", addPlan);
     yield takeLatest("EDIT_PLAN", editPlan);
+    yield takeLatest("DELETE_PLAN", deletePlan);
 }
 
 export default practicePlansSaga;
