@@ -31,25 +31,26 @@ function EditEventDialog({ }) {
 
     }
 
-    // This will need to be changed to a PUT dispatch
+    const submitEdits = (e) => {
+        e.preventDefault();
+        const payload = {
+            id: selectedEvent.id,
+            title: editedEvent.title,
+            date: editedEvent.date,
+            start: editedEvent.date + "T" + editedEvent.start,
+            end: editedEvent.date + "T" + editedEvent.end
+        }
 
-    // const addEvent = (e) => {
-    //     e.preventDefault();
-    //     const payload = {
-    //         title: editedEvent.title,
-    //         start: selectedDate + "T" + editedEvent.start,
-    //         end: selectedDate + "T" + editedEvent.end
-    //     }
-
-    //     dispatch({ type: "ADD_EVENT", payload });
-    //     setEditedEvent({
-    //         title: "",
-    //         start: "",
-    //         end: "",
-    //     });
-    //     const dialog = document.querySelector("dialog");
-    //     dialog.close();
-    // }
+        dispatch({ type: "EDIT_CALENDAR_EVENT", payload });
+        setEditedEvent({
+            title: "",
+            date: "",
+            start: "",
+            end: ""
+        });
+        const dialog = document.querySelector("dialog");
+        dialog.close();
+    }
 
     // This function may or may not be necessary in the final version
     const formatTime = (input) => {
@@ -61,7 +62,7 @@ function EditEventDialog({ }) {
         let offset = date.getTimezoneOffset();
         offset = offset / 60;
         let decimal = (parseFloat(`${hours}.${minutes}`) - offset).toFixed(2);
-        if(parseFloat(decimal) < 0) {
+        if (parseFloat(decimal) < 0) {
             decimal = (parseFloat(decimal) + 24).toFixed(2);
             decimal = String(decimal);
         }
@@ -71,35 +72,32 @@ function EditEventDialog({ }) {
     }
 
     useEffect(() => {
-        // Use this code in the final version:
-        // const dialog=document.querySelector("dialog");
-        // dialog.showModal();
-        // Insert GET request here
+        const dialog = document.querySelector("dialog");
+        dialog.showModal();
+        dispatch({ type: "FETCH_SELECTED_EVENT", payload: selectedEvent.id })
         // not this:
-        if (Object.keys(selectedEvent).length !== 0) {  
-            
-            setEditedEvent({
-                title: selectedEvent.title,
-                date: JSON.stringify(selectedEvent.start).split("T")[0].slice(1),
-                start: formatTime(selectedEvent.start),
-                end: formatTime(selectedEvent.end)
-            });
+        // if (Object.keys(selectedEvent).length !== 0) {  
 
-        }   
-        //
-        // This almost fixes it. Takes two clicks, but it does update
-    }, [selectedEvent]);
+        //     setEditedEvent({
+        //         title: selectedEvent.title,
+        //         date: JSON.stringify(selectedEvent.start).split("T")[0].slice(1),
+        //         start: formatTime(selectedEvent.start),
+        //         end: formatTime(selectedEvent.end)
+        //     });
+
+        // }   
+    }, []);
 
     return (
         <div>
             <dialog id="edit">
-                <form onSubmit={(e) => e.preventDefault()}>
+                <form onSubmit={submitEdits}>
                     <label htmlFor="title">Piece</label><br />
                     {/* Need to make this a dropdown */}
                     <input id="title" name="title" type="text" placeholder="Piece to Practice" value={editedEvent.title} onChange={handleChange} /><br />
                     {/* May want to always render an input for date so it can be changed */}
-                    <label htmlFor="date">Date</label><br/>
-                    <input id="date" name="date" type="date" value={editedEvent.date} onChange={handleChange} /><br/>
+                    <label htmlFor="date">Date</label><br />
+                    <input id="date" name="date" type="date" value={editedEvent.date} onChange={handleChange} /><br />
                     <label htmlFor="start">Start</label><br />
                     <input id="start" name="start" type="time" value={editedEvent.start} onChange={handleChange} /><br />
                     <label htmlFor="end">End</label><br />
