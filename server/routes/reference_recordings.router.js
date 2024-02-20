@@ -5,9 +5,10 @@ const {
     rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
 
+// Ask about this
 // GET all reference recordings for one piece. Need to pass piece's id into query parameter
-router.get("/:id", rejectUnauthenticated, (req, res) => {
-    const pieceId = req.params.id;
+router.get("/:piece_id", rejectUnauthenticated, (req, res) => {
+    const pieceId = req.params.piece_id;
     const queryText = `
     SELECT "reference_recordings"."url", "reference_recordings"."interpretation_likes", "reference_recordings"."interpretation_changes"
     FROM "reference_recordings"
@@ -19,6 +20,21 @@ router.get("/:id", rejectUnauthenticated, (req, res) => {
         res.send(result.rows);
     }).catch((error) => {
         console.log("ERROR in reference_recordings GET:", error);
+        res.sendStatus(500);
+    });
+});
+
+// GET selected reference recording for editing coments
+router.get("/:recording_id", rejectUnauthenticated, (req, res) => {
+    const recordingId = req.params.recording_id;
+    const queryText = `SELECT "reference_recordings"."url", "reference_recordings"."interpretation_likes", "reference_recordings"."interpretation_changes"
+    FROM "reference_recordings" WHERE "reference_recordings"."id" = $1;
+    `;
+    pool.query(queryText, [recordingId])
+    .then((result) => {
+        res.send(result.rows);
+    }).catch((error) => {
+        console.log("ERROR in reference_recordings SINGLE GET:", error);
         res.sendStatus(500);
     });
 });
