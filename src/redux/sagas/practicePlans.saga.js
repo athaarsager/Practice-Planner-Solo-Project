@@ -11,10 +11,18 @@ function* fetchPlans() {
     }
 }
 
-
+function* addPlan() {
+    try {
+        yield axios.post("/api/practice_plans");
+        yield put({ type: "FETCH_PLANS"});
+    } catch(error) {
+        console.error("ERROR in addPlan saga:", error);
+    }
+}
 
 function* practicePlansSaga() {
-    yield takeLatest("FETCH_PLANS", fetchPlans)
+    yield takeLatest("FETCH_PLANS", fetchPlans);
+    yield takeLatest("ADD_PLAN", addPlan);
 }
 
 export default practicePlansSaga;
