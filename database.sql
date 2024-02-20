@@ -34,7 +34,7 @@ CREATE TABLE "reference_recordings" (
     "piece_id" integer REFERENCES "pieces" ("id") ON DELETE CASCADE NOT NULL,
 	"url" varchar NOT NULL,
 	"interpretation_likes" varchar NOT NULL,
-	"interpretation_changes" integer NOT NULL
+	"interpretation_changes" varchar NOT NULL
 );
 
 

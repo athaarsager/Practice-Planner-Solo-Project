@@ -29,7 +29,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use("/api/pieces", piecesRouter);
 app.use("/api/practice_plans", practicePlansRouter);
-app.use("/api/reference_recordings");
+app.use("/api/reference_recordings", referenceRecordingsRouter);
 
 // Listen Server & Port
 app.listen(PORT, () => {
