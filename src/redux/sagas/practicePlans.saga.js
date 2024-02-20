@@ -39,7 +39,7 @@ function* editPlan(action) {
     }
 }
 
-function deletePlan(action) {
+function* deletePlan(action) {
     try {
         yield axios.delete(`/api/practice_plans/${action.payload}`);
         yield put({ type: "FETCH_PLANS"});
