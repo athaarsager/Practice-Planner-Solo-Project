@@ -11,18 +11,29 @@ function* fetchPlans() {
     }
 }
 
-function* addPlan() {
+function* addPlan(action) {
     try {
-        yield axios.post("/api/practice_plans");
+        yield axios.post("/api/practice_plans", action.payload);
         yield put({ type: "FETCH_PLANS"});
     } catch(error) {
         console.error("ERROR in addPlan saga:", error);
     }
 }
 
+function* editPlan(action) {
+    try {
+        // payload needs to be plan's id 
+        yield axios.put(`/api/practice_plans/${action.payload}`);
+        yield put({ type: "FETCH_PLANS" });
+    } catch(error) {
+        console.error("ERROR in editPlan saga:", error);
+    }
+}
+
 function* practicePlansSaga() {
     yield takeLatest("FETCH_PLANS", fetchPlans);
     yield takeLatest("ADD_PLAN", addPlan);
+    yield takeLatest("EDIT_PLAN", editPlan);
 }
 
 export default practicePlansSaga;

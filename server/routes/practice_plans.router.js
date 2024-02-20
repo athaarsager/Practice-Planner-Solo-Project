@@ -42,7 +42,7 @@ router.put("/:id", rejectUnauthenticated, (req, res) => {
     const piece = req.body;
     const queryText = `
     UPDATE "practice_plans" SET "section" = $1, "problems" = $2, "plan" = $3, "goal" = $4
-    WHERE "piece_id" = $5;  
+    WHERE "id" = $5;  
     `;
     pool.query(queryText, [piece.section, piece.problems, piece.plan, piece.goal, planId])
         .then((result) => {
