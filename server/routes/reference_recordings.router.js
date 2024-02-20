@@ -23,4 +23,20 @@ router.get("/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 
+// POST new reference recording to database
+router.post("/", rejectUnauthenticated, (req, res) => {
+    const recording = req.body;
+    const queryText = `
+    INSERT INTO "reference_recordings" ("piece_id", "url", "interpretation_likes", "interpretation_changes")
+    VALUES ($1, $2, $3, $4);
+    `;
+    pool.query(queryText, [recording.piece_id, recording.url, recording.interpretation_likes, recording.interpretation_changes])
+    .then(() => {
+        res.sendStatus(201);
+    }).catch((error) => {
+        console.log("ERROR in reference_recordings POST:", error);
+        res.sendStatus(500);
+    });
+});
+
 module.exports = router;
