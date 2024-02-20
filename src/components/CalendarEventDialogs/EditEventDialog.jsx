@@ -9,7 +9,7 @@ function EditEventDialog({ }) {
     const [editedEvent, setEditedEvent] = useState({
         title: selectedEvent.title,
         // This line seems to be giving me the "component changing from uncontrolled to controlled" warning, but can't figure out what's causing it...
-        date: Object.keys(selectedEvent).length !== 0 ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "2024-01-01",
+        date: JSON.stringify(selectedEvent.start).split("T")[0].slice(1),
         start: selectedEvent.start,
         end: selectedEvent.end
     });
