@@ -56,4 +56,19 @@ router.put("/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 
+// Delete recording
+router.delete("/:id", rejectUnauthenticated, (req, res) => {
+    const recordingId = req.params.id;
+    const queryText = `
+    DELETE FROM "reference_recordings" WHERE "id" = $1;
+    `;
+    pool.query(queryText, [recordingId])
+    .then(() => {
+        res.sendStatus(204);
+    }).catch((error) => {
+        console.log("ERROR in reference_recordings DELETE:", error);
+        res.sendStatus(500);
+    });
+});
+
 module.exports = router;
