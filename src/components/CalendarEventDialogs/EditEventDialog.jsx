@@ -52,6 +52,12 @@ function EditEventDialog({ }) {
         dialog.close();
     }
 
+    const deleteEvent = () => {
+        dispatch({ type: "DELETE_CALENDAR_EVENT", payload: selectedEvent.id});
+        const dialog = document.querySelector("dialog");
+        dialog.close();
+    }
+
     // This function may or may not be necessary in the final version
     const formatTime = (input) => {
         const hours = JSON.stringify(input).split("T")[1].substring(0, 2);
@@ -100,7 +106,7 @@ return (
                 <label htmlFor="end">End</label><br />
                 <input id="end" name="end" type="time" value={editedEvent.end} onChange={handleChange} /><br />
                 <button type="submit">Submit Changes</button>
-                <button type="button">Delete Event</button>
+                <button onClick={deleteEvent} type="button">Delete Event</button>
                 <button type="button">Go to Practice Plan</button>
             </form>
         </dialog>
