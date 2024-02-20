@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -40,7 +40,7 @@ function NewEventDialog({ selectedDate }) {
             end: selectedDate + "T" + newEvent.end
         }
 
-        dispatch({ type: "ADD_EVENT", payload });
+        dispatch({ type: "ADD_CALENDAR_EVENT", payload });
         setNewEvent({
             title: "",
             date: selectedDate ? selectedDate : "",
