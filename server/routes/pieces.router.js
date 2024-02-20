@@ -7,11 +7,11 @@ const {
 
 // GET pieces from database
 router.get("/", rejectUnauthenticated, (req, res) => {
-    const queryText = `SELECT "title", "composer" FROM "pieces" WHERE "user_id" = $1;`;
+    const queryText = `SELECT "id", "title", "composer" FROM "pieces" WHERE "user_id" = $1;`;
     pool.query(queryText, [req.user.id])
     .then((result) => {
-        console.log(req.user.id);
         res.send(result.rows);
+        console.log("got pieces:", result.rows);
     }).catch((error) => {
         res.sendStatus(500);
     });
