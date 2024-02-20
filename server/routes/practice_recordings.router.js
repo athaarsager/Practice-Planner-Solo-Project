@@ -20,4 +20,31 @@ router.get("/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 
+// GET for most recent practice recording
+router.get("/most_recent/:id", rejectUnauthenticated, (req, res) => {
+    // Need to send piece id in req.params
+    pieceId = req.params.id;
+    const queryText = `
+    SELECT MAX("practice_recordings"."id") FROM "practice_recordings"
+    JOIN "practice_plans" ON "practice_plans"."id" = "practice_recordings"."plan_id"
+    WHERE "practice_plans"."piece_id" = $1
+    `;
+    pool.query(queryText, [pieceId])
+    .then((result) => {
+        const max = result.rows[0].max;
+        const newQueryText = `
+        SELECT "file_name" FROM "practice_recordings" WHERE "id" = $1;
+        `;
+        pool.query(newQueryText, [max])
+        .then((result) => {
+            res.send(result.rows);
+        }).catch((error) => {
+            console.log("ERROR in getting file_name of most recent practice_recording GET:", error);
+        });
+    }).catch((error) => {
+        console.log("ERROR in first most recent practice_recording GET:", error);
+        res.sendStatus(500);
+    });
+});
+
 module.exports = router;
