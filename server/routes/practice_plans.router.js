@@ -36,4 +36,21 @@ const {
     });
   });
 
+  // PUT (edit) existing plan
+  router.put("/:id", rejectUnauthenticated, (req, res) => {
+    const planId = req.params.id;
+    const piece = req.body;
+    console.log(planId);
+    const queryText = `
+    UPDATE "practice_plans" SET "section" = $1, "problems" = $2, "plan" = $3, "goal" = $4
+    WHERE "piece_id" = $5;  
+    `;
+    pool.query(queryText, [piece.section, piece.problems, piece.plan, piece.goal, planId])
+    .then((result) => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log("ERROR in practice_plans PUT:", error);
+    });
+  });
+
   module.exports = router;
