@@ -5,7 +5,7 @@ import axios from "axios";
 function* fetchPlans() {
     try {
         const plansResponse = yield axios.get("/api/practice_plans");
-        yield put({ type: "SET_PLANS", payload: plansResponse.data});
+        yield put({ type: "SET_PLANS", payload: plansResponse.data });
     } catch (error) {
         console.error("ERROR in fetchPlans saga:", error);
     }
@@ -14,8 +14,8 @@ function* fetchPlans() {
 function* fetchSelectedPlan(action) {
     try {
         const planResponse = yield axios.get(`/api/practice_plans/${action.payload}`);
-        yield put({ type: "SET_SELECTED_PLAN", payload: planResponse});
-    } catch(error) {    
+        yield put({ type: "SET_SELECTED_PLAN", payload: planResponse });
+    } catch (error) {
         console.error("ERROR in fetchSinglePlan saga:", error);
     }
 }
@@ -23,8 +23,8 @@ function* fetchSelectedPlan(action) {
 function* addPlan(action) {
     try {
         yield axios.post("/api/practice_plans", action.payload);
-        yield put({ type: "FETCH_PLANS"});
-    } catch(error) {
+        yield put({ type: "FETCH_PLANS" });
+    } catch (error) {
         console.error("ERROR in addPlan saga:", error);
     }
 }
@@ -34,7 +34,7 @@ function* editPlan(action) {
         // payload needs to be plan's id 
         yield axios.put(`/api/practice_plans/${action.payload.id}`, action.payload);
         yield put({ type: "FETCH_PLANS" });// This may need to be FETCH_SELECTED_PLAN...based on how I do front-end rendering
-    } catch(error) {
+    } catch (error) {
         console.error("ERROR in editPlan saga:", error);
     }
 }
@@ -42,8 +42,8 @@ function* editPlan(action) {
 function* deletePlan(action) {
     try {
         yield axios.delete(`/api/practice_plans/${action.payload}`);
-        yield put({ type: "FETCH_PLANS"});
-    } catch(error) {
+        yield put({ type: "FETCH_PLANS" });
+    } catch (error) {
         console.error("ERROR in deletePlan saga:", error);
     }
 }
