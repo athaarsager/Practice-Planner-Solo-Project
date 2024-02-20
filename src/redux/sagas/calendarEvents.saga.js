@@ -10,6 +10,15 @@ function* fetchCalendarEvents() {
     }
 }
 
+function* fetchSelectedEvent(action) {
+    try {
+        const fetchSelectedEventResponse = yield axios.get(`/api/calendar_events/${action.payload}`);
+        yield put({ type: "SET_SELECTED_EVENT", payload: fetchSelectedEventResponse});
+    } catch (error) {
+        console.error("ERROR in fetchSelectedEvent saga", error);
+    }
+}
+
 function* addCalendarEvent(action) {
     try {
         yield axios.post("/api/calendar_events", action.payload);
@@ -39,6 +48,7 @@ function deleteCalendarEvent(action) {
 
 function* calendarEventsSaga() {
     yield takeLatest("FETCH_CALENDAR_EVENTS", fetchCalendarEvents);
+    yield takeLatest("FETCH_SELECTED_EVENT", fetchSelectedEvent);
     yield takeLatest("ADD_CALENDAR_EVENT", addCalendarEvent);
     yield takeLatest("EDIT_CALENDAR_EVENT", editCalendarEvent);
     yield takeLatest("DELETE_CALENDAR_EVENT", deleteCalendarEvent);
