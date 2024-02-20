@@ -17,6 +17,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
             res.send(result.rows);
         }).catch((error) => {
             console.log("ERROR in calendar_events GET:", error);
+            res.sendStatus(500);
         });
 });
 
@@ -26,13 +27,27 @@ router.post("/", rejectUnauthenticated, (req, res) => {
     VALUES ($1, $2, $3, $4, $5, $6);
     `;
     pool.query(queryText, [req.body.title, req.body.date, req.body.start, req.body.end, req.user.id, req.body.practice_plan_id])
-    .then((result) => {
+    .then(() => {
         res.sendStatus(201);
     }).catch((error) => {
         console.log("ERROR in calender_events POST:", error);
+        res.sendStatus(500);
     });
 });
 
-
+router.put("/:id", rejectUnauthenticated, (req, res) => {
+    const eventId = req.params.id;
+    const queryText = `
+    UPDATE "calendar_events" SET "title" = $1, "date" = $2, "start" = $3, "end" = $4
+    WHERE "id" = $5;
+    `;
+    pool.query(queryText, [req.body.title, req.body.date, req.body.start, req.body.end, eventId])
+    .then(() => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log("ERROR in calendar_events PUT:", error);
+        res.sendStatus(500);
+    });
+});
 
 module.exports = router;
