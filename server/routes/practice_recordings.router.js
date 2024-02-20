@@ -7,11 +7,12 @@ const {
 
 // GET for single practice recording attached to plan
 router.get("/:id", rejectUnauthenticated, (req, res) => {
-    const recordingId = req.params.id;
+    // Need to send id of plan in req.params as the recording will be viewed on the relevant plan page
+    const planId = req.params.id;
     const queryText = `
     SELECT "file_name" FROM "practice_recordings" WHERE "id" = $1;
     `;
-    pool.query(queryText, [recordingId])
+    pool.query(queryText, [planId])
     .then((result) => {
         res.send(result.rows);
     }).catch((error) => {
