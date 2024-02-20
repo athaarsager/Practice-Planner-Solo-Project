@@ -21,6 +21,22 @@ router.get("/", rejectUnauthenticated, (req, res) => {
         });
 });
 
+// Get single event for editing
+router.get("/:id", rejectUnauthenticated, (req, res) => {
+    const eventId = req.params.id;
+    const queryText = `
+    SELECT "calendar_events"."title", "calendar_events"."date", "calendar_events"."start", "calendar_events"."end"
+    FROM "calendar_events" WHERE "calendar_events"."id" = $1 AND "user_id" = $2;
+    `;
+    pool.query(queryText, [eventId, req.user.id])
+    .then((result) => {
+        res.send(result.rows);
+    }).catch((error) => {
+        console.log("ERROR in single calendar event GET:", error);
+        res.sendStatus(500);
+    });
+});
+
 router.post("/", rejectUnauthenticated, (req, res) => {
     const queryText = `
     INSERT INTO "calendar_events" ("title", "date", "start", "end", "user_id", "practice_plan_id")
