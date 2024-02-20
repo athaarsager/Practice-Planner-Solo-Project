@@ -74,41 +74,39 @@ function EditEventDialog({ }) {
     useEffect(() => {
         const dialog = document.querySelector("dialog");
         dialog.showModal();
-        dispatch({ type: "FETCH_SELECTED_EVENT", payload: selectedEvent.id })
-        // not this:
-        // if (Object.keys(selectedEvent).length !== 0) {  
+        dispatch({ type: "FETCH_SELECTED_EVENT", payload: selectedEvent.id });
 
-        //     setEditedEvent({
-        //         title: selectedEvent.title,
-        //         date: JSON.stringify(selectedEvent.start).split("T")[0].slice(1),
-        //         start: formatTime(selectedEvent.start),
-        //         end: formatTime(selectedEvent.end)
-        //     });
+        setEditedEvent({
+            title: selectedEvent.title,
+            date: JSON.stringify(selectedEvent.start).split("T")[0].slice(1),
+            start: formatTime(selectedEvent.start),
+            end: formatTime(selectedEvent.end)
+        });
 
-        // }   
-    }, []);
+    }   
+    ), []};
 
-    return (
-        <div>
-            <dialog id="edit">
-                <form onSubmit={submitEdits}>
-                    <label htmlFor="title">Piece</label><br />
-                    {/* Need to make this a dropdown */}
-                    <input id="title" name="title" type="text" placeholder="Piece to Practice" value={editedEvent.title} onChange={handleChange} /><br />
-                    {/* May want to always render an input for date so it can be changed */}
-                    <label htmlFor="date">Date</label><br />
-                    <input id="date" name="date" type="date" value={editedEvent.date} onChange={handleChange} /><br />
-                    <label htmlFor="start">Start</label><br />
-                    <input id="start" name="start" type="time" value={editedEvent.start} onChange={handleChange} /><br />
-                    <label htmlFor="end">End</label><br />
-                    <input id="end" name="end" type="time" value={editedEvent.end} onChange={handleChange} /><br />
-                    <button type="submit">Submit Changes</button>
-                    <button type="button">Delete Event</button>
-                    <button type="button">Go to Practice Plan</button>
-                </form>
-            </dialog>
-        </div>
-    );
-}
+return (
+    <div>
+        <dialog id="edit">
+            <form onSubmit={submitEdits}>
+                <label htmlFor="title">Piece</label><br />
+                {/* Need to make this a dropdown */}
+                <input id="title" name="title" type="text" placeholder="Piece to Practice" value={editedEvent.title} onChange={handleChange} /><br />
+                {/* May want to always render an input for date so it can be changed */}
+                <label htmlFor="date">Date</label><br />
+                <input id="date" name="date" type="date" value={editedEvent.date} onChange={handleChange} /><br />
+                <label htmlFor="start">Start</label><br />
+                <input id="start" name="start" type="time" value={editedEvent.start} onChange={handleChange} /><br />
+                <label htmlFor="end">End</label><br />
+                <input id="end" name="end" type="time" value={editedEvent.end} onChange={handleChange} /><br />
+                <button type="submit">Submit Changes</button>
+                <button type="button">Delete Event</button>
+                <button type="button">Go to Practice Plan</button>
+            </form>
+        </dialog>
+    </div>
+);
+
 
 export default EditEventDialog;
