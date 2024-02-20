@@ -20,4 +20,19 @@ router.get("/", rejectUnauthenticated, (req, res) => {
         });
 });
 
+router.post("/", rejectUnauthenticated, (req, res) => {
+    const queryText = `
+    INSERT INTO "calendar_events" ("title", "date", "start", "end", "user_id", "practice_plan_id")
+    VALUES ($1, $2, $3, $4, $5, $6);
+    `;
+    pool.query(queryText, [req.body.title, req.body.date, req.body.start, req.body.end, req.user.id, req.body.practice_plan_id])
+    .then((result) => {
+        res.sendStatus(201);
+    }).catch((error) => {
+        console.log("ERROR in calender_events POST:", error);
+    });
+});
+
+
+
 module.exports = router;
