@@ -11,8 +11,19 @@ function* fetchReferenceRecordings(action) {
     }
 }
 
+function* fetchSelectedRecording(action) {
+    try {
+        const recordingResponse = yield axios.get(`/api/reference_recordings/${action.payload}`);
+        yield put({ type: "SET_SELECTED_RECORDING", payload: recordingResponse.data});
+
+    } catch(error) {
+        console.error("ERROR in fetchSelectedRecording saga:", error);
+    }
+}
+
 function* referenceRecordingsSaga() {
     yield takeLatest("FETCH_REFERENCE_RECORDINGS", fetchReferenceRecordings);
+    yield takeLatest("FETCH_SELECTED_RECORDING", fetchSelectedRecording);
 }
 
 export default referenceRecordingsSaga;
