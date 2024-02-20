@@ -47,4 +47,22 @@ router.get("/most_recent/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 
+// POST (add) new recording
+router.post("/upload_file/", rejectUnauthenticated, (req, res) => {
+    // Need to send plan Id in req.body
+    const queryText = `
+    INSERT INTO "practice_recordings" ("file_name", "plan_id")
+    VALUES ($1, $2);
+    `;
+    pool.query(queryText, [req.body.file_name, req.body.plan_id])
+    .then(() => {
+        res.sendStatus(201);
+    }).catch((error) => {
+        console.log("ERROR in practice_recording POST:", error);
+        res.sendStatus(500);
+    });
+});
+
+
+
 module.exports = router;
