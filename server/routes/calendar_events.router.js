@@ -50,4 +50,18 @@ router.put("/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.delete("/:id", rejectUnauthenticated, (req, res) => {
+    const eventId = req.params.id;
+    const queryText = `
+    DELETE FROM "calendar_events" WHERE "id" = $1;
+    `;
+    pool.query(queryText, [eventId])
+    .then(() => {
+        res.sendStatus(204);
+    }).catch((error) => {
+        console.log("ERROR in calendar_events DELETE:", eror);
+        res.sendStatus(500);
+    });
+});
+
 module.exports = router;
