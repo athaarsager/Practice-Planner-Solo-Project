@@ -63,6 +63,22 @@ router.post("/upload_file/", rejectUnauthenticated, (req, res) => {
     });
 });
 
+// DELETE recording
+router.delete("/delete/:id", rejectUnauthenticated, (req, res) => {
+    // need to pass id of recording into req.params
+    const recordingId = req.params.id;
+    const queryText = `
+    DELETE FROM "practice_recordings" WHERE "id" = $1;
+    `;
+    pool.query(queryText, [recordingId])
+    .then(() => {
+        res.sendStatus(204);
+    }).catch((error) => {
+        console.log("ERROR in practice_recording DELETE:", error);
+        res.sendStatus(500);
+    });
+});
+
 
 
 module.exports = router;
