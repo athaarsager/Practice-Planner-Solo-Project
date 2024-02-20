@@ -22,9 +22,18 @@ function* addCalendarEvent(action) {
 function* editCalendarEvent(action) {
     try {
         yield axios.put(`/api/calendar_events/${action.payload.id}`, action.payload);
-        yield put( {type: "FETCH_CALENDAR_EVENTS" });
+        yield put({ type: "FETCH_CALENDAR_EVENTS" });
     } catch (error) {
         console.error("ERROR in editCalendarEvent saga:", error);
+    }
+}
+
+function deleteCalendarEvent(action) {
+    try {
+        yield axios.delete(`/api/calendar_events/${action.payload}`);
+        yield put({ type: "FETCH_CALENDAR_EVENTS" });
+    } catch (error) {
+        console.error("ERROR in deleteCalendarEvent saga:", error);
     }
 }
 
@@ -32,6 +41,7 @@ function* calendarEventsSaga() {
     yield takeLatest("FETCH_CALENDAR_EVENTS", fetchCalendarEvents);
     yield takeLatest("ADD_CALENDAR_EVENT", addCalendarEvent);
     yield takeLatest("EDIT_CALENDAR_EVENT", editCalendarEvent);
+    yield takeLatest("DELETE_CALENDAR_EVENT", deleteCalendarEvent);
 }
 
 export default calendarEventsSaga;
