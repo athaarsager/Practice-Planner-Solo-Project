@@ -37,7 +37,7 @@ function* editCalendarEvent(action) {
     }
 }
 
-function deleteCalendarEvent(action) {
+function* deleteCalendarEvent(action) {
     try {
         yield axios.delete(`/api/calendar_events/${action.payload}`);
         yield put({ type: "FETCH_CALENDAR_EVENTS" });
