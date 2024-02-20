@@ -83,8 +83,7 @@ function EditEventDialog({ }) {
             end: formatTime(selectedEvent.end)
         });
 
-    }   
-    ), []};
+    }, []);
 
 return (
     <div>
@@ -107,6 +106,6 @@ return (
         </dialog>
     </div>
 );
-
+}
 
 export default EditEventDialog;
