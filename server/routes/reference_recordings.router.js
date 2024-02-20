@@ -39,4 +39,21 @@ router.post("/", rejectUnauthenticated, (req, res) => {
     });
 });
 
+// Edit reference recording comments (PUT)
+router.put("/:id", rejectUnauthenticated, (req, res) => {
+    const recordingId = req.params.id;
+    const recording = req.body;
+    const queryText = `
+    UPDATE "reference_recordings" SET "interpretation_likes" = $1, "interpretation_changes" = $2
+    WHERE "id" = $3;
+    `;
+    pool.query(queryText, [recording.interpretation_likes, recording.interpretation_changes, recordingId])
+    .then(() => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log("ERROR in reference_recordings PUT:", error);
+        res.sendStatus(500);
+    });
+});
+
 module.exports = router;
