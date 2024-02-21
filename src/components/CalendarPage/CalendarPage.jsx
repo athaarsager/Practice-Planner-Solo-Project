@@ -48,6 +48,11 @@ export default function CalendarPage() {
         }
     }
 
+    // need to GET all the calendar events on page load
+    useEffect(() => {
+        dispatch({ type: "FETCH_CALENDAR_EVENTS" });
+    }, []);
+
     return (
         // Calendar will always take up its entire container width 
         // Can manually set height via props

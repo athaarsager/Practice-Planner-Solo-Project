@@ -8,7 +8,7 @@ const {
 // GET all calendar events
 router.get("/", rejectUnauthenticated, (req, res) => {
     const queryText = `
-    SELECT "calendar_events"."title", "calendar_events"."date", "calendar_events"."start", "calendar_events"."end"
+    SELECT "calendar_events"."title", "calendar_events"."start", "calendar_events"."end"
     FROM "calendar_events"
     WHERE "user_id" = $1;
     `;
