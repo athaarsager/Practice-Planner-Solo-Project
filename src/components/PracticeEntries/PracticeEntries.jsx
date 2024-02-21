@@ -16,7 +16,7 @@ function PracticeEntries() {
     return (
         <>
             <h2>Practice Plans</h2>
-            <button>Add a New Practice Plan!</button>
+            <button onClick={() => history.push(`/${selectedPiece}/practice_entries/new_plan`)}>Add a New Practice Plan!</button>
             {plans.map(plan => (
                 <div key={plan.id}>
                     <h4>Prior Plan</h4>

@@ -13,7 +13,6 @@ import Footer from '../Footer/Footer';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
-import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
@@ -21,6 +20,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import Dashboard from '../Dashboard/Dashboard';
 import CalendarPage from '../CalendarPage/CalendarPage';
 import PracticeEntries from '../PracticeEntries/PracticeEntries';
+import NewPracticePlan from '../NewPracticePlan/NewPracticePlan';
 
 import './App.css';
 
@@ -59,6 +59,10 @@ function App() {
 
           <ProtectedRoute exact path="/:id/practice_entries">
             <PracticeEntries />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/:id/practice_entries/new_plan">
+            <NewPracticePlan />
           </ProtectedRoute>
 
           <ProtectedRoute
