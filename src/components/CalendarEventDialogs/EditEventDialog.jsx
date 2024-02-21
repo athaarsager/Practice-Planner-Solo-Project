@@ -59,6 +59,7 @@ function EditEventDialog({ }) {
         dispatch({ type: "DELETE_CALENDAR_EVENT", payload: selectedEvent.id});
         const dialog = document.querySelector("dialog");
         dialog.close();
+        history.goBack();
     }
 
     // This function may or may not be necessary in the final version
