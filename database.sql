@@ -25,7 +25,8 @@ CREATE TABLE "practice_plans" (
 	"section" varchar NOT NULL,
 	"problems" varchar NOT NULL,
 	"plan" varchar NOT NULL,
-	"goal" varchar NOT NULL
+	"goal" varchar NOT NULL,
+	"reflection_written" boolean NOT NULL
 );
 
 
@@ -41,7 +42,7 @@ CREATE TABLE "reference_recordings" (
 CREATE TABLE "practice_recordings" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"file_name" varchar NOT NULL,
-	"plan_id" integer REFERENCES "practice_plans" ("id")
+	"plan_id" integer REFERENCES "practice_plans" ("id") ON DELETE CASCADE
 );
 
 
