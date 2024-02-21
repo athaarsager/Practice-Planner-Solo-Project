@@ -54,9 +54,9 @@ function App() {
             <Dashboard />
           </ProtectedRoute>
             
-          <ProtectedRoute exact path="/calendar">
+          {/* <ProtectedRoute exact path="/calendar">
             <CalendarPage />
-          </ProtectedRoute>
+          </ProtectedRoute> */}
 
           <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage
