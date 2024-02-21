@@ -83,7 +83,6 @@ function EditEventDialog({ }) {
     useEffect(() => {
         const dialog = document.querySelector("dialog");
         dialog.showModal();
-        alert(JSON.stringify(selectedEvent));
 
         if (Object.keys(selectedEvent).length !== 0) {
 
