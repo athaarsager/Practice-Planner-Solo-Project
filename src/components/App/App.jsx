@@ -20,8 +20,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Dashboard from '../Dashboard/Dashboard';
 import CalendarPage from '../CalendarPage/CalendarPage';
-import EditEventDialog from '../CalendarEventDialogs/EditEventDialog';
-import NewEventDialog from '../CalendarEventDialogs/NewEventDialog';
+import PracticeEntries from '../PracticeEntries/PracticeEntries';
 
 import './App.css';
 
@@ -40,7 +39,7 @@ function App() {
         <Nav />
         <Switch>
           {/* Visiting localhost:5173 will redirect to localhost:5173/home */}
-          <Redirect exact from="/" to="/home" />
+          <Redirect exact from="/" to="/dashboard/pieces" />
 
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:5173/user will show the UserPage if the user is logged in.
@@ -58,6 +57,10 @@ function App() {
             <CalendarPage />
           </ProtectedRoute>
 
+          <ProtectedRoute exact path="/:id/practice_entries">
+            <PracticeEntries />
+          </ProtectedRoute>
+
           <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage
             exact
@@ -73,7 +76,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect to the /dashboard
-              <Redirect to="/dashboard" />
+              <Redirect to="/dashboard/pieces" />
               :
               // Otherwise, show the login page
               <LoginPage />
@@ -87,7 +90,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect them to the /user page
-              <Redirect to="/dashboard" />
+              <Redirect to="/dashboard/pieces" />
               :
               // Otherwise, show the registration page
               <RegisterPage />
@@ -96,12 +99,12 @@ function App() {
 
           <Route
             exact
-            path="/home"
+            path="/dashboard/pieces"
           >
             {user.id ?
               // If the user is already logged in, 
               // redirect them to the /dashboard page
-              <Redirect to="/dashboard" />
+              <Redirect to="/dashboard'pieces" />
               :
               // Otherwise, show the Landing page
               <LandingPage />
