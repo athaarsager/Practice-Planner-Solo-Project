@@ -47,6 +47,8 @@ function NewEventDialog({ open, closeNewEvent }) {
             start: "",
             end: "",
         } );
+
+        closeNewEvent();
     }
 
     return (

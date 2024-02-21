@@ -50,16 +50,13 @@ function EditEventDialog({ open, closeEditedEvent }) {
             start: "",
             end: ""
         });
-        const dialog = document.querySelector("dialog");
-        dialog.close();
-        history.goBack();
+
+        closeEditedEvent();
     }
 
     const deleteEvent = () => {
         dispatch({ type: "DELETE_CALENDAR_EVENT", payload: selectedEvent.id});
-        const dialog = document.querySelector("dialog");
-        dialog.close();
-        history.goBack();
+        closeEditedEvent();
     }
 
     // This function may or may not be necessary in the final version
