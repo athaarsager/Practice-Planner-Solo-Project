@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function NewEventDialog() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const createdEvents = useSelector(store => store.calendarEvents);
     const selectedEvent = useSelector(store => store.selectedEvent);
     const selectedDate = useSelector(store => store.selectedDate);
@@ -50,6 +51,7 @@ function NewEventDialog() {
         } );
         const dialog = document.querySelector("dialog");
         dialog.close();
+        history.goBack();
     }
 
     useEffect(() => {

@@ -14,7 +14,6 @@ export default function CalendarPage() {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const [selectedDate, setSelectedDate] = useState("");
     const [selectedEvent, setSelectedEvent] = useState({});
 
     // create reference here. Set it to FullCalendar component (once it's rendered) by passing it to the component as a prop
@@ -44,7 +43,6 @@ export default function CalendarPage() {
                 .getApi()
                 .changeView("timeGridDay", dateClickInfo.date);
             setDayView(true);
-            alert(`This is the current selected date ${JSON.stringify(dateClickInfo.dateStr)}`);
             // Have to do some weird formatting here for the data
             dispatch({ type: "SET_SELECTED_DATE", payload: JSON.stringify(dateClickInfo.dateStr).substring(1, 11)});
         }

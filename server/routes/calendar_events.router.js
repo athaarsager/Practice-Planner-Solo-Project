@@ -48,7 +48,6 @@ router.post("/", rejectUnauthenticated, (req, res) => {
         res.sendStatus(201);
     }).catch((error) => {
         console.log("ERROR in calender_events POST:", error);
-        console.log(req.body.date);
         res.sendStatus(500);
     });
 });
