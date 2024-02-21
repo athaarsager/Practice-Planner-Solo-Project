@@ -54,7 +54,7 @@ function NewEventDialog({ open, closeNewEvent }) {
             {/* Since "open" is a boolean value, when fed to the actual component, it is always evaluated "truthy"
             for some reason...
             SO...need to conditionally render the dialog based on the value of open OUTSIDE of the dialog component */}
-            { open &&
+            
             <dialog open={open} onClose={closeNewEvent}>
                 <form onSubmit={addEvent}>
                     <label htmlFor="title">Piece</label><br />
@@ -70,7 +70,7 @@ function NewEventDialog({ open, closeNewEvent }) {
                     <input type="submit" />
                 </form>
             </dialog>
-}
+
         </div>
     );
 }

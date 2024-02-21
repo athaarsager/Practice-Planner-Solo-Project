@@ -40,6 +40,7 @@ export default function CalendarPage() {
         // In final version, the dispatch above will be to a saga
         // Then will useHistory here to push to the EditEvent component
         // Will then put the showModal in the useEffect of EditEvent
+        setEditEventIsOpen(true);
         
     }
 
@@ -95,7 +96,7 @@ export default function CalendarPage() {
                     {}
                 }
             />
-            {dayView && <button onClick={setAddNewEventIsOpen(true)}>Add Practice Session</button>}
+            {dayView && <button onClick={() => setAddNewEventIsOpen(true)}>Add Practice Session</button>}
             <DashboardFooter />
             <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} />
             <EditEventDialog open={editEventIsOpen} closeEditedEvent={closeEditedEvent}/>

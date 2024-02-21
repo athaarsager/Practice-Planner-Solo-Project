@@ -98,7 +98,6 @@ function EditEventDialog({ open, closeEditedEvent }) {
 
 return (
     <div>
-        { open &&
         <dialog open={open} onClose={closeEditedEvent}>
             <form onSubmit={submitEdits}>
                 <label htmlFor="title">Piece</label><br />
@@ -116,7 +115,7 @@ return (
                 <button type="button">Go to Practice Plan</button>
             </form>
         </dialog>
-}
+
     </div>
 );
 }
