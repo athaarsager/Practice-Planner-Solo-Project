@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-function EditEventDialog({ }) {
+function EditEventDialog({ open, closeEditedEvent }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const selectedEvent = useSelector(store => store.selectedEvent);
@@ -82,8 +82,6 @@ function EditEventDialog({ }) {
     }
 
     useEffect(() => {
-        const dialog = document.querySelector("dialog");
-        dialog.showModal();
 
         if (Object.keys(selectedEvent).length !== 0) {
 
@@ -100,7 +98,8 @@ function EditEventDialog({ }) {
 
 return (
     <div>
-        <dialog id="edit">
+        { open &&
+        <dialog open={open} onClose={closeEditedEvent}>
             <form onSubmit={submitEdits}>
                 <label htmlFor="title">Piece</label><br />
                 {/* Need to make this a dropdown */}
@@ -117,6 +116,7 @@ return (
                 <button type="button">Go to Practice Plan</button>
             </form>
         </dialog>
+}
     </div>
 );
 }

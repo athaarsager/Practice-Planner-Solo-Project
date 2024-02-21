@@ -8,6 +8,8 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import DashboardFooter from '../DashboardFooter/DashboardFooter';
+import NewEventDialog from '../CalendarEventDialogs/NewEventDialog';
+import EditEventDialog from '../CalendarEventDialogs/EditEventDialog';
 
 
 export default function CalendarPage() {
@@ -21,6 +23,14 @@ export default function CalendarPage() {
 
     const [dayView, setDayView] = useState(false);
 
+    const [addNewEventIsOpen, setAddNewEventIsOpen] = useState(false);
+
+    const closeNewEvent = () => setAddNewEventIsOpen(false);
+
+    const [editEventIsOpen, setEditEventIsOpen] = useState(false);
+
+    const closeEditedEvent = () => setEditEventIsOpen(false);
+
     const calendarEvents = useSelector(store => store.calendarEvents);
 
     const viewEventDetails = (eventInfo) => {
@@ -30,7 +40,7 @@ export default function CalendarPage() {
         // In final version, the dispatch above will be to a saga
         // Then will useHistory here to push to the EditEvent component
         // Will then put the showModal in the useEffect of EditEvent
-        history.push("/dashboard/calendar/edit_event");
+        
     }
 
     const switchView = dateClickInfo => {
@@ -85,9 +95,10 @@ export default function CalendarPage() {
                     {}
                 }
             />
-            {dayView && <button onClick={() => history.push("/dashboard/calendar/add_event")}>Add Practice Session</button>}
+            {dayView && <button onClick={setAddNewEventIsOpen(true)}>Add Practice Session</button>}
             <DashboardFooter />
-
+            <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} />
+            <EditEventDialog open={editEventIsOpen} closeEditedEvent={closeEditedEvent}/>
         </div>
     );
 

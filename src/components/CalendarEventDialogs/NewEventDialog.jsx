@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-function NewEventDialog() {
+function NewEventDialog({ open, closeNewEvent }) {
     const dispatch = useDispatch();
-    const history = useHistory();
     const createdEvents = useSelector(store => store.calendarEvents);
     const selectedEvent = useSelector(store => store.selectedEvent);
     const selectedDate = useSelector(store => store.selectedDate);
@@ -49,19 +47,15 @@ function NewEventDialog() {
             start: "",
             end: "",
         } );
-        const dialog = document.querySelector("dialog");
-        dialog.close();
-        history.goBack();
     }
-
-    useEffect(() => {
-        const dialog = document.querySelector("dialog");
-        dialog.showModal();
-    }, []);
 
     return (
         <div>
-            <dialog>
+            {/* Since "open" is a boolean value, when fed to the actual component, it is always evaluated "truthy"
+            for some reason...
+            SO...need to conditionally render the dialog based on the value of open OUTSIDE of the dialog component */}
+            { open &&
+            <dialog open={open} onClose={closeNewEvent}>
                 <form onSubmit={addEvent}>
                     <label htmlFor="title">Piece</label><br />
                     {/* Need to make this a dropdown */}
@@ -76,10 +70,9 @@ function NewEventDialog() {
                     <input type="submit" />
                 </form>
             </dialog>
+}
         </div>
     );
 }
-
-//{"allDay": false, "title":"Undertale Variations", "start":"2024-02-22T"}
 
 export default NewEventDialog;
