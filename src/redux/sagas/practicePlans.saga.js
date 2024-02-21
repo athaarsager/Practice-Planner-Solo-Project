@@ -2,9 +2,9 @@ import { put, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 
 
-function* fetchPlans() {
+function* fetchPlans(action) {
     try {
-        const plansResponse = yield axios.get("/api/practice_plans");
+        const plansResponse = yield axios.get(`/api/practice_plans/${action.payload}`);
         yield put({ type: "SET_PLANS", payload: plansResponse.data });
     } catch (error) {
         console.error("ERROR in fetchPlans saga:", error);
@@ -13,7 +13,7 @@ function* fetchPlans() {
 
 function* fetchSelectedPlan(action) {
     try {
-        const planResponse = yield axios.get(`/api/practice_plans/${action.payload}`);
+        const planResponse = yield axios.get(`/api/practice_plans/plan/${action.payload}`);
         yield put({ type: "SET_SELECTED_PLAN", payload: planResponse });
     } catch (error) {
         console.error("ERROR in fetchSinglePlan saga:", error);
