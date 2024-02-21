@@ -6,6 +6,7 @@ import interactionPlugin from "@fullcalendar/interaction"; // need this for date
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import DashboardFooter from '../DashboardFooter/DashboardFooter';
 
 
 export default function CalendarPage() {
@@ -81,7 +82,7 @@ export default function CalendarPage() {
         }
       />
       {dayView && <button onClick={displayModal}>Add Practice Session</button>}
-     
+     <DashboardFooter />
       
     </div>
   );

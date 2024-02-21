@@ -49,14 +49,14 @@ function App() {
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
-            path="/dashboard"
+            path="/dashboard/pieces"
           >
             <Dashboard />
           </ProtectedRoute>
             
-          {/* <ProtectedRoute exact path="/calendar">
+          <ProtectedRoute exact path="/dashboard/calendar">
             <CalendarPage />
-          </ProtectedRoute> */}
+          </ProtectedRoute>
 
           <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage

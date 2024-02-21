@@ -4,8 +4,8 @@ function DashboardFooter() {
     const history = useHistory();
     return (
         <>
-        <button>Pieces</button>
-        <button onClick={() => history.push("/calendar")}>Calendar</button>
+        <button onClick={() => history.push("/dashboard/pieces")}>Pieces</button>
+        <button onClick={() => history.push("/dashboard/calendar")}>Calendar</button>
         </>
     );
 }
