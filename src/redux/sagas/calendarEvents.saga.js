@@ -33,7 +33,7 @@ function* addCalendarEvent(action) {
 
 function* editCalendarEvent(action) {
     try {
-        // console.log("This is the event id")
+        console.log("This is the action.payload:", action.payload);
         yield axios.put(`/api/calendar_events/${action.payload.id}`, action.payload);
         yield put({ type: "FETCH_CALENDAR_EVENTS" });
     } catch (error) {

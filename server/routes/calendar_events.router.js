@@ -24,11 +24,8 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 // Get single event for editing
 router.get("/:id", rejectUnauthenticated, (req, res) => {
     const eventId = req.params.id;
-    console.log("This is req.params:", req.params);
-    console.log("This is req.params.id:", req.params.id);
-    console.log("This is the eventId:", eventId);
     const queryText = `
-    SELECT "calendar_events"."title", "calendar_events"."date", "calendar_events"."start", "calendar_events"."end"
+    SELECT "calendar_events"."id", "calendar_events"."title", "calendar_events"."date", "calendar_events"."start", "calendar_events"."end"
     FROM "calendar_events" WHERE "calendar_events"."id" = $1 AND "user_id" = $2;
     `;
     pool.query(queryText, [eventId, req.user.id])

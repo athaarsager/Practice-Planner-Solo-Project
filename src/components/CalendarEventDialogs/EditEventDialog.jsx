@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function EditEventDialog({ }) {
     const dispatch = useDispatch();
+    const history = useHistory();
     const selectedEvent = useSelector(store => store.selectedEvent);
     console.log("This is the selected event:", JSON.stringify(selectedEvent));
     // Don't use startTime and endTime because those create a recurring event
@@ -82,7 +83,7 @@ function EditEventDialog({ }) {
     useEffect(() => {
         const dialog = document.querySelector("dialog");
         dialog.showModal();
-        //alert(JSON.stringify(selectedEvent));
+        alert(JSON.stringify(selectedEvent));
 
         if (Object.keys(selectedEvent).length !== 0) {
 
@@ -99,7 +100,6 @@ function EditEventDialog({ }) {
 
 return (
     <div>
-        <p>loading</p>
         <dialog id="edit">
             <form onSubmit={submitEdits}>
                 <label htmlFor="title">Piece</label><br />
