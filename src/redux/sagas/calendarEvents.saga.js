@@ -4,7 +4,7 @@ import axios from "axios";
 function* fetchCalendarEvents() {
     try {
         const fetchCalendarResponse = yield axios.get("/api/calendar_events");
-        yield put({ type: "SET_CALENDAR_EVENTS", payload: fetchCalendarResponse });
+        yield put({ type: "SET_CALENDAR_EVENTS", payload: fetchCalendarResponse.data });
     } catch (error) {
         console.error("ERROR in fetchCalendarEvents saga:", error);
     }
@@ -12,8 +12,11 @@ function* fetchCalendarEvents() {
 
 function* fetchSelectedEvent(action) {
     try {
+        console.log("This is the action.payload:", action.payload);
+        console.log("This is the typeOf the action.payload:", typeof action.payload);
         const fetchSelectedEventResponse = yield axios.get(`/api/calendar_events/${action.payload}`);
-        yield put({ type: "SET_SELECTED_EVENT", payload: fetchSelectedEventResponse});
+        console.log("This is what we got back from the server:", fetchSelectedEventResponse);
+        yield put({ type: "SET_SELECTED_EVENT", payload: fetchSelectedEventResponse.data[0]});
     } catch (error) {
         console.error("ERROR in fetchSelectedEvent saga", error);
     }
@@ -30,6 +33,7 @@ function* addCalendarEvent(action) {
 
 function* editCalendarEvent(action) {
     try {
+        console.log("This is the action.payload:", action.payload);
         yield axios.put(`/api/calendar_events/${action.payload.id}`, action.payload);
         yield put({ type: "FETCH_CALENDAR_EVENTS" });
     } catch (error) {
