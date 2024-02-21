@@ -25,10 +25,12 @@ export default function CalendarPage() {
 
     const viewEventDetails = (eventInfo) => {
         setSelectedEvent(eventInfo.event.id); // just grab the id from here? eventInfo.event.id?
-        dispatch({ type: "SET_EVENT", payload: selectedEvent });
+        // is this even the right action type? What am I trying to do here?
+        dispatch({ type: "FETCH_SELECTED_EVENT", payload: parseInt(eventInfo.event.id) });
         // In final version, the dispatch above will be to a saga
         // Then will useHistory here to push to the EditEvent component
         // Will then put the showModal in the useEffect of EditEvent
+        history.push("/dashboard/calendar/edit_event");
     }
 
     const switchView = dateClickInfo => {

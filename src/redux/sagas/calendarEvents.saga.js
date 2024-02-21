@@ -12,8 +12,11 @@ function* fetchCalendarEvents() {
 
 function* fetchSelectedEvent(action) {
     try {
+        console.log("This is the action.payload:", action.payload);
+        console.log("This is the typeOf the action.payload:", typeof action.payload);
         const fetchSelectedEventResponse = yield axios.get(`/api/calendar_events/${action.payload}`);
-        yield put({ type: "SET_SELECTED_EVENT", payload: fetchSelectedEventResponse});
+        console.log("This is what we got back from the server:", fetchSelectedEventResponse);
+        yield put({ type: "SET_SELECTED_EVENT", payload: fetchSelectedEventResponse.data[0]});
     } catch (error) {
         console.error("ERROR in fetchSelectedEvent saga", error);
     }

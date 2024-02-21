@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 function EditEventDialog({ }) {
     const dispatch = useDispatch();
     const selectedEvent = useSelector(store => store.selectedEvent);
+    console.log("This is the selected event:", JSON.stringify(selectedEvent));
     // Don't use startTime and endTime because those create a recurring event
     const [editedEvent, setEditedEvent] = useState({
         title: selectedEvent.title,
         // This line seems to be giving me the "component changing from uncontrolled to controlled" warning, but can't figure out what's causing it...
-        date: JSON.stringify(selectedEvent.start).split("T")[0].slice(1),
+        date: Object.keys(selectedEvent).length !==0 ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "",
         start: selectedEvent.start,
         end: selectedEvent.end
     });
@@ -80,19 +81,22 @@ function EditEventDialog({ }) {
     useEffect(() => {
         const dialog = document.querySelector("dialog");
         dialog.showModal();
-        dispatch({ type: "FETCH_SELECTED_EVENT", payload: selectedEvent.id });
+
+        if (Object.keys(selectedEvent).length !== 0) {
 
         setEditedEvent({
             title: selectedEvent.title,
-            date: JSON.stringify(selectedEvent.start).split("T")[0].slice(1),
+            date: selectedEvent ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "",
             start: formatTime(selectedEvent.start),
             end: formatTime(selectedEvent.end)
         });
+    }
 
     }, []);
 
 return (
     <div>
+        <p>loading</p>
         <dialog id="edit">
             <form onSubmit={submitEdits}>
                 <label htmlFor="title">Piece</label><br />
@@ -114,4 +118,4 @@ return (
 );
 }
 
-export default EditEventDialog;
+export default EditEventDialog; 
