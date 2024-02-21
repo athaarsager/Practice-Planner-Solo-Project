@@ -5,8 +5,6 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction"; // need this for dateClick
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
-import EventIntake from '../EventIntake/EventIntake';
-import EditEvent from '../EditEvent/EditEvent';
 import { useDispatch } from 'react-redux';
 
 
@@ -24,13 +22,11 @@ export default function CalendarPage() {
   const calendarEvents = useSelector(store => store.calendarEvents);
 
   const viewEventDetails = (eventInfo) => {
-    setSelectedEvent(eventInfo.event);
+    setSelectedEvent(eventInfo.event.id); // just grab the id from here? eventInfo.event.id?
     dispatch({type: "SET_EVENT", payload: selectedEvent});
     // In final version, the dispatch above will be to a saga
     // Then will useHistory here to push to the EditEvent component
     // Will then put the showModal in the useEffect of EditEvent
-    const dialog = document.getElementById("edit");
-    dialog.showModal();
   }
 
   const switchView = dateClickInfo => {
@@ -85,9 +81,7 @@ export default function CalendarPage() {
         }
       />
       {dayView && <button onClick={displayModal}>Add Practice Session</button>}
-      <EventIntake /*key={key}*/ selectedDate={selectedDate} />
-      {/* <EventIntake selectedDate={selectedDate} selectedEvent={selectedEvent} isNewEvent={isNewEvent} /> */}
-      <EditEvent selectedDate={selectedDate}/>
+     
       
     </div>
   );

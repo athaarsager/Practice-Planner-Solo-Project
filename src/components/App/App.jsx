@@ -19,6 +19,9 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Dashboard from '../Dashboard/Dashboard';
+import CalendarPage from '../CalendarPage/CalendarPage';
+import EditEventDialog from '../CalendarEventDialogs/EditEventDialog';
+import NewEventDialog from '../CalendarEventDialogs/NewEventDialog';
 
 import './App.css';
 
@@ -42,13 +45,17 @@ function App() {
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:5173/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
-            Even though it seems like they are different pages, the user is always on localhost:5173/user */}
+            Even though it seems like they are different pages, the user is always on localhost:5173/dashboard */}
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
             path="/dashboard"
           >
             <Dashboard />
+          </ProtectedRoute>
+            
+          <ProtectedRoute exact path="/calendar">
+            <CalendarPage />
           </ProtectedRoute>
 
           <ProtectedRoute
