@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 
-function NewEventDialog({ selectedDate }) {
+function NewEventDialog() {
     const dispatch = useDispatch();
     const createdEvents = useSelector(store => store.calendarEvents);
     const selectedEvent = useSelector(store => store.selectedEvent);
+    const selectedDate = useSelector(store => store.selectedDate);
     // Don't use startTime and endTime because those create a recurring event
     const [newEvent, setNewEvent] =  useState({
         title: "",
-        date: selectedDate ? selectedDate : "",
+        date: selectedDate,
         start: "",
         end: ""
     });
@@ -50,6 +51,11 @@ function NewEventDialog({ selectedDate }) {
         const dialog = document.querySelector("dialog");
         dialog.close();
     }
+
+    useEffect(() => {
+        const dialog = document.querySelector("dialog");
+        dialog.showModal();
+    }, []);
 
     return (
         <div>

@@ -58,6 +58,10 @@ function App() {
             <CalendarPage />
           </ProtectedRoute>
 
+          <ProtectedRoute exact path="/dashboard/calendar/add_event">
+            <NewEventDialog />
+          </ProtectedRoute>
+
           <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage
             exact
