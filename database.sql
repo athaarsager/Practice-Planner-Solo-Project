@@ -26,7 +26,7 @@ CREATE TABLE "practice_plans" (
 	"problems" varchar NOT NULL,
 	"plan" varchar NOT NULL,
 	"goal" varchar NOT NULL,
-	"reflection_written" boolean NOT NULL
+	"reflection_written" boolean NOT NULL DEFAULT false
 );
 
 
