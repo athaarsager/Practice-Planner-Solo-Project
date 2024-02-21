@@ -4,6 +4,7 @@ import axios from "axios";
 
 function* fetchPlans(action) {
     try {
+        console.log("This is the action.payload being sent to the server:", action.payload);
         const plansResponse = yield axios.get(`/api/practice_plans/${action.payload}`);
         yield put({ type: "SET_PLANS", payload: plansResponse.data });
     } catch (error) {
@@ -14,7 +15,7 @@ function* fetchPlans(action) {
 function* fetchSelectedPlan(action) {
     try {
         const planResponse = yield axios.get(`/api/practice_plans/plan/${action.payload}`);
-        yield put({ type: "SET_SELECTED_PLAN", payload: planResponse });
+        yield put({ type: "SET_SELECTED_PLAN", payload: planResponse.data });
     } catch (error) {
         console.error("ERROR in fetchSinglePlan saga:", error);
     }

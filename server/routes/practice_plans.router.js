@@ -8,8 +8,9 @@ const {
 // GET practice plans from database
 router.get("/:id", rejectUnauthenticated, (req, res) => {
     const pieceId = req.params.id;
+    console.log("This is the pieceId:", pieceId);
     const queryText = `
-    SELECT "practice_plans"."section", "practice_plans"."problems", "practice_plans"."plan", "practice_plans"."goal" FROM "practice_plans"
+    SELECT "practice_plans"."id", "practice_plans"."section", "practice_plans"."problems", "practice_plans"."plan", "practice_plans"."goal" FROM "practice_plans"
     JOIN "pieces" ON "pieces"."id" = "practice_plans"."piece_id"
     WHERE "pieces"."user_id" = $1 AND "practice_plans"."piece_id" = $2;`;
     pool.query(queryText, [req.user.id, pieceId])
