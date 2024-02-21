@@ -51,6 +51,7 @@ function EditEventDialog({ }) {
         });
         const dialog = document.querySelector("dialog");
         dialog.close();
+        history.goBack();
     }
 
     const deleteEvent = () => {
@@ -81,10 +82,12 @@ function EditEventDialog({ }) {
     useEffect(() => {
         const dialog = document.querySelector("dialog");
         dialog.showModal();
+        //alert(JSON.stringify(selectedEvent));
 
         if (Object.keys(selectedEvent).length !== 0) {
 
         setEditedEvent({
+            id: selectedEvent.id,
             title: selectedEvent.title,
             date: selectedEvent ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "",
             start: formatTime(selectedEvent.start),
@@ -92,7 +95,7 @@ function EditEventDialog({ }) {
         });
     }
 
-    }, []);
+    }, [selectedEvent]); // Need to put selectedEvent here so it actually displays in dialog. Page must not load with it yet?
 
 return (
     <div>
