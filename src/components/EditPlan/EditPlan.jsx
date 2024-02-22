@@ -12,10 +12,10 @@ function EditPlan() {
     const [responses, setResponses] = useState(
         {
             piece_id: pieceId,
-            section: "",
-            problems: "",
-            plan: "",
-            goal: ""
+            section: selectedPlan.section,
+            problems: selectedPlan.problems,
+            plan: selectedPlan.plan,
+            goal: selectedPlan.goal
         });
 
         const handleChange = (e) => {
@@ -23,7 +23,7 @@ function EditPlan() {
             const { name, value } = e.target;
     
             // currentInfo is another name for state. maybe just call it state in the future
-            setNewEvent((currentInfo) => ({ ...currentInfo, [name]: value }));
+            setResponses((currentInfo) => ({ ...currentInfo, [name]: value }));
         }
 
 
