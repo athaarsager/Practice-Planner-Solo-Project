@@ -29,7 +29,7 @@ function ReviewPlan() {
             <p><strong>What is your goal for the end of the practice session?</strong></p>
             <p>{selectedPlan.goal}</p>
             <button data-planid={selectedPlan.id} onClick={deletePlan}>Delete Plan</button>
-            <button>Edit Plan</button>
+            <button onClick={() => history.push(`/${pieceId}/practice_entries/review_plan/${planId}/edit`)}>Edit Plan</button>
 
 
         </div>
