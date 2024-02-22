@@ -20,7 +20,6 @@ function NewPracticePlan() {
                 <div>
                     <p>Create Calendar Event? Optional</p>
                     {/* Do I need two buttons? Probably only need yes... */}
-                    <button type="button">No</button>
                     <button type="button">Yes</button>
                 </div>
                 <button type="button">Cancel</button>
