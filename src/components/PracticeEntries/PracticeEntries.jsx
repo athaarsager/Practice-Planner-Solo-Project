@@ -2,13 +2,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect } from "react";
 import PracticeEntriesFooter from "./PracticeEntriesFooter";
+import AddPieceDialog from "../AddPieceDialog/AddPieceDialog";
 
 function PracticeEntries() {
     const dispatch = useDispatch();
     const history = useHistory();
     const selectedPiece = useSelector(store => store.selectedPiece);
     const plans = useSelector(store => store.plans);
-    console.log("This is the selectedPiece", selectedPiece);
+
+    const [addPieceIsOpen, setAddPieceIsOpen] = useState(false);
+
+    const closeAddPiece = () => setAddPieceIsOpen(false);
 
     useEffect(() => {
         dispatch({ type: "FETCH_PLANS", payload: selectedPiece.id });
@@ -37,6 +41,7 @@ function PracticeEntries() {
 
                 </div>
             ))}
+            <AddPieceDialog open={addPieceIsOpen} closeAddPiece={closeAddPiece} />
             <PracticeEntriesFooter />
         </>
     );
