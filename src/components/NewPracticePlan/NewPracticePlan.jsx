@@ -1,11 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
+import NewEventDialog from "../CalendarEventDialogs/NewEventDialog";
 
 function NewPracticePlan() {
     const dispatch = useDispatch();
     const history = useHistory();
     const pieceId = useParams().id;
+    const selectedDate = "";
+    console.log("This is the selectedDate:", selectedDate);
+    
+
+    const [addNewEventIsOpen, setAddNewEventIsOpen] = useState(false);
+
+    const closeNewEvent = () => setAddNewEventIsOpen(false);
+
 
     const [responses, setResponses] = useState(
         {
@@ -43,11 +52,12 @@ function NewPracticePlan() {
                 <input id="goal" name="goal" type="text" placeholder="Your Answer Here" size="100" value={responses.goal} onChange={handleChange} /><br />
                 <div>
                     <p>Create Calendar Event? Optional</p>
-                    <button type="button">Yes</button>
+                    <button type="button" onClick={() => setAddNewEventIsOpen(true)}>Yes</button>
                 </div>
                 <button type="button" onClick={() => history.goBack()}>Cancel</button>
                 <button type="submit">Finish Plan!</button>
             </form>
+            <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate}/>
         </>
     );
 }

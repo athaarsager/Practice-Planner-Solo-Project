@@ -16,6 +16,7 @@ export default function CalendarPage() {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const [selectedDate, setSelectedDate] = useState("");
     const [selectedEvent, setSelectedEvent] = useState({});
 
     // create reference here. Set it to FullCalendar component (once it's rendered) by passing it to the component as a prop
@@ -51,13 +52,15 @@ export default function CalendarPage() {
                 .getApi()
                 .changeView("dayGridMonth");
             setDayView(false);
+            // dispatch({ type: "RESET_SELECTED_DATE" });
         } else {
             calendarRef.current
                 .getApi()
                 .changeView("timeGridDay", dateClickInfo.date);
             setDayView(true);
             // Have to do some weird formatting here for the data
-            dispatch({ type: "SET_SELECTED_DATE", payload: JSON.stringify(dateClickInfo.dateStr).substring(1, 11)});
+            // dispatch({ type: "SET_SELECTED_DATE", payload: JSON.stringify(dateClickInfo.dateStr).substring(1, 11)});
+            setSelectedDate(JSON.stringify(dateClickInfo.dateStr).substring(1, 11));
         }
     }
 
@@ -98,8 +101,8 @@ export default function CalendarPage() {
             />
             {dayView && <button onClick={() => setAddNewEventIsOpen(true)}>Add Practice Session</button>}
             <DashboardFooter />
-            <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} />
-            <EditEventDialog open={editEventIsOpen} closeEditedEvent={closeEditedEvent}/>
+            <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} />
+            <EditEventDialog open={editEventIsOpen} closeEditedEvent={closeEditedEvent} selectedDate={selectedDate} />
         </div>
     );
 

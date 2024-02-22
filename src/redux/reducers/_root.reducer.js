@@ -10,7 +10,6 @@ import selectedPracticeRecording from './selectedPracticeRecording.reducer';
 import latestPracticeRecording from './latestPracticeRecording.reducer';
 import calendarEvents from './calendarEvents.reducer';
 import selectedEvent from './selectedEvent.reducer';
-import selectedDate from './selectedDate.reducer';
 import selectedPiece from './selectedPiece.reducer';
 
 // rootReducer is the primary reducer for our entire project
@@ -31,8 +30,7 @@ const rootReducer = combineReducers({
   selectedPracticeRecording,
   latestPracticeRecording,
   calendarEvents,
-  selectedEvent,
-  selectedDate
+  selectedEvent
 });
 
 export default rootReducer;

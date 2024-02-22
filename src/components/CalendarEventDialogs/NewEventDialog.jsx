@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-function NewEventDialog({ open, closeNewEvent }) {
+function NewEventDialog({ open, closeNewEvent, selectedDate }) {
     const dispatch = useDispatch();
-    const createdEvents = useSelector(store => store.calendarEvents);
-    const selectedEvent = useSelector(store => store.selectedEvent);
-    const selectedDate = useSelector(store => store.selectedDate);
+    // const selectedDate = useSelector(store => store.selectedDate);
     // Don't use startTime and endTime because those create a recurring event
-    const [newEvent, setNewEvent] =  useState({
+    const [newEvent, setNewEvent] = useState({
         title: "",
-        date: selectedDate,
+        date: selectedDate ? selectedDate : "",
         start: "",
         end: ""
     });
@@ -35,7 +33,7 @@ function NewEventDialog({ open, closeNewEvent }) {
         e.preventDefault();
         const payload = {
             title: newEvent.title,
-            date: selectedDate ? selectedDate : "",
+            date: selectedDate ? selectedDate : newEvent.date,
             start: selectedDate + "T" + newEvent.start,
             end: selectedDate + "T" + newEvent.end
         }
@@ -46,7 +44,7 @@ function NewEventDialog({ open, closeNewEvent }) {
             date: selectedDate ? selectedDate : "",
             start: "",
             end: "",
-        } );
+        });
 
         closeNewEvent();
     }
@@ -56,7 +54,7 @@ function NewEventDialog({ open, closeNewEvent }) {
             {/* Since "open" is a boolean value, when fed to the actual component, it is always evaluated "truthy"
             for some reason...
             SO...need to conditionally render the dialog based on the value of open OUTSIDE of the dialog component */}
-            
+
             <dialog open={open} onClose={closeNewEvent}>
                 <form onSubmit={addEvent}>
                     <label htmlFor="title">Piece</label><br />
@@ -65,6 +63,10 @@ function NewEventDialog({ open, closeNewEvent }) {
                     {/* Need some conditioinal rendering here if piece is not added from calendar day screen. Something like: */}
                     {/* !selectedEvent && */}
                     {/* insert label and input for date here */}
+                    { !selectedDate && <>
+                    <label htmlFor="date">Date</label><br />
+                    <input id="date" name="date" type="date" value={newEvent.date} onChange={handleChange} /><br />
+                    </>}
                     <label htmlFor="start">Start</label><br />
                     <input id="start" name="start" type="time" value={newEvent.start} onChange={handleChange} /><br />
                     <label htmlFor="end">End</label><br />

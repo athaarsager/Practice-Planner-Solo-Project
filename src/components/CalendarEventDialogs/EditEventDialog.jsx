@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-function EditEventDialog({ open, closeEditedEvent }) {
+function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const selectedEvent = useSelector(store => store.selectedEvent);
