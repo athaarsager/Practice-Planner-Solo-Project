@@ -1,18 +1,24 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-function NewEventDialog({ open, closeNewEvent }) {
+function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
+    const history = useHistory();
     const dispatch = useDispatch();
-    const createdEvents = useSelector(store => store.calendarEvents);
-    const selectedEvent = useSelector(store => store.selectedEvent);
-    const selectedDate = useSelector(store => store.selectedDate);
+    // const selectedDate = useSelector(store => store.selectedDate);
     // Don't use startTime and endTime because those create a recurring event
-    const [newEvent, setNewEvent] =  useState({
-        title: "",
-        date: selectedDate,
+    const selectedPiece = useSelector(store => store.selectedPiece);
+    const plans = useSelector(store => store.plans);
+
+    const [newEvent, setNewEvent] = useState({
+        title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : "",
+        date: selectedDate ? selectedDate : "",
         start: "",
         end: ""
     });
+
+    console.log("In dialog. Selected piece is:", selectedPiece);
+
 
     // event object can contain keys such as the following (more can be found at: https://fullcalendar.io/docs/event-parsing ):
     // {
@@ -28,17 +34,25 @@ function NewEventDialog({ open, closeNewEvent }) {
 
         // currentInfo is another name for state. maybe just call it state in the future
         setNewEvent((currentInfo) => ({ ...currentInfo, [name]: value }));
-
     }
 
     const addEvent = (e) => {
         e.preventDefault();
+
         const payload = {
             title: newEvent.title,
-            date: selectedDate ? selectedDate : "",
-            start: selectedDate + "T" + newEvent.start,
-            end: selectedDate + "T" + newEvent.end
+            date: selectedDate ? selectedDate : newEvent.date,
+            start: selectedDate ? selectedDate + "T" + newEvent.start : newEvent.date + "T" + newEvent.start,
+            end: selectedDate ? selectedDate + "T" + newEvent.end : newEvent.date + "T" + newEvent.end
         }
+
+        // Make this all ONE dispatch
+        if (Object.keys(responses).length !== 0) {
+            dispatch({type: "ADD_PLAN_AND_EVENT", payload: {newPlan: responses, newEvent: payload}});
+            closeNewEvent();
+            history.goBack();
+        } else {
+    
 
         dispatch({ type: "ADD_CALENDAR_EVENT", payload });
         setNewEvent({
@@ -46,17 +60,21 @@ function NewEventDialog({ open, closeNewEvent }) {
             date: selectedDate ? selectedDate : "",
             start: "",
             end: "",
-        } );
+        });
 
         closeNewEvent();
     }
+    }
+
+    useEffect(() => {
+        console.log("useEffect fired! the selectedPiece is:", selectedPiece);
+        setNewEvent((state) => ({ ...state, title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : ""}));
+        console.log("newEvent is:", newEvent); // Not updating fast enough with React life cycle again or something...
+    }, [selectedPiece]);
 
     return (
         <div>
-            {/* Since "open" is a boolean value, when fed to the actual component, it is always evaluated "truthy"
-            for some reason...
-            SO...need to conditionally render the dialog based on the value of open OUTSIDE of the dialog component */}
-            
+
             <dialog open={open} onClose={closeNewEvent}>
                 <form onSubmit={addEvent}>
                     <label htmlFor="title">Piece</label><br />
@@ -65,11 +83,16 @@ function NewEventDialog({ open, closeNewEvent }) {
                     {/* Need some conditioinal rendering here if piece is not added from calendar day screen. Something like: */}
                     {/* !selectedEvent && */}
                     {/* insert label and input for date here */}
+                    {!selectedDate && <>
+                        <label htmlFor="date">Date</label><br />
+                        <input id="date" name="date" type="date" value={newEvent.date} onChange={handleChange} /><br />
+                    </>}
                     <label htmlFor="start">Start</label><br />
                     <input id="start" name="start" type="time" value={newEvent.start} onChange={handleChange} /><br />
                     <label htmlFor="end">End</label><br />
                     <input id="end" name="end" type="time" value={newEvent.end} onChange={handleChange} /><br />
                     <input type="submit" />
+                    <button type="button" onClick={() => closeNewEvent()}>Cancel</button>
                 </form>
             </dialog>
 

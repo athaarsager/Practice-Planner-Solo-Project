@@ -15,7 +15,10 @@ import EditEventDialog from '../CalendarEventDialogs/EditEventDialog';
 export default function CalendarPage() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const selectedPiece = useSelector(store => store.selectedPiece);
+    const responses = {};
 
+    const [selectedDate, setSelectedDate] = useState("");
     const [selectedEvent, setSelectedEvent] = useState({});
 
     // create reference here. Set it to FullCalendar component (once it's rendered) by passing it to the component as a prop
@@ -51,19 +54,23 @@ export default function CalendarPage() {
                 .getApi()
                 .changeView("dayGridMonth");
             setDayView(false);
+            // dispatch({ type: "RESET_SELECTED_DATE" });
         } else {
             calendarRef.current
                 .getApi()
                 .changeView("timeGridDay", dateClickInfo.date);
             setDayView(true);
             // Have to do some weird formatting here for the data
-            dispatch({ type: "SET_SELECTED_DATE", payload: JSON.stringify(dateClickInfo.dateStr).substring(1, 11)});
+            // dispatch({ type: "SET_SELECTED_DATE", payload: JSON.stringify(dateClickInfo.dateStr).substring(1, 11)});
+            setSelectedDate(JSON.stringify(dateClickInfo.dateStr).substring(1, 11));
         }
     }
 
     // need to GET all the calendar events on page load
     useEffect(() => {
         dispatch({ type: "FETCH_CALENDAR_EVENTS" });
+        dispatch({ type: "CLEAR_SELECTED_PIECE"});
+        console.log("This is the selected piece:", selectedPiece);
     }, []);
 
     return (
@@ -98,8 +105,8 @@ export default function CalendarPage() {
             />
             {dayView && <button onClick={() => setAddNewEventIsOpen(true)}>Add Practice Session</button>}
             <DashboardFooter />
-            <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} />
-            <EditEventDialog open={editEventIsOpen} closeEditedEvent={closeEditedEvent}/>
+            <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} responses={responses} />
+            <EditEventDialog open={editEventIsOpen} closeEditedEvent={closeEditedEvent} selectedDate={selectedDate} />
         </div>
     );
 
