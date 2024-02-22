@@ -1,4 +1,4 @@
-const selectedPieceReducer = (state = "", action) => {
+const selectedPieceReducer = (state = {}, action) => {
     switch (action.type) {
         case "SET_SELECTED_PIECE":
             return action.payload;

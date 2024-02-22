@@ -8,15 +8,16 @@ function PracticeEntries() {
     const history = useHistory();
     const selectedPiece = useSelector(store => store.selectedPiece);
     const plans = useSelector(store => store.plans);
+    console.log("This is the selectedPiece", selectedPiece);
 
     useEffect(() => {
-        dispatch({ type: "FETCH_PLANS", payload: selectedPiece });
+        dispatch({ type: "FETCH_PLANS", payload: selectedPiece.id });
     }, []);
 
     return (
         <>
             <h2>Practice Plans</h2>
-            <button onClick={() => history.push(`/${selectedPiece}/practice_entries/new_plan`)}>Add a New Practice Plan!</button>
+            <button onClick={() => history.push(`/${selectedPiece.id}/practice_entries/new_plan`)}>Add a New Practice Plan!</button>
             {plans.map(plan => (
                 <div key={plan.id}>
                     <h4>Prior Plan</h4>

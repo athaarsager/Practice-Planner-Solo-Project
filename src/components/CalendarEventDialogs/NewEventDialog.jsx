@@ -35,7 +35,8 @@ function NewEventDialog({ open, closeNewEvent, selectedDate }) {
             title: newEvent.title,
             date: selectedDate ? selectedDate : newEvent.date,
             start: selectedDate ? selectedDate + "T" + newEvent.start : newEvent.date + "T" + newEvent.start,
-            end: selectedDate ? selectedDate + "T" + newEvent.end : newEvent.date + "T" + newEvent.end
+            end: selectedDate ? selectedDate + "T" + newEvent.end : newEvent.date + "T" + newEvent.end,
+            practice_plan_id: NULL
         }
 
         dispatch({ type: "ADD_CALENDAR_EVENT", payload });
@@ -63,9 +64,9 @@ function NewEventDialog({ open, closeNewEvent, selectedDate }) {
                     {/* Need some conditioinal rendering here if piece is not added from calendar day screen. Something like: */}
                     {/* !selectedEvent && */}
                     {/* insert label and input for date here */}
-                    { !selectedDate && <>
-                    <label htmlFor="date">Date</label><br />
-                    <input id="date" name="date" type="date" value={newEvent.date} onChange={handleChange} /><br />
+                    {!selectedDate && <>
+                        <label htmlFor="date">Date</label><br />
+                        <input id="date" name="date" type="date" value={newEvent.date} onChange={handleChange} /><br />
                     </>}
                     <label htmlFor="start">Start</label><br />
                     <input id="start" name="start" type="time" value={newEvent.start} onChange={handleChange} /><br />

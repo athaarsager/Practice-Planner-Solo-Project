@@ -7,14 +7,12 @@ function NewPracticePlan() {
     const dispatch = useDispatch();
     const history = useHistory();
     const pieceId = useParams().id;
+    const selectedPiece = useSelector(store => store.selectedPiece);
     const selectedDate = "";
-    console.log("This is the selectedDate:", selectedDate);
-    
 
     const [addNewEventIsOpen, setAddNewEventIsOpen] = useState(false);
 
     const closeNewEvent = () => setAddNewEventIsOpen(false);
-
 
     const [responses, setResponses] = useState(
         {
