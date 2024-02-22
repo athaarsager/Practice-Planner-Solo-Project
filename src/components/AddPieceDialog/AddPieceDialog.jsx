@@ -15,7 +15,7 @@ function AddPieceDialog({open, closeAddPiece}) {
                 <label htmlFor="composer">Composer</label><br />
                 <input id="composer" name="composer" type="text" placeholder="Composer Name" value={pieceComposer} onChange={(e) => setPieceComposer(e.target.value)} />
                 <button type="submit">Submit</button>
-                <button type="button">Cancel</button>
+                <button type="button" onClick={() => closeAddPiece()}>Cancel</button>
             </form>
             
         </dialog>

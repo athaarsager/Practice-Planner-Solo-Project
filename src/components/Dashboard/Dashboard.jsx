@@ -1,13 +1,18 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DashboardFooter from "../DashboardFooter/DashboardFooter";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import AddPieceDialog from "../AddPieceDialog/AddPieceDialog";
 
 function Dashboard() {
     const dispatch = useDispatch();
     const history = useHistory();
     const username = useSelector(store => store.user.username);
     const pieces = useSelector(store => store.pieces);
+
+    const [addPieceIsOpen, setAddPieceIsOpen] = useState(false);
+
+    const closeAddPiece = () => setAddPieceIsOpen(false);
 
     const goToPiecePlans = (e) => {
         history.push(`/${e.target.dataset.pieceid}/practice_entries`);
@@ -27,8 +32,8 @@ function Dashboard() {
                     <p data-pieceid={piece.id} data-piecetitle={piece.title}>{piece.composer}</p>
                 </div>
             ))}
-            <button>Add a New Piece Here!</button>
-
+            <button onClick={() => setAddPieceIsOpen(true)}>Add a New Piece Here!</button>
+            <AddPieceDialog open={addPieceIsOpen} closeAddPiece={closeAddPiece} />
             <DashboardFooter />
         </>
     );
