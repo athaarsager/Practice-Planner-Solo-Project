@@ -16,6 +16,7 @@ export default function CalendarPage() {
     const dispatch = useDispatch();
     const history = useHistory();
     const selectedPiece = useSelector(store => store.selectedPiece);
+    const responses = {};
 
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedEvent, setSelectedEvent] = useState({});
@@ -104,7 +105,7 @@ export default function CalendarPage() {
             />
             {dayView && <button onClick={() => setAddNewEventIsOpen(true)}>Add Practice Session</button>}
             <DashboardFooter />
-            <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} />
+            <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} responses={responses} />
             <EditEventDialog open={editEventIsOpen} closeEditedEvent={closeEditedEvent} selectedDate={selectedDate} />
         </div>
     );

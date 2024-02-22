@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-function NewEventDialog({ open, closeNewEvent, selectedDate }) {
+function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     const dispatch = useDispatch();
     // const selectedDate = useSelector(store => store.selectedDate);
     // Don't use startTime and endTime because those create a recurring event
     const selectedPiece = useSelector(store => store.selectedPiece);
+    const plans = useSelector(store => store.plans);
 
     const [newEvent, setNewEvent] = useState({
         title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : "",
@@ -31,17 +32,26 @@ function NewEventDialog({ open, closeNewEvent, selectedDate }) {
 
         // currentInfo is another name for state. maybe just call it state in the future
         setNewEvent((currentInfo) => ({ ...currentInfo, [name]: value }));
-
     }
 
     const addEvent = (e) => {
         e.preventDefault();
+
+        const planId = "";
+
+        // Make this all ONE dispatch
+        if (Object.keys(responses).length !== 0) {
+            console.log("This is the value of responses:", responses);
+            dispatch({ type: "ADD_PLAN", payload: responses});
+            console.log("This is the value of plans:", plans);
+        }
+
         const payload = {
             title: newEvent.title,
             date: selectedDate ? selectedDate : newEvent.date,
             start: selectedDate ? selectedDate + "T" + newEvent.start : newEvent.date + "T" + newEvent.start,
             end: selectedDate ? selectedDate + "T" + newEvent.end : newEvent.date + "T" + newEvent.end,
-            practice_plan_id: NULL
+            //practice_plan_id: parseInt(plans[-1].id)
         }
 
         dispatch({ type: "ADD_CALENDAR_EVENT", payload });

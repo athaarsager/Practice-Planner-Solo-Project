@@ -8,6 +8,7 @@ function NewPracticePlan() {
     const history = useHistory();
     const pieceId = useParams().id;
     const selectedPiece = useSelector(store => store.selectedPiece);
+    const onPracticePlanScreen = true;
     const selectedDate = "";
 
     const [addNewEventIsOpen, setAddNewEventIsOpen] = useState(false);
@@ -55,7 +56,7 @@ function NewPracticePlan() {
                 <button type="button" onClick={() => history.goBack()}>Cancel</button>
                 <button type="submit">Finish Plan!</button>
             </form>
-            <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate}/>
+            <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} onPracticePlanScreen={onPracticePlanScreen} responses={responses}/>
         </>
     );
 }

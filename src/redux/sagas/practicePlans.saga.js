@@ -23,8 +23,9 @@ function* fetchSelectedPlan(action) {
 
 function* addPlan(action) {
     try {
+        const pieceId = action.payload.piece_id;
         yield axios.post("/api/practice_plans", action.payload);
-        yield put({ type: "FETCH_PLANS" });
+        yield put({ type: "FETCH_PLANS", payload: pieceId });
     } catch (error) {
         console.error("ERROR in addPlan saga:", error);
     }
