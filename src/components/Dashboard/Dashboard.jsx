@@ -19,6 +19,10 @@ function Dashboard() {
         dispatch({ type: "SET_SELECTED_PIECE", payload: { id: parseInt(e.target.dataset.pieceid), title: e.target.dataset.piecetitle } });
     }
 
+    const deletePiece = (e) => {
+        dispatch({type: "DELETE_PIECE", payload: e.target.dataset.pieceid});
+    }
+
     useEffect(() => {
         dispatch({ type: "FETCH_PIECES" });
     }, []);
@@ -27,10 +31,13 @@ function Dashboard() {
         <>
             <h1>Welcome to the Dashboard, {username}!</h1>
             {pieces.map(piece => (
+                <>
                 <div className="piece-icon" key={piece.id} data-pieceid={piece.id} data-piecetitle={piece.title} onClick={goToPiecePlans}>
                     <p data-pieceid={piece.id} data-piecetitle={piece.title}>{piece.title}</p>
                     <p data-pieceid={piece.id} data-piecetitle={piece.title}>{piece.composer}</p>
                 </div>
+                <button data-pieceid={piece.id} onClick={deletePiece}>Delete Piece</button><br />
+                </>
             ))}
             <button onClick={() => setAddPieceIsOpen(true)}>Add a New Piece Here!</button>
             <AddPieceDialog open={addPieceIsOpen} closeAddPiece={closeAddPiece} />
