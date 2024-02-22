@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 
 function EditPlan() {
     const dispatch = useDispatch();
-    const hisotry = useHistory();
+    const history = useHistory();
     const planId = useParams().plan_id;
     const pieceId = useParams().id;
     const selectedPlan = useSelector(store => store.selectedPlan);
 
     const [responses, setResponses] = useState(
         {
+            id: planId,
             piece_id: pieceId,
             section: selectedPlan.section,
             problems: selectedPlan.problems,
@@ -18,23 +19,27 @@ function EditPlan() {
             goal: selectedPlan.goal
         });
 
-        const handleChange = (e) => {
+    const handleChange = (e) => {
 
-            const { name, value } = e.target;
-    
-            // currentInfo is another name for state. maybe just call it state in the future
-            setResponses((currentInfo) => ({ ...currentInfo, [name]: value }));
-        }
+        const { name, value } = e.target;
 
+        setResponses((state) => ({ ...state, [name]: value }));
+    }
+
+    const submitEdits = (e) => {
+        e.preventDefault();
+        dispatch({ type: "EDIT_PLAN", payload: responses });
+        history.goBack();
+    }
 
     useEffect(() => {
-        dispatch({ type: "FETCH_SELECTED_PLAN", payload: planId});
+        dispatch({ type: "FETCH_SELECTED_PLAN", payload: planId });
     }, []);
 
     return (
         <>
-        <h2>Edit Plan</h2>
-        <form>
+            <h2>Edit Plan</h2>
+            <form onSubmit={submitEdits}>
                 <label htmlFor="section">What section are you working on?</label><br />
                 <input id="section" name="section" type="text" placeholder="Your Answer Here" size="100" value={responses.section} onChange={handleChange} /><br />
                 <label htmlFor="problems">What are the problems you need to solve/issues you need to address in this section?</label><br />
@@ -43,6 +48,8 @@ function EditPlan() {
                 <input id="plan" name="plan" type="text" placeholder="Your Answer Here" size="100" value={responses.plan} onChange={handleChange} /><br />
                 <label htmlFor="goal">What is your goal for the end of the practice session? e.g. runs without mistakes, target metronome marking, etc.</label><br />
                 <input id="goal" name="goal" type="text" placeholder="Your Answer Here" size="100" value={responses.goal} onChange={handleChange} /><br />
+                <button type="button" onClick={() => history.goBack()}>Back</button>
+                <button type="submit">Submit Changes</button>
             </form>
         </>
     );

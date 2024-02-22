@@ -28,6 +28,7 @@ function ReviewPlan() {
             <p>{selectedPlan.plan}</p>
             <p><strong>What is your goal for the end of the practice session?</strong></p>
             <p>{selectedPlan.goal}</p>
+            <button onClick={() => history.goBack()}>Back</button>
             <button data-planid={selectedPlan.id} onClick={deletePlan}>Delete Plan</button>
             <button onClick={() => history.push(`/${pieceId}/practice_entries/review_plan/${planId}/edit`)}>Edit Plan</button>
 
