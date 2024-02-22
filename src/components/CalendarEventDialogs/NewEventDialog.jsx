@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
+    const history = useHistory();
     const dispatch = useDispatch();
     // const selectedDate = useSelector(store => store.selectedDate);
     // Don't use startTime and endTime because those create a recurring event
@@ -48,6 +50,7 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
         if (Object.keys(responses).length !== 0) {
             dispatch({type: "ADD_PLAN_AND_EVENT", payload: {newPlan: responses, newEvent: payload}});
             closeNewEvent();
+            history.goBack();
         } else {
     
 
