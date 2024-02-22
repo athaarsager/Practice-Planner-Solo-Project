@@ -34,8 +34,8 @@ function NewEventDialog({ open, closeNewEvent, selectedDate }) {
         const payload = {
             title: newEvent.title,
             date: selectedDate ? selectedDate : newEvent.date,
-            start: selectedDate + "T" + newEvent.start,
-            end: selectedDate + "T" + newEvent.end
+            start: selectedDate ? selectedDate + "T" + newEvent.start : newEvent.date + "T" + newEvent.start,
+            end: selectedDate ? selectedDate + "T" + newEvent.end : newEvent.date + "T" + newEvent.end
         }
 
         dispatch({ type: "ADD_CALENDAR_EVENT", payload });
