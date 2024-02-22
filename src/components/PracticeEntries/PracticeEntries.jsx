@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect } from "react";
 import PracticeEntriesFooter from "./PracticeEntriesFooter";
 
@@ -7,17 +7,17 @@ import PracticeEntriesFooter from "./PracticeEntriesFooter";
 function PracticeEntries() {
     const dispatch = useDispatch();
     const history = useHistory();
-    const selectedPiece = useSelector(store => store.selectedPiece);
     const plans = useSelector(store => store.plans);
+    const pieceId = useParams().id;
 
     useEffect(() => {
-        dispatch({ type: "FETCH_PLANS", payload: selectedPiece.id });
+        dispatch({ type: "FETCH_PLANS", payload: pieceId });
     }, []);
 
     return (
         <>
             <h2>Practice Plans</h2>
-            <button onClick={() => history.push(`/${selectedPiece.id}/practice_entries/new_plan`)}>Add a New Practice Plan!</button>
+            <button onClick={() => history.push(`/${pieceId}/practice_entries/new_plan`)}>Add a New Practice Plan!</button>
             {plans.map(plan => (
                 <div key={plan.id}>
                     <h4>Prior Plan</h4>
@@ -29,7 +29,7 @@ function PracticeEntries() {
                     <p>{plan.plan}</p>
                     <p><strong>What is your goal for the end of the practice session?</strong></p>
                     <p>{plan.goal}</p>
-                    <button>Review Full Entry</button>
+                    <button data-planid={plan.id} onClick={(e) => history.push(`/${pieceId}/practice_entries/review_plan/${e.target.dataset.planid}`)}>Review Full Entry</button>
                     {plan.reflection_written ?
                         <button>Edit Reflection</button> :
                         <button>Write Refelction</button>

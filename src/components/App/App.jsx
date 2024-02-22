@@ -21,6 +21,7 @@ import Dashboard from '../Dashboard/Dashboard';
 import CalendarPage from '../CalendarPage/CalendarPage';
 import PracticeEntries from '../PracticeEntries/PracticeEntries';
 import NewPracticePlan from '../NewPracticePlan/NewPracticePlan';
+import ReviewPlan from '../ReviewPlan/ReviewPlan';
 
 import './App.css';
 
@@ -63,6 +64,10 @@ function App() {
 
           <ProtectedRoute exact path="/:id/practice_entries/new_plan">
             <NewPracticePlan />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/:id/practice_entries/review_plan/:plan_id">
+            <ReviewPlan />
           </ProtectedRoute>
 
           <ProtectedRoute
