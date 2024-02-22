@@ -15,7 +15,7 @@ function* fetchPlans(action) {
 function* fetchSelectedPlan(action) {
     try {
         const planResponse = yield axios.get(`/api/practice_plans/plan/${action.payload}`);
-        yield put({ type: "SET_SELECTED_PLAN", payload: planResponse.data });
+        yield put({ type: "SET_SELECTED_PLAN", payload: planResponse.data[0] });
     } catch (error) {
         console.error("ERROR in fetchSinglePlan saga:", error);
     }

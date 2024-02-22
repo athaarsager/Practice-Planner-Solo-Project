@@ -8,6 +8,7 @@ function ReviewPlan() {
 
     useEffect(() => {
         disptach({ type: "FETCH_SELECTED_PLAN", payload: planId });
+        console.log("This is the selectedPlan:", selectedPlan);
     }, []);
     return (
         <div>
