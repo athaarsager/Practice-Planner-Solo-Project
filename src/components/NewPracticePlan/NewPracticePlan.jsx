@@ -45,7 +45,7 @@ function NewPracticePlan() {
                     <p>Create Calendar Event? Optional</p>
                     <button type="button">Yes</button>
                 </div>
-                <button type="button">Cancel</button>
+                <button type="button" onClick={() => history.goBack()}>Cancel</button>
                 <button type="submit">Finish Plan!</button>
             </form>
         </>
