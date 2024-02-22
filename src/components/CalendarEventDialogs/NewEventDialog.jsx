@@ -5,12 +5,17 @@ function NewEventDialog({ open, closeNewEvent, selectedDate }) {
     const dispatch = useDispatch();
     // const selectedDate = useSelector(store => store.selectedDate);
     // Don't use startTime and endTime because those create a recurring event
+    const selectedPiece = useSelector(store => store.selectedPiece);
+
     const [newEvent, setNewEvent] = useState({
-        title: "",
+        title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : "",
         date: selectedDate ? selectedDate : "",
         start: "",
         end: ""
     });
+
+    console.log("In dialog. Selected piece is:", selectedPiece);
+
 
     // event object can contain keys such as the following (more can be found at: https://fullcalendar.io/docs/event-parsing ):
     // {
@@ -50,11 +55,14 @@ function NewEventDialog({ open, closeNewEvent, selectedDate }) {
         closeNewEvent();
     }
 
+    useEffect(() => {
+        console.log("useEffect fired! the selectedPiece is:", selectedPiece);
+        setNewEvent((state) => ({ ...state, title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : ""}));
+        console.log("newEvent is:", newEvent); // Not updating fast enough with React life cycle again or something...
+    }, [selectedPiece]);
+
     return (
         <div>
-            {/* Since "open" is a boolean value, when fed to the actual component, it is always evaluated "truthy"
-            for some reason...
-            SO...need to conditionally render the dialog based on the value of open OUTSIDE of the dialog component */}
 
             <dialog open={open} onClose={closeNewEvent}>
                 <form onSubmit={addEvent}>
@@ -73,6 +81,7 @@ function NewEventDialog({ open, closeNewEvent, selectedDate }) {
                     <label htmlFor="end">End</label><br />
                     <input id="end" name="end" type="time" value={newEvent.end} onChange={handleChange} /><br />
                     <input type="submit" />
+                    <button type="button" onClick={() => closeNewEvent()}>Cancel</button>
                 </form>
             </dialog>
 

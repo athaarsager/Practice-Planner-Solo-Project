@@ -15,6 +15,7 @@ import EditEventDialog from '../CalendarEventDialogs/EditEventDialog';
 export default function CalendarPage() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const selectedPiece = useSelector(store => store.selectedPiece);
 
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedEvent, setSelectedEvent] = useState({});
@@ -67,6 +68,8 @@ export default function CalendarPage() {
     // need to GET all the calendar events on page load
     useEffect(() => {
         dispatch({ type: "FETCH_CALENDAR_EVENTS" });
+        dispatch({ type: "CLEAR_SELECTED_PIECE"});
+        console.log("This is the selected piece:", selectedPiece);
     }, []);
 
     return (
