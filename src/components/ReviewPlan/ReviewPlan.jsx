@@ -1,15 +1,23 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect } from "react";
 function ReviewPlan() {
-    const disptach = useDispatch();
+    const dispatch = useDispatch();
+    const history = useHistory();
     const planId = useParams().plan_id;
+    const pieceId = useParams().id;
     const selectedPlan = useSelector(store => store.selectedPlan);
 
+    const deletePlan = (e) => {
+        dispatch({ type: "DELETE_PLAN", payload: {planId: e.target.dataset.planid, pieceId } });
+        history.goBack();
+    }
+
     useEffect(() => {
-        disptach({ type: "FETCH_SELECTED_PLAN", payload: planId });
+        dispatch({ type: "FETCH_SELECTED_PLAN", payload: planId });
         console.log("This is the selectedPlan:", selectedPlan);
     }, []);
+
     return (
         <div>
             <p><strong>What section are you working on?</strong></p>
@@ -20,7 +28,7 @@ function ReviewPlan() {
             <p>{selectedPlan.plan}</p>
             <p><strong>What is your goal for the end of the practice session?</strong></p>
             <p>{selectedPlan.goal}</p>
-            <button>Delete Plan</button>
+            <button data-planid={selectedPlan.id} onClick={deletePlan}>Delete Plan</button>
             <button>Edit Plan</button>
 
 
