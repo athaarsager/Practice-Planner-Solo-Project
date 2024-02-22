@@ -36,7 +36,7 @@ function* addPlanAndEvent(action) {
     try {
         const pieceId = action.payload.newPlan.piece_id;
         yield axios.post("/api/practice_plans/event", action.payload);
-        yield put({ type: "FETCH_PLANS", payload: pieceId});
+        yield put({ type: "FETCH_PLANS", payload: pieceId });
     } catch (error) {
         console.error("ERROR in addPlanAndEvent saga:", error);
     }
@@ -64,7 +64,7 @@ function* deletePlan(action) {
 function* practicePlansSaga() {
     yield takeLatest("FETCH_PLANS", fetchPlans);
     yield takeLatest("FETCH_SELECTED_PLAN", fetchSelectedPlan);
-    yield takeLatest ("ADD_PLAN_AND_EVENT");
+    yield takeLatest("ADD_PLAN_AND_EVENT", addPlanAndEvent);
     yield takeLatest("ADD_PLAN", addPlan);
     yield takeLatest("EDIT_PLAN", editPlan);
     yield takeLatest("DELETE_PLAN", deletePlan);

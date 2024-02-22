@@ -37,22 +37,19 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     const addEvent = (e) => {
         e.preventDefault();
 
-        const planId = "";
-
-        // Make this all ONE dispatch
-        if (Object.keys(responses).length !== 0) {
-            console.log("This is the value of responses:", responses);
-            dispatch({ type: "ADD_PLAN", payload: responses});
-            console.log("This is the value of plans:", plans);
-        }
-
         const payload = {
             title: newEvent.title,
             date: selectedDate ? selectedDate : newEvent.date,
             start: selectedDate ? selectedDate + "T" + newEvent.start : newEvent.date + "T" + newEvent.start,
-            end: selectedDate ? selectedDate + "T" + newEvent.end : newEvent.date + "T" + newEvent.end,
-            //practice_plan_id: parseInt(plans[-1].id)
+            end: selectedDate ? selectedDate + "T" + newEvent.end : newEvent.date + "T" + newEvent.end
         }
+
+        // Make this all ONE dispatch
+        if (Object.keys(responses).length !== 0) {
+            dispatch({type: "ADD_PLAN_AND_EVENT", payload: {newPlan: responses, newEvent: payload}});
+            closeNewEvent();
+        } else {
+    
 
         dispatch({ type: "ADD_CALENDAR_EVENT", payload });
         setNewEvent({
@@ -63,6 +60,7 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
         });
 
         closeNewEvent();
+    }
     }
 
     useEffect(() => {
