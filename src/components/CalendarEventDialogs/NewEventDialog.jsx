@@ -67,9 +67,7 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     }
 
     useEffect(() => {
-        console.log("useEffect fired! the selectedPiece is:", selectedPiece);
         setNewEvent((state) => ({ ...state, title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : ""}));
-        console.log("newEvent is:", newEvent); // Not updating fast enough with React life cycle again or something...
     }, [selectedPiece]);
 
     return (
