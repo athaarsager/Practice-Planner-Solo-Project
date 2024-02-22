@@ -26,7 +26,7 @@ router.get("/:id", rejectUnauthenticated, (req, res) => {
 router.get("/plan/:id", rejectUnauthenticated, (req, res) => {
     const planId = req.params.id;
     const queryText = `
-    SELECT "practice_plans"."section", "practice_plans"."problems", "practice_plans"."plan", "practice_plans"."goal" FROM "practice_plans"
+    SELECT "practice_plans"."id", "practice_plans"."section", "practice_plans"."problems", "practice_plans"."plan", "practice_plans"."goal" FROM "practice_plans"
     JOIN "pieces" ON "pieces"."id" = "practice_plans"."piece_id"
     WHERE "pieces"."user_id" = $1 AND "practice_plans"."id" = $2; 
     `;

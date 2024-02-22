@@ -4,6 +4,7 @@ import axios from "axios";
 
 function* fetchPlans(action) {
     try {
+        // action.payload needs to be pieceId
         console.log("This is the action.payload being sent to the server:", action.payload);
         const plansResponse = yield axios.get(`/api/practice_plans/${action.payload}`);
         yield put({ type: "SET_PLANS", payload: plansResponse.data });
@@ -15,7 +16,7 @@ function* fetchPlans(action) {
 function* fetchSelectedPlan(action) {
     try {
         const planResponse = yield axios.get(`/api/practice_plans/plan/${action.payload}`);
-        yield put({ type: "SET_SELECTED_PLAN", payload: planResponse.data });
+        yield put({ type: "SET_SELECTED_PLAN", payload: planResponse.data[0] });
     } catch (error) {
         console.error("ERROR in fetchSinglePlan saga:", error);
     }
@@ -54,8 +55,8 @@ function* editPlan(action) {
 
 function* deletePlan(action) {
     try {
-        yield axios.delete(`/api/practice_plans/${action.payload}`);
-        yield put({ type: "FETCH_PLANS" });
+        yield axios.delete(`/api/practice_plans/${action.payload.planId}`);
+        yield put({ type: "FETCH_PLANS", payload: action.payload.pieceId });
     } catch (error) {
         console.error("ERROR in deletePlan saga:", error);
     }
