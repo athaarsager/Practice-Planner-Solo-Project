@@ -8,7 +8,6 @@ const {
 // GET practice plans from database
 router.get("/:id", rejectUnauthenticated, (req, res) => {
     const pieceId = req.params.id;
-    console.log("This is the pieceId:", pieceId);
     const queryText = `
     SELECT "practice_plans"."id", "practice_plans"."section", "practice_plans"."problems", "practice_plans"."plan", "practice_plans"."goal", "practice_plans"."reflection_written" FROM "practice_plans"
     JOIN "pieces" ON "pieces"."id" = "practice_plans"."piece_id"
@@ -61,7 +60,6 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 router.post("/event", rejectUnauthenticated, (req, res) => {
     // req.body will be an object whose keys are also objects
     const newPlan = req.body.newPlan;
-    console.log("This is newPlan:", newPlan);
     const queryText = `
     INSERT INTO "practice_plans" ("piece_id", "section", "problems", "plan", "goal")
     VALUES ($1, $2, $3, $4, $5)
