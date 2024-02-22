@@ -6,10 +6,18 @@ function AddPieceDialog({open, closeAddPiece}) {
     const [pieceTitle, setPieceTitle] = useState("");
     const [pieceComposer, setPieceComposer] = useState("");
 
+    const addPiece = (e) => {
+        e.preventDefault();
+        dispatch({ type: "ADD_PIECE", payload: { title: pieceTitle, composer: pieceComposer }});
+        setPieceTitle("");
+        setPieceComposer("");
+        closeAddPiece();
+    }
+
     return (
         <>
         <dialog open={open} onClose={closeAddPiece}>
-            <form>
+            <form onSubmit={addPiece}>
                 <label htmlFor="title">Title</label><br />
                 <input id="title" name="title" type="text" placeholder="Title Here" value={pieceTitle} onChange={(e) => setPieceTitle(e.target.value)} /><br />
                 <label htmlFor="composer">Composer</label><br />
