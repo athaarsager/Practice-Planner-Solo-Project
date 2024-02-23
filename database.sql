@@ -29,6 +29,13 @@ CREATE TABLE "practice_plans" (
 	"reflection_written" boolean NOT NULL DEFAULT false
 );
 
+CREATE TABLE "reflections" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"went_well" varchar NOT NULL,
+	"needs_work" varchar NOT NULL,
+	"plan_id" integer REFERENCES "practice_plans" ("id") ON DELETE CASCADE NOT NULL
+);
+
 
 CREATE TABLE "reference_recordings" (
 	"id" serial PRIMARY KEY NOT NULL,
