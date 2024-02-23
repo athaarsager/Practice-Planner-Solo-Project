@@ -12,12 +12,25 @@ function ReflectionForm() {
 
     const submitReflection = (e) => {
         e.preventDefault();
-        const payload = {
-            plan_id: planId,
-            went_well: wentWell,
-            needs_work: needsWork
-        }
+
+        if (Object.keys(selectedReflection). length === 0) {
+            const payload = {
+                went_well: wentWell,
+                needs_work: needsWork,
+                plan_id: planId,
+            }
         dispatch({ type: "ADD_REFLECTION", payload });
+        console.log("New reflection dispatched!");
+    } else {
+        const payload = {
+            id: selectedReflection.id,
+            went_well: wentWell,
+            needs_work: needsWork,
+            plan_id: planId
+        }
+        dispatch({ type: "EDIT_REFLECTION", payload });
+        console.log("Edit dispatched!");
+    }
         history.goBack();
     }
 
