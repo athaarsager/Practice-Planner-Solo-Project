@@ -37,4 +37,21 @@ const {
     });
   });
 
+  // PUT route for editing existing reflection
+  router.put("/:id", rejectUnauthenticated, (req, res) => {
+    // need plan id in req.params
+    const planId = req.params.id;
+    const queryText =  `
+    UPDATE "reflections" SET "went_well" = $1, "needs_work" = $2
+    WHERE "id" = $3;
+    `;
+    pool.query(queryText, [req.body.went_well, req.body.needs_work, planId])
+    .then(() => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log("ERROR in reflections PUT:", error);
+        res.sendStatus(500);
+    });
+  });
+
   module.exports = router;
