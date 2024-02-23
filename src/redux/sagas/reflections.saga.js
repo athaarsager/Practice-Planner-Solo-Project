@@ -12,9 +12,10 @@ function* getSelectedReflection(action) {
 }
 
 // should make get saga first...
-function* addReflection() {
+function* addReflection(action) {
+    // payload needs to be reflection info
     try {
-
+        yield axios.post("/api/reflections", action.payload);
     } catch (error) {
         console.error("ERROR in addReflection saga:", error);
     }
@@ -22,6 +23,7 @@ function* addReflection() {
 
 function* reflectionsSaga() {
     yield takeLatest("GET_SELECTED_REFLECTION", getSelectedReflection);
+    yield takeLatest("ADD_REFLECTION", addReflection);
 }
 
 export default reflectionsSaga;
