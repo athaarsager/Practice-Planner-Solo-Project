@@ -11,7 +11,7 @@ function* getSelectedReflection(action) {
     }
 }
 
-// should make get saga first...
+
 function* addReflection(action) {
     // payload needs to be reflection info
     try {
@@ -21,9 +21,20 @@ function* addReflection(action) {
     }
 }
 
+// edit/PUT saga
+function* editReflection(action) {
+    // payload needs to be edited info. also needs to include id
+    try {
+        yield axios.put(`/api/reflections/${action.payload.id}`, action.payload);
+    } catch (error) {
+        console.error("ERROR in editReflection saga:", error);
+    }
+}
+
 function* reflectionsSaga() {
     yield takeLatest("GET_SELECTED_REFLECTION", getSelectedReflection);
     yield takeLatest("ADD_REFLECTION", addReflection);
+    yield takeLatest("EDIT_REFLECTION", editReflection);
 }
 
 export default reflectionsSaga;
