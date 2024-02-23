@@ -41,7 +41,7 @@ function NewPracticePlan() {
         if (newPlanProblems !== "") {
             setResponses((state) => ({ ...state, problems: newPlanProblems}));
         }
-    }, [newPlanProblems])
+    }, [newPlanProblems]);
 
     return (
         <>

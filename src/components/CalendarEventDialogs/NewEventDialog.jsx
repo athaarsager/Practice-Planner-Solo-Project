@@ -8,7 +8,7 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     // const selectedDate = useSelector(store => store.selectedDate);
     // Don't use startTime and endTime because those create a recurring event
     const selectedPiece = useSelector(store => store.selectedPiece);
-    const plans = useSelector(store => store.plans);
+    const pieces = useSelector(store => store.pieces);
 
     const [newEvent, setNewEvent] = useState({
         title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : "",
@@ -77,10 +77,13 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
                 <form onSubmit={addEvent}>
                     <label htmlFor="title">Piece</label><br />
                     {/* Need to make this a dropdown */}
-                    <input id="title" name="title" type="text" placeholder="Piece to Practice" value={newEvent.title} onChange={handleChange} /><br />
-                    {/* Need some conditioinal rendering here if piece is not added from calendar day screen. Something like: */}
-                    {/* !selectedEvent && */}
-                    {/* insert label and input for date here */}
+                    {/* <input id="title" name="title" type="text" placeholder="Piece to Practice" value={newEvent.title} onChange={handleChange} /><br /> */}
+                    <select name="title" id="title" onChange={handleChange}>
+                        <option value="" disabled hidden selected>Select Piece</option>
+                        {pieces.map(piece => (
+                            <option key={piece.id} value={piece.title}>{piece.title}</option>
+                        ))}
+                    </select><br />
                     {!selectedDate && <>
                         <label htmlFor="date">Date</label><br />
                         <input id="date" name="date" type="date" value={newEvent.date} onChange={handleChange} /><br />
