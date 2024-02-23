@@ -23,6 +23,7 @@ import PracticeEntries from '../PracticeEntries/PracticeEntries';
 import NewPracticePlan from '../NewPracticePlan/NewPracticePlan';
 import ReviewPlan from '../ReviewPlan/ReviewPlan';
 import EditPlan from '../EditPlan/EditPlan';
+import ReflectionForm from '../ReflectionForm/ReflectionForm';
 
 import './App.css';
 
@@ -73,6 +74,10 @@ function App() {
 
           <ProtectedRoute exact path="/:id/practice_entries/review_plan/:plan_id/edit">
             <EditPlan />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/:id/practice_entries/write_reflection/:plan_id">
+            <ReflectionForm />
           </ProtectedRoute>
 
           <ProtectedRoute

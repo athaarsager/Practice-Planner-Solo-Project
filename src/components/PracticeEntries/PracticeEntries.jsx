@@ -32,7 +32,7 @@ function PracticeEntries() {
                     <button data-planid={plan.id} onClick={(e) => history.push(`/${pieceId}/practice_entries/review_plan/${e.target.dataset.planid}`)}>Review Full Entry</button>
                     {plan.reflection_written ?
                         <button>Edit Reflection</button> :
-                        <button>Write Refelction</button>
+                        <button data-planid={plan.id} onClick={(e) => history.push(`/${pieceId}/practice_entries/write_reflection/${e.target.dataset.planid}`)}>Write Refelction</button>
                     }
 
                 </div>

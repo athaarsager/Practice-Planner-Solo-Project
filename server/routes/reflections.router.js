@@ -26,11 +26,23 @@ const {
   router.post("/", rejectUnauthenticated, (req, res) => {
     const queryText = `
     INSERT INTO "reflections" ("went_well", "needs_work", "plan_id")
-    VALUES ($1, $2, $3);
+    VALUES ($1, $2, $3)
+    RETURNING "plan_id";
     `;
     pool.query(queryText, [req.body.went_well, req.body.needs_work, req.body.plan_id])
-    .then(() => {
-        res.sendStatus(201);
+    .then((result) => {
+        const planId = result.rows[0].plan_id;
+        const newQueryText = `
+        UPDATE "practice_plans" SET "reflection_written" = true
+        WHERE "id"=$1;
+        `;
+        pool.query(newQueryText, [planId])
+        .then(() => {
+          res.sendStatus(201);
+        }).catch((error) => {
+          console.log("Error in updating practice_plans reflection_written boolean:", error);
+          res.sendStatus(500);
+        })
     }).catch((error) => {
         console.log("ERROR in reflections POST:", error);
         res.sendStatus(500);
