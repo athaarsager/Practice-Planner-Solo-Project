@@ -7,6 +7,7 @@ import practicePlansSaga from './practicePlans.saga';
 import referenceRecordingsSaga from './referenceRecordings.saga';
 import practiceRecordingsSaga from './practiceRecordings.saga';
 import calendarEventsSaga from './calendarEvents.saga';
+import reflectionsSaga from './reflections.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -22,6 +23,7 @@ export default function* rootSaga() {
     userSaga(),
     piecesSaga(),
     practicePlansSaga(),
+    reflectionsSaga(),
     referenceRecordingsSaga(),
     practiceRecordingsSaga(),
     calendarEventsSaga()
