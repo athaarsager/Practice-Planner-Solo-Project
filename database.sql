@@ -29,12 +29,18 @@ CREATE TABLE "practice_plans" (
 	"reflection_written" boolean NOT NULL DEFAULT false
 );
 
-CREATE TABLE "reflections" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"went_well" varchar NOT NULL,
-	"needs_work" varchar NOT NULL,
-	"plan_id" integer REFERENCES "practice_plans" ("id") ON DELETE CASCADE NOT NULL
+
+CREATE TABLE reflections (
+    id SERIAL PRIMARY KEY,
+    went_well character varying NOT NULL,
+    needs_work character varying NOT NULL,
+    plan_id integer NOT NULL REFERENCES practice_plans(id) ON DELETE CASCADE UNIQUE
 );
+
+-- Indices -------------------------------------------------------
+
+CREATE UNIQUE INDEX reflections_pkey ON reflections(id int4_ops);
+CREATE UNIQUE INDEX reflections_plan_id_key ON reflections(plan_id int4_ops);
 
 
 CREATE TABLE "reference_recordings" (

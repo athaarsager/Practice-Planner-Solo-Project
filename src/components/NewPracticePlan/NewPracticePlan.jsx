@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NewEventDialog from "../CalendarEventDialogs/NewEventDialog";
 
 function NewPracticePlan() {
@@ -8,6 +8,7 @@ function NewPracticePlan() {
     const history = useHistory();
     const pieceId = useParams().id;
     const selectedPiece = useSelector(store => store.selectedPiece);
+    const newPlanProblems = useSelector(store => store.newPlanProblems);
     const onPracticePlanScreen = true;
     const selectedDate = "";
 
@@ -24,17 +25,23 @@ function NewPracticePlan() {
             goal: ""
         });
 
-        const handleChange = (e) => {
-            const { name, value } = e.target;
+    const handleChange = (e) => {
+        const { name, value } = e.target;
 
-            setResponses((state) => ({...state, [name]: value}));
-        }
+        setResponses((state) => ({ ...state, [name]: value }));
+    }
 
     const submitPlan = (e) => {
         e.preventDefault();
-        dispatch({ type: "ADD_PLAN", payload: responses});
+        dispatch({ type: "ADD_PLAN", payload: responses });
         history.goBack();
     }
+
+    useEffect(() => {
+        if (newPlanProblems !== "") {
+            setResponses((state) => ({ ...state, problems: newPlanProblems}));
+        }
+    }, [newPlanProblems])
 
     return (
         <>
@@ -56,7 +63,7 @@ function NewPracticePlan() {
                 <button type="button" onClick={() => history.goBack()}>Cancel</button>
                 <button type="submit">Finish Plan!</button>
             </form>
-            <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} onPracticePlanScreen={onPracticePlanScreen} responses={responses}/>
+            <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} onPracticePlanScreen={onPracticePlanScreen} responses={responses} />
         </>
     );
 }
