@@ -22,7 +22,6 @@ function ReflectionForm() {
 
     return (
         <>
-        <p>Welcome to the Reflection Form for plan: {planId}!</p>
         <form onSubmit={submitReflection}>
             <label htmlFor="went-well">What went well this session?</label><br />
             <input id="went-well" name="went-well" type="text" placeholder="Your Answer Here!" value={wentWell} onChange={(e) => setWentWell(e.target.value)} /><br />
