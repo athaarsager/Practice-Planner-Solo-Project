@@ -11,7 +11,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     const [editedEvent, setEditedEvent] = useState({
         title: selectedEvent.title,
         // This line seems to be giving me the "component changing from uncontrolled to controlled" warning, but can't figure out what's causing it...
-        date: Object.keys(selectedEvent).length !==0 ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "",
+        date: Object.keys(selectedEvent).length !== 0 ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "",
         start: selectedEvent.start,
         end: selectedEvent.end
     });
@@ -55,7 +55,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     }
 
     const deleteEvent = () => {
-        dispatch({ type: "DELETE_CALENDAR_EVENT", payload: selectedEvent.id});
+        dispatch({ type: "DELETE_CALENDAR_EVENT", payload: selectedEvent.id });
         closeEditedEvent();
     }
 
@@ -82,39 +82,42 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
 
         if (Object.keys(selectedEvent).length !== 0) {
 
-        setEditedEvent({
-            id: selectedEvent.id,
-            title: selectedEvent.title,
-            date: selectedEvent ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "",
-            start: formatTime(selectedEvent.start),
-            end: formatTime(selectedEvent.end)
-        });
-    }
+            setEditedEvent({
+                id: selectedEvent.id,
+                title: selectedEvent.title,
+                date: selectedEvent ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "",
+                start: formatTime(selectedEvent.start),
+                end: formatTime(selectedEvent.end)
+            });
+        }
 
     }, [selectedEvent]); // Need to put selectedEvent here so it actually displays in dialog. Page must not load with it yet?
 
-return (
-    <div>
-        <dialog open={open} onClose={closeEditedEvent}>
-            <form onSubmit={submitEdits}>
-                <label htmlFor="title">Piece</label><br />
-                {/* Need to make this a dropdown */}
-                <input id="title" name="title" type="text" placeholder="Piece to Practice" value={editedEvent.title} onChange={handleChange} /><br />
-                {/* May want to always render an input for date so it can be changed */}
-                <label htmlFor="date">Date</label><br />
-                <input id="date" name="date" type="date" value={editedEvent.date} onChange={handleChange} /><br />
-                <label htmlFor="start">Start</label><br />
-                <input id="start" name="start" type="time" value={editedEvent.start} onChange={handleChange} /><br />
-                <label htmlFor="end">End</label><br />
-                <input id="end" name="end" type="time" value={editedEvent.end} onChange={handleChange} /><br />
-                <button type="submit">Submit Changes</button>
-                <button onClick={deleteEvent} type="button">Delete Event</button>
-                <button type="button">Go to Practice Plan</button>
-            </form>
-        </dialog>
+    return (
+        <div>
+            <dialog open={open} onClose={closeEditedEvent}>
+                <form onSubmit={submitEdits}>
+                    <label htmlFor="title">Piece</label><br />
+                    {/* Need to make this a dropdown */}
+                    <input id="title" name="title" type="text" placeholder="Piece to Practice" value={editedEvent.title} onChange={handleChange} /><br />
+                    {/* May want to always render an input for date so it can be changed */}
+                    <label htmlFor="date">Date</label><br />
+                    <input id="date" name="date" type="date" value={editedEvent.date} onChange={handleChange} /><br />
+                    <label htmlFor="start">Start</label><br />
+                    <input id="start" name="start" type="time" value={editedEvent.start} onChange={handleChange} /><br />
+                    <label htmlFor="end">End</label><br />
+                    <input id="end" name="end" type="time" value={editedEvent.end} onChange={handleChange} /><br />
+                    <button type="submit">Submit Changes</button>
+                    <button onClick={deleteEvent} type="button">Delete Event</button>
+                    {selectedEvent.practice_plan_id ?
+                        <button type="button">Go to Practice Plan</button> :
+                        <button type="button">Add Practice Plan</button>
+                    }
+                </form>
+            </dialog>
 
-    </div>
-);
+        </div>
+    );
 }
 
 export default EditEventDialog; 
