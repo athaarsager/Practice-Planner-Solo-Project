@@ -2,10 +2,10 @@ import { put, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 
 function* getSelectedReflection(action) {
-    // payload needs to be reflection id
+    // payload needs to be reflection's plan id
     try {
         const getSelectedReflectionResponse = yield axios.get(`/api/reflections/${action.payload}`);
-        yield put({ type: "SET_SELECTED_REFLECTION", payload: getSelectedReflectionResponse.data});
+        yield put({ type: "SET_SELECTED_REFLECTION", payload: getSelectedReflectionResponse.data[0]});
     } catch (error) {
         console.error("ERROR in getSelectedReflectin saga:", error);
     }

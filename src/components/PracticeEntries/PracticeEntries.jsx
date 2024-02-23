@@ -10,6 +10,11 @@ function PracticeEntries() {
     const plans = useSelector(store => store.plans);
     const pieceId = useParams().id;
 
+    const goToEditPage = (e) => {
+        dispatch({ type: "GET_SELECTED_REFLECTION", payload: e.target.dataset.planid});
+        history.push(`/${pieceId}/practice_entries/write_reflection/${e.target.dataset.planid}`);
+    }
+
     useEffect(() => {
         dispatch({ type: "FETCH_PLANS", payload: pieceId });
     }, []);
@@ -31,7 +36,7 @@ function PracticeEntries() {
                     <p>{plan.goal}</p>
                     <button data-planid={plan.id} onClick={(e) => history.push(`/${pieceId}/practice_entries/review_plan/${e.target.dataset.planid}`)}>Review Full Entry</button>
                     {plan.reflection_written ?
-                        <button>Edit Reflection</button> :
+                        <button data-planid={plan.id} onClick={goToEditPage}>Edit Reflection</button> :
                         <button data-planid={plan.id} onClick={(e) => history.push(`/${pieceId}/practice_entries/write_reflection/${e.target.dataset.planid}`)}>Write Refelction</button>
                     }
 

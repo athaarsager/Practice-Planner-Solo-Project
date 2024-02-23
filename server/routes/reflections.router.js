@@ -11,7 +11,7 @@ const {
     const reflectionId = req.params.id;
     const queryText = `
     SELECT "went_well", "needs_work" FROM "reflections"
-    WHERE "id" = $1;
+    WHERE "plan_id" = $1;
     `;
     pool.query(queryText, [reflectionId])
     .then((response) => {
