@@ -47,7 +47,10 @@ function ReflectionForm() {
                 <label htmlFor="needs_work">What still needs work?</label><br />
                 <input id="needs_work" name="needs_work" type="text" placeholder="Your Answer Here!" value={needsWork} onChange={(e) => setNeedsWork(e.target.value)} /><br />
                 {/* <button>Export to New Practice Session</button> */}
-                <button>Save Reflection!</button>
+                { Object.keys(selectedReflection).length === 0 ?
+                <button>Save Reflection!</button> :
+                <button>Save Edits!</button>
+}
             </form>
         </>
     );
