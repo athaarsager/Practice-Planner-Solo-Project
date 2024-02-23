@@ -6,6 +6,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const selectedEvent = useSelector(store => store.selectedEvent);
+    const pieces = useSelector(store => store.pieces);
     console.log("This is the selected event:", JSON.stringify(selectedEvent));
     // Don't use startTime and endTime because those create a recurring event
     const [editedEvent, setEditedEvent] = useState({
@@ -99,8 +100,13 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                 <form onSubmit={submitEdits}>
                     <label htmlFor="title">Piece</label><br />
                     {/* Need to make this a dropdown */}
-                    <input id="title" name="title" type="text" placeholder="Piece to Practice" value={editedEvent.title} onChange={handleChange} /><br />
-                    {/* May want to always render an input for date so it can be changed */}
+                    {/* <input id="title" name="title" type="text" placeholder="Piece to Practice" value={editedEvent.title} onChange={handleChange} /><br /> */}
+                    <select name="title" id="title" defaultValue={selectedEvent.title} onChange={handleChange}>
+                        <option value="" disabled hidden selected>Select Piece</option>
+                        {pieces.map(piece => (
+                            <option key={piece.id} value={piece.title}>{piece.title}</option>
+                        ))}
+                    </select><br />
                     <label htmlFor="date">Date</label><br />
                     <input id="date" name="date" type="date" value={editedEvent.date} onChange={handleChange} /><br />
                     <label htmlFor="start">Start</label><br />
