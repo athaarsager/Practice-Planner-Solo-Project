@@ -36,12 +36,6 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
         setNewEvent((currentInfo) => ({ ...currentInfo, [name]: value }));
     }
 
-    // const handleTitleChange = (e) => {
-    //     const [pieceId, pieceTitle] = e.target.value.split(",");
-    //     setNewEvent((state) => ({ ...state, piece_id: pieceId }));
-    //     setNewEvent((state) => ({ ...state, title: pieceTitle }))
-    // }
-
     const addEvent = (e) => {
         e.preventDefault();
         console.log("This is the newEvent.title:", newEvent.title);

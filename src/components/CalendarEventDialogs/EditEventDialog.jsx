@@ -35,15 +35,6 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
 
     }
 
-    // const updatePieceTitle = (e) => {
-    //     // Figure out how to get the id and title in the value and split it for setting state here
-    //     const [pieceId, pieceTitle] = e.target.value.split(","); // Efficient way of creating new variables via ChatGPT
-    //     console.log("pieceId is:", pieceId);
-    //     console.log("pieceTitle is:", pieceTitle);
-    //     setPieceId(pieceId);
-    //     setEditedEvent((state) => ({...state, title: pieceTitle}));
-    // }
-
     const submitEdits = (e) => {
         e.preventDefault();
         const payload = {
