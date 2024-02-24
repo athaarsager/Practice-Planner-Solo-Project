@@ -7,6 +7,7 @@ function ReviewPlan() {
     const planId = useParams().plan_id;
     const pieceId = useParams().id;
     const selectedPlan = useSelector(store => store.selectedPlan);
+    const selectedPiece = useSelector(store => store.selectedPiece);
 
     const deletePlan = (e) => {
         dispatch({ type: "DELETE_PLAN", payload: {planId: e.target.dataset.planid, pieceId } });
@@ -20,6 +21,7 @@ function ReviewPlan() {
 
     return (
         <div>
+            <h1>Review plan for {selectedPiece.title}</h1>
             <p><strong>What section are you working on?</strong></p>
             <p>{selectedPlan.section}</p>
             <p><strong>What are the problems you need to solve/issues you need to address in this section?</strong></p>
