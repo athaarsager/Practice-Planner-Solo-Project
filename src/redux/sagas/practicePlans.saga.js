@@ -32,6 +32,14 @@ function* addPlan(action) {
     }
 }
 
+function* addPlanForExistingEvent(action) {
+    try {
+        yield axios.post("/api/practice_plans/existing_event", action.payload);
+    } catch (error) {
+        console.log("ERROR in addPlanForExistingEvent saga:", error);
+    }
+}
+
 function* addPlanAndEvent(action) {
     // payload is object containing two objects
     try {
@@ -55,7 +63,8 @@ function* editPlan(action) {
 
 function* editPlanPiece(action) {
     try {
-        yield axios.put(`/api/practice_plans/change_piece/${action.payload.plan_id}`, action.payload);
+        const planResponse = yield axios.get(`/api/practice_plans/plan/${action.payload}`);
+        yield axios.put(`/api/practice_plans/change_piece/${action.payload.plan_id}`, planResponse.data[0].piece_id);
     } catch (error) {
         console.error("ERROR in editPlanPiece saga:", error);
     }
@@ -73,10 +82,11 @@ function* deletePlan(action) {
 function* practicePlansSaga() {
     yield takeLatest("FETCH_PLANS", fetchPlans);
     yield takeLatest("FETCH_SELECTED_PLAN", fetchSelectedPlan);
+    yield takeLatests("ADD_PLAN_FOR_EXISTING_EVENT", addPlanForExistingEvent);
     yield takeLatest("ADD_PLAN_AND_EVENT", addPlanAndEvent);
     yield takeLatest("ADD_PLAN", addPlan);
     yield takeLatest("EDIT_PLAN", editPlan);
-    yield takeLatest("EDIT_PLAN_PIECE");
+    yield takeLatest("EDIT_PLAN_PIECE", editPlanPiece);
     yield takeLatest("DELETE_PLAN", deletePlan);
 }
 

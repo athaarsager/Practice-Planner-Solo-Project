@@ -25,7 +25,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 router.get("/:id", rejectUnauthenticated, (req, res) => {
     const eventId = req.params.id;
     const queryText = `
-    SELECT "calendar_events"."id", "calendar_events"."piece_id", "calendar_events"."title", "calendar_events"."date", "calendar_events"."start", "calendar_events"."end"
+    SELECT "calendar_events"."id", "calendar_events"."piece_id", "calendar_events"."title", "calendar_events"."date", "calendar_events"."start", "calendar_events"."end", "calendar_events"."practice_plan_id"
     FROM "calendar_events" WHERE "calendar_events"."id" = $1 AND "user_id" = $2;
     `;
     pool.query(queryText, [eventId, req.user.id])

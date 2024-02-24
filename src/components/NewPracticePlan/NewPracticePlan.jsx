@@ -33,6 +33,10 @@ function NewPracticePlan() {
 
     const submitPlan = (e) => {
         e.preventDefault();
+        if (selectedPiece.event_exits) {
+            // selectedPiece.event_id
+            // payload = {...responses, event_id: selectedPiece.event_id}
+        }
         dispatch({ type: "ADD_PLAN", payload: responses });
         history.goBack();
     }
