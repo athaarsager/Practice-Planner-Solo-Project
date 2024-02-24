@@ -7,7 +7,6 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     const history = useHistory();
     const selectedEvent = useSelector(store => store.selectedEvent);
     const pieces = useSelector(store => store.pieces);
-    console.log("This is the selected event:", JSON.stringify(selectedEvent));
     // Don't use startTime and endTime because those create a recurring event
     const [editedEvent, setEditedEvent] = useState({
         title: selectedEvent.title,
@@ -16,6 +15,8 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
         start: selectedEvent.start,
         end: selectedEvent.end
     });
+
+    const [pieceId, setPieceId] = useState("");
 
     // event object can contain keys such as the following (more can be found at: https://fullcalendar.io/docs/event-parsing ):
     // {
@@ -32,6 +33,14 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
         // currentInfo is another name for state. maybe just call it state in the future
         setEditedEvent((currentInfo) => ({ ...currentInfo, [name]: value }));
 
+    }
+
+    const updatePieceTitle = (e) => {
+        // Figure out how to get the id and title in the value and split it for setting state here
+        console.log(e.target.value);
+        setPieceId(e.target.value.id);
+        setEditedEvent((state) => ({...state, title: e.target.value}));
+        // handleChange(e);
     }
 
     const submitEdits = (e) => {
@@ -90,6 +99,9 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                 start: formatTime(selectedEvent.start),
                 end: formatTime(selectedEvent.end)
             });
+
+            console.log("useEffect fired! selected Event is:", selectedEvent);
+            console.log("This is the selected event's title:", selectedEvent.title);
         }
 
     }, [selectedEvent]); // Need to put selectedEvent here so it actually displays in dialog. Page must not load with it yet?
@@ -101,10 +113,10 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                     <label htmlFor="title">Piece</label><br />
                     {/* Need to make this a dropdown */}
                     {/* <input id="title" name="title" type="text" placeholder="Piece to Practice" value={editedEvent.title} onChange={handleChange} /><br /> */}
-                    <select name="title" id="title" defaultValue={selectedEvent.title} onChange={handleChange}>
-                        <option value="" disabled hidden selected>Select Piece</option>
+                    <select name="title" id="title" value={selectedEvent.title} onChange={updatePieceTitle}>
+                        <option value="" disabled hidden>Select Piece</option>
                         {pieces.map(piece => (
-                            <option key={piece.id} value={piece.title}>{piece.title}</option>
+                            <option id={piece.id} data-pieceid={piece.id} key={piece.id} value={piece.title}>{piece.title}</option>
                         ))}
                     </select><br />
                     <label htmlFor="date">Date</label><br />
@@ -118,7 +130,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                     <button type="submit">Submit Changes</button>
                     {selectedEvent.practice_plan_id ?
                         <button type="button">Go to Practice Plan</button> :
-                        <button type="button">Add Practice Plan</button>
+                        <button type="button" onClick={() => history.push(`/${pieceId}/practice_entries/new_plan`)}>Add Practice Plan</button>
                     }
                 </form>
             </dialog>
