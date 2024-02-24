@@ -25,7 +25,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 router.get("/:id", rejectUnauthenticated, (req, res) => {
     const eventId = req.params.id;
     const queryText = `
-    SELECT "calendar_events"."id", "calendar_events"."title", "calendar_events"."date", "calendar_events"."start", "calendar_events"."end"
+    SELECT "calendar_events"."id", "calendar_events"."piece_id", "calendar_events"."title", "calendar_events"."date", "calendar_events"."start", "calendar_events"."end"
     FROM "calendar_events" WHERE "calendar_events"."id" = $1 AND "user_id" = $2;
     `;
     pool.query(queryText, [eventId, req.user.id])
@@ -39,11 +39,11 @@ router.get("/:id", rejectUnauthenticated, (req, res) => {
 
 router.post("/", rejectUnauthenticated, (req, res) => {
     const queryText = `
-    INSERT INTO "calendar_events" ("title", "date", "start", "end", "user_id", "practice_plan_id")
-    VALUES ($1, $2, $3, $4, $5, $6);
+    INSERT INTO "calendar_events" ("piece_id", "title", "date", "start", "end", "user_id", "practice_plan_id")
+    VALUES ($1, $2, $3, $4, $5, $6, $7);
     `;
     console.log(req.body.date);
-    pool.query(queryText, [req.body.title, req.body.date, req.body.start, req.body.end, req.user.id, req.body.practice_plan_id])
+    pool.query(queryText, [req.body.piece_id, req.body.title, req.body.date, req.body.start, req.body.end, req.user.id, req.body.practice_plan_id])
     .then(() => {
         res.sendStatus(201);
     }).catch((error) => {
@@ -55,10 +55,10 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 router.put("/:id", rejectUnauthenticated, (req, res) => {
     const eventId = req.params.id;
     const queryText = `
-    UPDATE "calendar_events" SET "title" = $1, "date" = $2, "start" = $3, "end" = $4
-    WHERE "id" = $5;
+    UPDATE "calendar_events" SET "piece_id" = $1, "title" = $2, "date" = $3, "start" = $4, "end" = $5
+    WHERE "id" = $6;
     `;
-    pool.query(queryText, [req.body.title, req.body.date, req.body.start, req.body.end, eventId])
+    pool.query(queryText, [req.body.piece_id, req.body.title, req.body.date, req.body.start, req.body.end, eventId])
     .then(() => {
         res.sendStatus(200);
     }).catch((error) => {

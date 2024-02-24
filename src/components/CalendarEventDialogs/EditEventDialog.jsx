@@ -37,9 +37,11 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
 
     const updatePieceTitle = (e) => {
         // Figure out how to get the id and title in the value and split it for setting state here
-        console.log(e.target.value);
-        setPieceId(e.target.value.id);
-        setEditedEvent((state) => ({...state, title: e.target.value}));
+        const [pieceId, pieceTitle] = e.target.value.split(","); // Efficient way of creating new variables via ChatGPT
+        console.log("pieceId is:", pieceId);
+        console.log("pieceTitle is:", pieceTitle);
+        setPieceId(pieceId);
+        setEditedEvent((state) => ({...state, title: pieceTitle}));
         // handleChange(e);
     }
 
@@ -99,9 +101,6 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                 start: formatTime(selectedEvent.start),
                 end: formatTime(selectedEvent.end)
             });
-
-            console.log("useEffect fired! selected Event is:", selectedEvent);
-            console.log("This is the selected event's title:", selectedEvent.title);
         }
 
     }, [selectedEvent]); // Need to put selectedEvent here so it actually displays in dialog. Page must not load with it yet?
@@ -113,10 +112,10 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                     <label htmlFor="title">Piece</label><br />
                     {/* Need to make this a dropdown */}
                     {/* <input id="title" name="title" type="text" placeholder="Piece to Practice" value={editedEvent.title} onChange={handleChange} /><br /> */}
-                    <select name="title" id="title" value={selectedEvent.title} onChange={updatePieceTitle}>
+                    <select name="title" id="title" value={pieceId + "," + selectedEvent.title} onChange={updatePieceTitle}>
                         <option value="" disabled hidden>Select Piece</option>
                         {pieces.map(piece => (
-                            <option id={piece.id} data-pieceid={piece.id} key={piece.id} value={piece.title}>{piece.title}</option>
+                            <option key={piece.id} value={`${piece.id},${piece.title}`}>{piece.title}</option>
                         ))}
                     </select><br />
                     <label htmlFor="date">Date</label><br />

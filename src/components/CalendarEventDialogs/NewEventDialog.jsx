@@ -11,6 +11,7 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     const pieces = useSelector(store => store.pieces);
 
     const [newEvent, setNewEvent] = useState({
+        piece_id: Object.keys(selectedPiece).length !== 0 ? selectedPiece.id : "",
         title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : "",
         date: selectedDate ? selectedDate : "",
         start: "",
@@ -36,10 +37,17 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
         setNewEvent((currentInfo) => ({ ...currentInfo, [name]: value }));
     }
 
+    const handleTitleChange = (e) => {
+        const [pieceId, pieceTitle] = e.target.value.split(",");
+        setNewEvent((state) => ({ ...state, piece_id: pieceId }));
+        setNewEvent((state) => ({ ...state, title: pieceTitle }))
+    }
+
     const addEvent = (e) => {
         e.preventDefault();
 
         const payload = {
+            piece_id: newEvent.piece_id,
             title: newEvent.title,
             date: selectedDate ? selectedDate : newEvent.date,
             start: selectedDate ? selectedDate + "T" + newEvent.start : newEvent.date + "T" + newEvent.start,
@@ -56,6 +64,7 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
 
         dispatch({ type: "ADD_CALENDAR_EVENT", payload });
         setNewEvent({
+            piece_id: "",
             title: "",
             date: selectedDate ? selectedDate : "",
             start: "",
@@ -78,10 +87,10 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
                     <label htmlFor="title">Piece</label><br />
                     {/* Need to make this a dropdown */}
                     {/* <input id="title" name="title" type="text" placeholder="Piece to Practice" value={newEvent.title} onChange={handleChange} /><br /> */}
-                    <select name="title" id="title" onChange={handleChange}>
+                    <select name="title" id="title" onChange={handleTitleChange}>
                         <option value="" disabled hidden selected>Select Piece</option>
                         {pieces.map(piece => (
-                            <option key={piece.id} value={piece.title}>{piece.title}</option>
+                            <option key={piece.id} value={`${piece.id}, ${piece.title}`}>{piece.title}</option>
                         ))}
                     </select><br />
                     {!selectedDate && <>
