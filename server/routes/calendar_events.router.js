@@ -69,7 +69,7 @@ router.put("/:id", rejectUnauthenticated, (req, res) => {
     `;
     pool.query(queryText, [req.body.title])
         .then((result) => {
-            const pieceId = result.rows[0];
+            const pieceId = result.rows[0].id;
             const eventId = req.params.id;
             const newQueryText = `
     UPDATE "calendar_events" SET "piece_id" = $1, "title" = $2, "date" = $3, "start" = $4, "end" = $5
