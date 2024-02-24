@@ -48,6 +48,11 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
             end: editedEvent.date + "T" + editedEvent.end
         }
 
+        // if (editedEvent.title !== selectedEvent.title && selectedEvent.practice_plan_id) {
+        //     console.log("This is the editedEvent's title:", editedEvent.title);
+        //     console.log("This is the selectedEvent's title:", selectedEvent.title);
+        // }
+
         dispatch({ type: "EDIT_CALENDAR_EVENT", payload });
         setEditedEvent({
             title: "",
@@ -67,6 +72,8 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     const addPracticePlan = () => {
         console.log("In add Practice Plan. This is the editedEvent:", editedEvent);
         console.log("In add Practice Plan. This is the selectedEvent:", selectedEvent);
+        dispatch( {type: "SET_SELECTED_PIECE", payload:{id: selectedEvent.piece_id, title: editedEvent.title} });
+        history.push(`/${selectedEvent.piece_id}/practice_entries/new_plan`);
     }
 
     // This function may or may not be necessary in the final version

@@ -41,6 +41,7 @@ function NewPracticePlan() {
         if (newPlanProblems !== "") {
             setResponses((state) => ({ ...state, problems: newPlanProblems}));
         }
+        console.log("In NewPracticePlan.jsx. This is the selectedPiece:", selectedPiece);
     }, [newPlanProblems]);
 
     return (
