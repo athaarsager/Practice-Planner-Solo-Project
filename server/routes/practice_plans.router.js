@@ -103,6 +103,22 @@ router.put("/:id", rejectUnauthenticated, (req, res) => {
         });
 });
 
+// PUT change plan when calendar event is changed
+router.put("/change_piece/:id", rejectUnauthenticated, (req, res) => {
+    // grab this from selectedEvent?
+    const planId = req.params.id;
+    const pieceId = req.body.piece_id;
+    const queryText = `
+    UPDATE "practice_plans" SET "piece_id" = $1 WHERE "id" = $2;
+    `;
+    pool.query(queryText, [pieceId, planId])
+    .then(() => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log("ERROR in practice_plans change piece_id:", error);
+    });
+});
+
 // Delete route for practice_plans
 router.delete("/:id", rejectUnauthenticated, (req, res) => {
     const planId = req.params.id;

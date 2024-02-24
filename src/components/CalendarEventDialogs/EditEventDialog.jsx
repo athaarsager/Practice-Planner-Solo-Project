@@ -48,10 +48,10 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
             end: editedEvent.date + "T" + editedEvent.end
         }
 
-        // if (editedEvent.title !== selectedEvent.title && selectedEvent.practice_plan_id) {
-        //     console.log("This is the editedEvent's title:", editedEvent.title);
-        //     console.log("This is the selectedEvent's title:", selectedEvent.title);
-        // }
+        if (editedEvent.title !== selectedEvent.title && selectedEvent.piece_id) {
+            console.log("This is the editedEvent's title:", editedEvent.title);
+            console.log("This is the selectedEvent's title:", selectedEvent.title);
+        }
 
         dispatch({ type: "EDIT_CALENDAR_EVENT", payload });
         setEditedEvent({
@@ -107,9 +107,6 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                 start: formatTime(selectedEvent.start),
                 end: formatTime(selectedEvent.end)
             });
-
-            console.log("In use effect. selectedEvent piece_id is:", selectedEvent.piece_id);
-            console.log("This is the selectedEvent:", selectedEvent);
         }
 
     }, [selectedEvent]); // Need to put selectedEvent here so it actually displays in dialog. Page must not load with it yet?
@@ -119,7 +116,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
             <dialog open={open} onClose={closeEditedEvent}>
                 <form onSubmit={submitEdits}>
                     <label htmlFor="title">Piece</label><br />
-                    <select name="title" id="title" value={selectedEvent.title} onChange={handleChange}>
+                    <select name="title" id="title" value={editedEvent.title} onChange={handleChange}>
                         {pieces.map(piece => (
                             <option key={piece.id} value={piece.title}>{piece.title}</option>
                         ))}
