@@ -55,6 +55,8 @@ export default function CalendarPage() {
                 .changeView("dayGridMonth");
             setDayView(false);
             // dispatch({ type: "RESET_SELECTED_DATE" });
+            setAddNewEventIsOpen(false);
+            setEditEventIsOpen(false);
         } else {
             calendarRef.current
                 .getApi()
