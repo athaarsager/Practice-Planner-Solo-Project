@@ -53,6 +53,14 @@ function* editPlan(action) {
     }
 }
 
+function* editPlanPiece(action) {
+    try {
+        yield axios.put(`/api/practice_plans/change_piece/${action.payload.plan_id}`, action.payload);
+    } catch (error) {
+        console.error("ERROR in editPlanPiece saga:", error);
+    }
+}
+
 function* deletePlan(action) {
     try {
         yield axios.delete(`/api/practice_plans/${action.payload.planId}`);
@@ -68,6 +76,7 @@ function* practicePlansSaga() {
     yield takeLatest("ADD_PLAN_AND_EVENT", addPlanAndEvent);
     yield takeLatest("ADD_PLAN", addPlan);
     yield takeLatest("EDIT_PLAN", editPlan);
+    yield takeLatest("EDIT_PLAN_PIECE");
     yield takeLatest("DELETE_PLAN", deletePlan);
 }
 
