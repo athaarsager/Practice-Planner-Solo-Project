@@ -72,7 +72,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     const addPracticePlan = () => {
         console.log("In add Practice Plan. This is the editedEvent:", editedEvent);
         console.log("In add Practice Plan. This is the selectedEvent:", selectedEvent);
-        dispatch( {type: "SET_SELECTED_PIECE", payload:{id: selectedEvent.piece_id, title: editedEvent.title} });
+        dispatch( {type: "SET_SELECTED_PIECE", payload:{id: selectedEvent.piece_id, title: editedEvent.title, event_exists: true} });
         history.push(`/${selectedEvent.piece_id}/practice_entries/new_plan`);
     }
 

@@ -57,10 +57,12 @@ function NewPracticePlan() {
                 <input id="plan" name="plan" type="text" placeholder="Your Answer Here" size="100" value={responses.plan} onChange={handleChange} /><br />
                 <label htmlFor="goal">What is your goal for the end of the practice session? e.g. runs without mistakes, target metronome marking, etc.</label><br />
                 <input id="goal" name="goal" type="text" placeholder="Your Answer Here" size="100" value={responses.goal} onChange={handleChange} /><br />
+                {!selectedPiece.event_exists &&
                 <div>
                     <p>Create Calendar Event? Optional</p>
                     <button type="button" onClick={() => setAddNewEventIsOpen(true)}>Yes</button>
                 </div>
+                    }
                 <button type="button" onClick={() => history.goBack()}>Cancel</button>
                 <button type="submit">Finish Plan!</button>
             </form>
