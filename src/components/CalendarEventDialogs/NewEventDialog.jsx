@@ -98,8 +98,8 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
                     <input id="start" name="start" type="time" value={newEvent.start} onChange={handleChange} /><br />
                     <label htmlFor="end">End</label><br />
                     <input id="end" name="end" type="time" value={newEvent.end} onChange={handleChange} /><br />
-                    <input type="submit" />
                     <button type="button" onClick={() => closeNewEvent()}>Cancel</button>
+                    <input type="submit" />
                 </form>
             </dialog>
 
