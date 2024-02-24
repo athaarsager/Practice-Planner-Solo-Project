@@ -82,7 +82,7 @@ function* deletePlan(action) {
 function* practicePlansSaga() {
     yield takeLatest("FETCH_PLANS", fetchPlans);
     yield takeLatest("FETCH_SELECTED_PLAN", fetchSelectedPlan);
-    yield takeLatests("ADD_PLAN_FOR_EXISTING_EVENT", addPlanForExistingEvent);
+    yield takeLatest("ADD_PLAN_FOR_EXISTING_EVENT", addPlanForExistingEvent);
     yield takeLatest("ADD_PLAN_AND_EVENT", addPlanAndEvent);
     yield takeLatest("ADD_PLAN", addPlan);
     yield takeLatest("EDIT_PLAN", editPlan);

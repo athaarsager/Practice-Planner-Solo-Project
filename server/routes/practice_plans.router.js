@@ -57,7 +57,7 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 });
 
 // Post new practice plan and retrieve id so can update associated calendar event
-router.post("/", rejectUnauthenticated, (req, res) => {
+router.post("/existing_event", rejectUnauthenticated, (req, res) => {
     const piece = req.body;
     const queryText = `
     INSERT INTO "practice_plans" ("piece_id", "section", "problems", "plan", "goal")
@@ -67,6 +67,8 @@ router.post("/", rejectUnauthenticated, (req, res) => {
     pool.query(queryText, [piece.piece_id, piece.section, piece.problems, piece.plan, piece.goal])
         .then((result) => {
             const planId = result.rows[0].id;
+            console.log("This is result.rows:", result.rows);
+            console.log("This is the result.rows[0].id:", planId);
             const newQueryText = `
         UPDATE "calendar_events" SET "practice_plan_id" = $1
         WHERE "id" = $2;
@@ -76,9 +78,11 @@ router.post("/", rejectUnauthenticated, (req, res) => {
                     res.sendStatus(201);
                 }).catch((error) => {
                     console.log("ERROR in setting calendar_event plan id:", error);
+                    res.sendStatus(500);
                 });
         }).catch((error) => {
             console.log("ERROR in practice_plans POST and retrieving id:", error);
+            res.sendStatus(500);
         });
 });
 
