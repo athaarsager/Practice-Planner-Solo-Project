@@ -35,6 +35,9 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
 
     }
 
+    // check if editedEvent.title === selectedEvent.title
+    // if different, check if selectedEvent had a plan_id.
+    // if it did, send off a PUT request to change the piece_id to the new piece_id
     const submitEdits = (e) => {
         e.preventDefault();
         const payload = {
@@ -59,6 +62,11 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     const deleteEvent = () => {
         dispatch({ type: "DELETE_CALENDAR_EVENT", payload: selectedEvent.id });
         closeEditedEvent();
+    }
+
+    const addPracticePlan = () => {
+        console.log("In add Practice Plan. This is the editedEvent:", editedEvent);
+        console.log("In add Practice Plan. This is the selectedEvent:", selectedEvent);
     }
 
     // This function may or may not be necessary in the final version
@@ -94,7 +102,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
             });
 
             console.log("In use effect. selectedEvent piece_id is:", selectedEvent.piece_id);
-            console.log("This is the edited event:", editedEvent);
+            console.log("This is the selectedEvent:", selectedEvent);
         }
 
     }, [selectedEvent]); // Need to put selectedEvent here so it actually displays in dialog. Page must not load with it yet?
@@ -105,7 +113,6 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                 <form onSubmit={submitEdits}>
                     <label htmlFor="title">Piece</label><br />
                     <select name="title" id="title" value={selectedEvent.title} onChange={handleChange}>
-                        <option value="" disabled hidden>Select Piece</option>
                         {pieces.map(piece => (
                             <option key={piece.id} value={piece.title}>{piece.title}</option>
                         ))}
@@ -121,7 +128,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                     <button type="submit">Submit Changes</button>
                     {selectedEvent.practice_plan_id ?
                         <button type="button">Go to Practice Plan</button> :
-                        <button type="button" onClick={() => history.push(`/${pieceId}/practice_entries/new_plan`)}>Add Practice Plan</button>
+                        <button type="button" onClick={addPracticePlan}>Add Practice Plan</button>
                     }
                 </form>
             </dialog>

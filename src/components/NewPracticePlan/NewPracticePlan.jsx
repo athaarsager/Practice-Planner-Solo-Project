@@ -45,7 +45,7 @@ function NewPracticePlan() {
 
     return (
         <>
-            <h1>New Practice Plan</h1>
+            <h1>New Practice Plan for {selectedPiece.title}</h1>
             {/* Use css to inrease size of inputs. Also see what MUI provides */}
             <form onSubmit={submitPlan}>
                 <label htmlFor="section">What section are you working on?</label><br />
