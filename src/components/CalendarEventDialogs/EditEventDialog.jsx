@@ -77,9 +77,6 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     }
 
     const goToPracticePlan = () => {
-        console.log(selectedEvent);
-        console.log("This is the piece id:", selectedEvent.piece_id);
-        console.log("This is the plan_id:", selectedEvent.plan_id);
         history.push(`/${selectedEvent.piece_id}/practice_entries/review_plan/${selectedEvent.practice_plan_id}`);
     }
 
