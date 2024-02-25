@@ -6,7 +6,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const selectedEvent = useSelector(store => store.selectedEvent);
-    console.log("This is the selected event:", JSON.stringify(selectedEvent));
+    const pieces = useSelector(store => store.pieces);
     // Don't use startTime and endTime because those create a recurring event
     const [editedEvent, setEditedEvent] = useState({
         title: selectedEvent.title,
@@ -15,6 +15,8 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
         start: selectedEvent.start,
         end: selectedEvent.end
     });
+
+    const [pieceId, setPieceId] = useState("");
 
     // event object can contain keys such as the following (more can be found at: https://fullcalendar.io/docs/event-parsing ):
     // {
@@ -33,6 +35,9 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
 
     }
 
+    // check if editedEvent.title === selectedEvent.title
+    // if different, check if selectedEvent had a plan_id.
+    // if it did, send off a PUT request to change the piece_id to the new piece_id
     const submitEdits = (e) => {
         e.preventDefault();
         const payload = {
@@ -41,6 +46,13 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
             date: editedEvent.date,
             start: editedEvent.date + "T" + editedEvent.start,
             end: editedEvent.date + "T" + editedEvent.end
+        }
+
+        if (editedEvent.title !== selectedEvent.title && selectedEvent.piece_id) {
+            console.log("This is the editedEvent's title:", editedEvent.title);
+            console.log("This is the selectedEvent's title:", selectedEvent.title);
+            // Need to do a GET, first?
+            dispatch({ type: "EDIT_PLAN_PIECE", payload: selectedEvent.practice_plan_id });
         }
 
         dispatch({ type: "EDIT_CALENDAR_EVENT", payload });
@@ -57,6 +69,15 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     const deleteEvent = () => {
         dispatch({ type: "DELETE_CALENDAR_EVENT", payload: selectedEvent.id });
         closeEditedEvent();
+    }
+
+    const addPracticePlan = () => {
+        dispatch( {type: "SET_SELECTED_PIECE", payload:{id: selectedEvent.piece_id, title: editedEvent.title, event_exists: true, event_id: selectedEvent.id} });
+        history.push(`/${selectedEvent.piece_id}/practice_entries/new_plan`);
+    }
+
+    const goToPracticePlan = () => {
+        history.push(`/${selectedEvent.piece_id}/practice_entries/review_plan/${selectedEvent.practice_plan_id}`);
     }
 
     // This function may or may not be necessary in the final version
@@ -84,13 +105,14 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
 
             setEditedEvent({
                 id: selectedEvent.id,
+                piece_id: selectedEvent.piece_id,
                 title: selectedEvent.title,
                 date: selectedEvent ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "",
                 start: formatTime(selectedEvent.start),
                 end: formatTime(selectedEvent.end)
             });
         }
-
+        console.log("This is the selectedEvent:", selectedEvent);
     }, [selectedEvent]); // Need to put selectedEvent here so it actually displays in dialog. Page must not load with it yet?
 
     return (
@@ -98,20 +120,23 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
             <dialog open={open} onClose={closeEditedEvent}>
                 <form onSubmit={submitEdits}>
                     <label htmlFor="title">Piece</label><br />
-                    {/* Need to make this a dropdown */}
-                    <input id="title" name="title" type="text" placeholder="Piece to Practice" value={editedEvent.title} onChange={handleChange} /><br />
-                    {/* May want to always render an input for date so it can be changed */}
+                    <select name="title" id="title" value={editedEvent.title} onChange={handleChange}>
+                        {pieces.map(piece => (
+                            <option key={piece.id} value={piece.title}>{piece.title}</option>
+                        ))}
+                    </select><br />
                     <label htmlFor="date">Date</label><br />
                     <input id="date" name="date" type="date" value={editedEvent.date} onChange={handleChange} /><br />
                     <label htmlFor="start">Start</label><br />
                     <input id="start" name="start" type="time" value={editedEvent.start} onChange={handleChange} /><br />
                     <label htmlFor="end">End</label><br />
                     <input id="end" name="end" type="time" value={editedEvent.end} onChange={handleChange} /><br />
-                    <button type="submit">Submit Changes</button>
+                    <button type="button" onClick={closeEditedEvent}>Cancel</button>
                     <button onClick={deleteEvent} type="button">Delete Event</button>
+                    <button type="submit">Submit Changes</button>
                     {selectedEvent.practice_plan_id ?
-                        <button type="button">Go to Practice Plan</button> :
-                        <button type="button">Add Practice Plan</button>
+                        <button type="button" onClick={goToPracticePlan}>Go to Practice Plan</button> :
+                        <button type="button" onClick={addPracticePlan}>Add Practice Plan</button>
                     }
                 </form>
             </dialog>

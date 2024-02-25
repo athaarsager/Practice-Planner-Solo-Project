@@ -59,15 +59,20 @@ CREATE TABLE "practice_recordings" (
 );
 
 
-CREATE TABLE "calendar_events" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"title" varchar NOT NULL,
-	"date" date NOT NULL,
-	"start" timestamp NOT NULL,
-	"end" timestamp NOT NULL,
-	"user_id" integer  REFERENCES "users" ("id") ON DELETE CASCADE NOT NULL,
-	"practice_plan_id" integer REFERENCES "practice_plans" ("id") ON DELETE CASCADE
+CREATE TABLE calendar_events (
+    id SERIAL PRIMARY KEY,
+    title character varying NOT NULL,
+    date date NOT NULL,
+    start timestamp without time zone NOT NULL,
+    "end" timestamp without time zone NOT NULL,
+    user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    practice_plan_id integer REFERENCES practice_plans(id) ON DELETE CASCADE,
+    piece_id integer NOT NULL REFERENCES pieces(id) ON DELETE CASCADE
 );
+
+-- Indices -------------------------------------------------------
+
+CREATE UNIQUE INDEX calendar_events_pkey ON calendar_events(id int4_ops);
 
 
 

@@ -33,7 +33,11 @@ function NewPracticePlan() {
 
     const submitPlan = (e) => {
         e.preventDefault();
+        if (selectedPiece.event_exists === true) {
+            dispatch({ type: "ADD_PLAN_FOR_EXISTING_EVENT", payload: {...responses, event_id: selectedPiece.event_id}});
+        } else {
         dispatch({ type: "ADD_PLAN", payload: responses });
+        }
         history.goBack();
     }
 
@@ -41,11 +45,12 @@ function NewPracticePlan() {
         if (newPlanProblems !== "") {
             setResponses((state) => ({ ...state, problems: newPlanProblems}));
         }
-    }, [newPlanProblems])
+        console.log("In NewPracticePlan.jsx. This is the selectedPiece:", selectedPiece);
+    }, [newPlanProblems]);
 
     return (
         <>
-            <h1>New Practice Plan</h1>
+            <h1>New Practice Plan for {selectedPiece.title}</h1>
             {/* Use css to inrease size of inputs. Also see what MUI provides */}
             <form onSubmit={submitPlan}>
                 <label htmlFor="section">What section are you working on?</label><br />
@@ -56,10 +61,12 @@ function NewPracticePlan() {
                 <input id="plan" name="plan" type="text" placeholder="Your Answer Here" size="100" value={responses.plan} onChange={handleChange} /><br />
                 <label htmlFor="goal">What is your goal for the end of the practice session? e.g. runs without mistakes, target metronome marking, etc.</label><br />
                 <input id="goal" name="goal" type="text" placeholder="Your Answer Here" size="100" value={responses.goal} onChange={handleChange} /><br />
+                {!selectedPiece.event_exists &&
                 <div>
                     <p>Create Calendar Event? Optional</p>
                     <button type="button" onClick={() => setAddNewEventIsOpen(true)}>Yes</button>
                 </div>
+                    }
                 <button type="button" onClick={() => history.goBack()}>Cancel</button>
                 <button type="submit">Finish Plan!</button>
             </form>

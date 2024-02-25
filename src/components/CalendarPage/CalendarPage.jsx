@@ -55,6 +55,8 @@ export default function CalendarPage() {
                 .changeView("dayGridMonth");
             setDayView(false);
             // dispatch({ type: "RESET_SELECTED_DATE" });
+            setAddNewEventIsOpen(false);
+            setEditEventIsOpen(false);
         } else {
             calendarRef.current
                 .getApi()
@@ -70,7 +72,7 @@ export default function CalendarPage() {
     useEffect(() => {
         dispatch({ type: "FETCH_CALENDAR_EVENTS" });
         dispatch({ type: "CLEAR_SELECTED_PIECE"});
-        console.log("This is the selected piece:", selectedPiece);
+        dispatch({ type: "FETCH_PIECES" }); // Need to do this so that the dropdowns in the dialogs load correctly even on refresh
     }, []);
 
     return (
