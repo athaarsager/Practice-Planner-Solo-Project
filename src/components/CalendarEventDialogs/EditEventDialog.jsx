@@ -72,10 +72,15 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     }
 
     const addPracticePlan = () => {
-        console.log("In add Practice Plan. This is the editedEvent:", editedEvent);
-        console.log("In add Practice Plan. This is the selectedEvent:", selectedEvent);
         dispatch( {type: "SET_SELECTED_PIECE", payload:{id: selectedEvent.piece_id, title: editedEvent.title, event_exists: true, event_id: selectedEvent.id} });
         history.push(`/${selectedEvent.piece_id}/practice_entries/new_plan`);
+    }
+
+    const goToPracticePlan = () => {
+        console.log(selectedEvent);
+        console.log("This is the piece id:", selectedEvent.piece_id);
+        console.log("This is the plan_id:", selectedEvent.plan_id);
+        history.push(`/${selectedEvent.piece_id}/practice_entries/review_plan/${selectedEvent.practice_plan_id}`);
     }
 
     // This function may or may not be necessary in the final version
@@ -133,7 +138,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                     <button onClick={deleteEvent} type="button">Delete Event</button>
                     <button type="submit">Submit Changes</button>
                     {selectedEvent.practice_plan_id ?
-                        <button type="button">Go to Practice Plan</button> :
+                        <button type="button" onClick={goToPracticePlan}>Go to Practice Plan</button> :
                         <button type="button" onClick={addPracticePlan}>Add Practice Plan</button>
                     }
                 </form>

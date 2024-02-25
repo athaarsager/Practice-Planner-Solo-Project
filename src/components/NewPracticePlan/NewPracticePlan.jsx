@@ -33,16 +33,9 @@ function NewPracticePlan() {
 
     const submitPlan = (e) => {
         e.preventDefault();
-        alert(JSON.stringify(selectedPiece));
-        // This if is not being hit for some reason...
         if (selectedPiece.event_exists === true) {
-            // selectedPiece.event_id
-            // payload = {...responses, event_id: selectedPiece.event_id}
-            alert("in submitPlan if!");
             dispatch({ type: "ADD_PLAN_FOR_EXISTING_EVENT", payload: {...responses, event_id: selectedPiece.event_id}});
         } else {
-            alert(`This is the value of selectedPiece.even_exists: ${selectedPiece.event_exists}`);
-            alert(`This is the selectedPiece: ${JSON.stringify(selectedPiece)}`);
         dispatch({ type: "ADD_PLAN", payload: responses });
         }
         history.goBack();
