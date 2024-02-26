@@ -63,8 +63,12 @@ function* editPlan(action) {
 
 function* editPlanPiece(action) {
     try {
-        const planResponse = yield axios.get(`/api/practice_plans/plan/${action.payload}`);
-        yield axios.put(`/api/practice_plans/change_piece/${action.payload.plan_id}`, planResponse.data[0].piece_id);
+        // This is grabbing the old piece id, not the new one
+        // need to dispatch to pieces to get piece_id first
+       console.log("This is the payload I am sending to the server:", action.payload); 
+       console.log("This is the new_piece_id:", action.payload.new_piece_title);
+ 
+        yield axios.put(`/api/practice_plans/change_piece/${action.payload.plan_id}`, {new_piece_title: action.payload.new_piece_title});
     } catch (error) {
         console.error("ERROR in editPlanPiece saga:", error);
     }

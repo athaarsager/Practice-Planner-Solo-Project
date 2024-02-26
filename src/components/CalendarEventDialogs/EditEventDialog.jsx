@@ -53,7 +53,9 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
             console.log("This is the editedEvent's title:", editedEvent.title);
             console.log("This is the selectedEvent's title:", selectedEvent.title);
             // Need to do a GET, first?
-            dispatch({ type: "EDIT_PLAN_PIECE", payload: selectedEvent.practice_plan_id });
+            // Need to send over new piece id
+            console.log("This is the payload I'm sending to update piece name:",);
+            dispatch({ type: "EDIT_PLAN_PIECE", payload: { new_piece_title: editedEvent.title, plan_id: selectedEvent.practice_plan_id } });
         }
 
         dispatch({ type: "EDIT_CALENDAR_EVENT", payload });
@@ -97,6 +99,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     }
 
     const goToPracticePlan = () => {
+        dispatch({ type: "SET_SELECTED_PIECE", payload: { id: selectedEvent.piece_id, title: editedEvent.title, event_exists: true, event_id: selectedEvent.id } });
         history.push(`/${selectedEvent.piece_id}/practice_entries/review_plan/${selectedEvent.practice_plan_id}`);
     }
 
