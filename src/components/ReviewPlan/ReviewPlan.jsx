@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 function ReviewPlan() {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -10,8 +11,26 @@ function ReviewPlan() {
     const selectedPiece = useSelector(store => store.selectedPiece);
 
     const deletePlan = (e) => {
-        dispatch({ type: "DELETE_PLAN", payload: {planId: e.target.dataset.planid, pieceId } });
-        history.goBack();
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch({ type: "DELETE_PLAN", payload: { planId: e.target.dataset.planid, pieceId } });
+                history.goBack();
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your practice plan has been deleted.",
+                    icon: "success"
+                });
+            }
+        });
+
     }
 
     useEffect(() => {
