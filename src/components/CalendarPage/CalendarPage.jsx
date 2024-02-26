@@ -73,6 +73,7 @@ export default function CalendarPage() {
         dispatch({ type: "FETCH_CALENDAR_EVENTS" });
         dispatch({ type: "CLEAR_SELECTED_PIECE"});
         dispatch({ type: "FETCH_PIECES" }); // Need to do this so that the dropdowns in the dialogs load correctly even on refresh
+        // Run function here for maintaining dayview?
     }, []);
 
     return (
