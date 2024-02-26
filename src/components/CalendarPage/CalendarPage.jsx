@@ -16,6 +16,8 @@ export default function CalendarPage() {
     const dispatch = useDispatch();
     const history = useHistory();
     const selectedPiece = useSelector(store => store.selectedPiece);
+    const calendarDateInfo = useSelector(store => store.calendarDateInfo);
+    const dayView = useSelector(store => store.dayView);
     const responses = {};
 
     const [selectedDate, setSelectedDate] = useState("");
@@ -24,7 +26,7 @@ export default function CalendarPage() {
     // create reference here. Set it to FullCalendar component (once it's rendered) by passing it to the component as a prop
     const calendarRef = useRef(null);
 
-    const [dayView, setDayView] = useState(false);
+    //const [dayView, setDayView] = useState(false);
 
     const [addNewEventIsOpen, setAddNewEventIsOpen] = useState(false);
 
@@ -53,19 +55,32 @@ export default function CalendarPage() {
             calendarRef.current
                 .getApi()
                 .changeView("dayGridMonth");
-            setDayView(false);
-            // dispatch({ type: "RESET_SELECTED_DATE" });
+            dispatch({ type: "UNSET_TO_DAYVIEW" });
+            dispatch({ type: "CLEAR_CALENDAR_DATE_INFO" });
             setAddNewEventIsOpen(false);
             setEditEventIsOpen(false);
         } else {
             calendarRef.current
                 .getApi()
                 .changeView("timeGridDay", dateClickInfo.date);
-            setDayView(true);
+            dispatch({ type: "SET_TO_DAYVIEW" });
+            dispatch({ type: "SET_CALENDAR_DATE_INFO", payload: dateClickInfo });
+            // set dateClickInfo in store here!
             // Have to do some weird formatting here for the data
             // dispatch({ type: "SET_SELECTED_DATE", payload: JSON.stringify(dateClickInfo.dateStr).substring(1, 11)});
             setSelectedDate(JSON.stringify(dateClickInfo.dateStr).substring(1, 11));
         }
+    }
+
+    const goToCalendarDay = (dayView, dateInfo) => {
+        if (!dayView) {
+            return;
+        }
+        console.log("This is the dateInfo:", dateInfo);
+        calendarRef.current
+        .getApi()
+        .changeView("timeGridDay", dateInfo.date);
+        setSelectedDate(JSON.stringify(dateInfo.dateStr).substring(1, 11));
     }
 
     // need to GET all the calendar events on page load
@@ -73,8 +88,12 @@ export default function CalendarPage() {
         dispatch({ type: "FETCH_CALENDAR_EVENTS" });
         dispatch({ type: "CLEAR_SELECTED_PIECE"});
         dispatch({ type: "FETCH_PIECES" }); // Need to do this so that the dropdowns in the dialogs load correctly even on refresh
+        console.log("This is the value of dayView:", dayView);
         // Run function here for maintaining dayview?
-    }, []);
+        // Need to store dateClickInfo.date AND dayview
+        goToCalendarDay(dayView, calendarDateInfo);
+        // clear it when submitting practice plan?
+    }, [dayView]);
 
     return (
         // Calendar will always take up its entire container width 
@@ -85,7 +104,7 @@ export default function CalendarPage() {
             <FullCalendar
                 ref={calendarRef}
                 plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                initialView="dayGridMonth"
+                initialView={dayView ? "timeGridDay" : "dayGridMonth"}
                 events={calendarEvents}
                 eventClick={viewEventDetails}
                 // making the time display false here because it messes up the display if the event is on a Saturday

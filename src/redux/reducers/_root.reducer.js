@@ -12,7 +12,9 @@ import calendarEvents from './calendarEvents.reducer';
 import selectedEvent from './selectedEvent.reducer';
 import selectedPiece from './selectedPiece.reducer';
 import selectedReflection from './selectedReflection.reducer';
-import newPlanProblems from './newPlanProblems.reducer'
+import newPlanProblems from './newPlanProblems.reducer';
+import calendarDateInfo from './calendarDateInfo.reducer';
+import dayView from './dayView.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -34,7 +36,9 @@ const rootReducer = combineReducers({
   latestPracticeRecording,
   calendarEvents,
   selectedEvent,
-  newPlanProblems
+  newPlanProblems,
+  calendarDateInfo,
+  dayView
 });
 
 export default rootReducer;
