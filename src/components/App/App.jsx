@@ -112,7 +112,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect them to the /dashboard page
-              <Redirect to="/dashboard'pieces" />
+              <Redirect to="/dashboard/pieces" />
               :
               // Otherwise, show the Landing page
               <LandingPage />
