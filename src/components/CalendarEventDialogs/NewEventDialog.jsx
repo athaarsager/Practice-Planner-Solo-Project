@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Swal from "sweetalert2";
 
 function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     const history = useHistory();

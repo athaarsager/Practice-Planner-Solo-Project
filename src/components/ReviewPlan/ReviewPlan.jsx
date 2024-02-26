@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import NewEventDialog from "../CalendarEventDialogs/NewEventDialog";
 import Swal from "sweetalert2";
 function ReviewPlan() {
     const dispatch = useDispatch();
@@ -9,6 +10,11 @@ function ReviewPlan() {
     const pieceId = useParams().id;
     const selectedPlan = useSelector(store => store.selectedPlan);
     const selectedPiece = useSelector(store => store.selectedPiece);
+    const [addNewEventIsOpen, setAddNewEventIsOpen] = useState(false);
+    const closeNewEvent = () => setAddNewEventIsOpen(false);
+    const onPracticePlanScreen = true; // Technically this is the review page, but this variable controls the functionality I want
+    const selectedDate = "";
+    const responses = {};
 
     const deletePlan = (e) => {
         Swal.fire({
@@ -36,6 +42,7 @@ function ReviewPlan() {
     useEffect(() => {
         dispatch({ type: "FETCH_SELECTED_PLAN", payload: planId });
         console.log("This is the selectedPlan:", selectedPlan);
+        // Need to reach out to a saga and/or route and check if the selected plan has a calendar event associated with it
     }, []);
 
     return (
@@ -52,7 +59,10 @@ function ReviewPlan() {
             <button onClick={() => history.goBack()}>Back</button>
             <button data-planid={selectedPlan.id} onClick={deletePlan}>Delete Plan</button>
             <button onClick={() => history.push(`/${pieceId}/practice_entries/review_plan/${planId}/edit`)}>Edit Plan</button>
-
+            {!selectedPlan.calendar_event_id &&
+                <button onClick={() => setAddNewEventIsOpen(true)}>Add Calendar Event</button>
+            }
+            <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} onPracticePlanScreen={onPracticePlanScreen} responses={responses} />
 
         </div>
     );
