@@ -8,6 +8,7 @@ function PracticeEntries() {
     const dispatch = useDispatch();
     const history = useHistory();
     const plans = useSelector(store => store.plans);
+    const selectedPiece = useSelector(store => store.selectedPiece);
     const pieceId = useParams().id;
 
     const goToEditPage = (e) => {
@@ -16,12 +17,13 @@ function PracticeEntries() {
     }
 
     useEffect(() => {
+        console.log("This is the selected piece:", selectedPiece);
         dispatch({ type: "FETCH_PLANS", payload: pieceId });
     }, []);
 
     return (
         <>
-            <h2>Practice Plans</h2>
+            <h2>Your Practice Plans for {selectedPiece.title}</h2>
             <button onClick={() => history.push(`/${pieceId}/practice_entries/new_plan`)}>Add a New Practice Plan!</button>
             {plans.map(plan => (
                 <div key={plan.id}>
