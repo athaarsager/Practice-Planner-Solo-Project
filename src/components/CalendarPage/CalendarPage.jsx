@@ -20,6 +20,7 @@ export default function CalendarPage() {
     const dayView = useSelector(store => store.dayView);
     const responses = {};
 
+    // It appears I do still use the selectedDate object as deleting it breaks everything. So...don't touch!
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedEvent, setSelectedEvent] = useState({});
 
@@ -64,19 +65,21 @@ export default function CalendarPage() {
                 .getApi()
                 .changeView("timeGridDay", dateClickInfo.date);
             dispatch({ type: "SET_TO_DAYVIEW" });
-            dispatch({ type: "SET_CALENDAR_DATE_INFO", payload: dateClickInfo });
             // set dateClickInfo in store here!
+            dispatch({ type: "SET_CALENDAR_DATE_INFO", payload: dateClickInfo });
+            
             // Have to do some weird formatting here for the data
-            // dispatch({ type: "SET_SELECTED_DATE", payload: JSON.stringify(dateClickInfo.dateStr).substring(1, 11)});
-            setSelectedDate(JSON.stringify(dateClickInfo.dateStr).substring(1, 11));
+            dispatch({ type: "SET_SELECTED_DATE", payload: JSON.stringify(dateClickInfo.dateStr).substring(1, 11)});
+            //setSelectedDate(JSON.stringify(dateClickInfo.dateStr).substring(1, 11));
         }
     }
 
     const goToCalendarDay = (dayView, dateInfo) => {
         if (!dayView) {
             return;
-        }
+        } // since this always runs on page start, need to make sure it returns immediately if dayView is false
         console.log("This is the dateInfo:", dateInfo);
+        // remember, dateInfo is equal to the dateClickInfo object as that is what I am feeding this function
         calendarRef.current
         .getApi()
         .changeView("timeGridDay", dateInfo.date);
@@ -89,11 +92,9 @@ export default function CalendarPage() {
         dispatch({ type: "CLEAR_SELECTED_PIECE"});
         dispatch({ type: "FETCH_PIECES" }); // Need to do this so that the dropdowns in the dialogs load correctly even on refresh
         console.log("This is the value of dayView:", dayView);
-        // Run function here for maintaining dayview?
-        // Need to store dateClickInfo.date AND dayview
+        // calendarDateInfo is the inputDate, which is equal to the dateClickInfo
         goToCalendarDay(dayView, calendarDateInfo);
-        // clear it when submitting practice plan?
-    }, [dayView]);
+    }, [dayView]); // update page based on value of dayView
 
     return (
         // Calendar will always take up its entire container width 
