@@ -28,10 +28,6 @@ function Nav() {
               Dashboard
             </Link>
 
-            <Link className="navLink" to="/info">
-              Info Page
-            </Link>
-
             <LogOutButton className="navLink" />
           </>
         )}
