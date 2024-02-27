@@ -1,0 +1,18 @@
+:root {
+    --fc-daygrid-event-dot-width: 5px;
+}
+
+.calendar-container {
+    width: 80vh;
+}
+
+.container-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fc .fc-daygrid-event {
+    font-size: 10px;
+    text-wrap: wrap;
+}

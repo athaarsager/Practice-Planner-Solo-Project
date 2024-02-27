@@ -10,6 +10,9 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import DashboardFooter from '../DashboardFooter/DashboardFooter';
 import NewEventDialog from '../CalendarEventDialogs/NewEventDialog';
 import EditEventDialog from '../CalendarEventDialogs/EditEventDialog';
+import "./CalendarPage.css"
+import Box from "@mui/material/Box";
+
 
 
 export default function CalendarPage() {
@@ -47,7 +50,7 @@ export default function CalendarPage() {
         // Then will useHistory here to push to the EditEvent component
         // Will then put the showModal in the useEffect of EditEvent
         setEditEventIsOpen(true);
-        
+
     }
 
     const switchView = dateClickInfo => {
@@ -67,9 +70,9 @@ export default function CalendarPage() {
             dispatch({ type: "SET_TO_DAYVIEW" });
             // set dateClickInfo in store here!
             dispatch({ type: "SET_CALENDAR_DATE_INFO", payload: dateClickInfo });
-            
+
             // Have to do some weird formatting here for the data
-            dispatch({ type: "SET_SELECTED_DATE", payload: JSON.stringify(dateClickInfo.dateStr).substring(1, 11)});
+            dispatch({ type: "SET_SELECTED_DATE", payload: JSON.stringify(dateClickInfo.dateStr).substring(1, 11) });
             //setSelectedDate(JSON.stringify(dateClickInfo.dateStr).substring(1, 11));
         }
     }
@@ -81,8 +84,8 @@ export default function CalendarPage() {
         console.log("This is the dateInfo:", dateInfo);
         // remember, dateInfo is equal to the dateClickInfo object as that is what I am feeding this function
         calendarRef.current
-        .getApi()
-        .changeView("timeGridDay", dateInfo.date);
+            .getApi()
+            .changeView("timeGridDay", dateInfo.date);
         setSelectedDate(JSON.stringify(dateInfo.dateStr).substring(1, 11));
         console.log("This is the dateClickInfo:", dateInfo);
     }
@@ -90,7 +93,7 @@ export default function CalendarPage() {
     // need to GET all the calendar events on page load
     useEffect(() => {
         dispatch({ type: "FETCH_CALENDAR_EVENTS" });
-        dispatch({ type: "CLEAR_SELECTED_PIECE"});
+        dispatch({ type: "CLEAR_SELECTED_PIECE" });
         dispatch({ type: "FETCH_PIECES" }); // Need to do this so that the dropdowns in the dialogs load correctly even on refresh
         console.log("This is the value of dayView:", dayView);
         // calendarDateInfo is the inputDate, which is equal to the dateClickInfo
@@ -102,36 +105,38 @@ export default function CalendarPage() {
         // Can manually set height via props
         // Can also use aspectRatio to adjust height
         // Apparently you don't even need to re-size the height if you have the width selected
-        <div className="calendar-container">
-            <FullCalendar
-                ref={calendarRef}
-                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                initialView={dayView ? "timeGridDay" : "dayGridMonth"}
-                events={calendarEvents}
-                eventClick={viewEventDetails}
-                // making the time display false here because it messes up the display if the event is on a Saturday
-                // user will click event to view time
-                displayEventTime={false}
-                dateClick={switchView}
-                // Creates custom button that I can use to toggle calendar view
-                // has clearer text than the built-in button and lets me toggle the boolean used for conditional rendering
-                customButtons={{
-                    viewButton: {
-                        text: "Full Calendar",
-                        click: switchView
+        <Box display="flex" flexDirection="column" alignItems="center">
+            <div className="calendar-container">
+                <FullCalendar
+                    ref={calendarRef}
+                    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                    initialView={dayView ? "timeGridDay" : "dayGridMonth"}
+                    events={calendarEvents}
+                    eventClick={viewEventDetails}
+                    // making the time display false here because it messes up the display if the event is on a Saturday
+                    // user will click event to view time
+                    displayEventTime={false}
+                    dateClick={switchView}
+                    // Creates custom button that I can use to toggle calendar view
+                    // has clearer text than the built-in button and lets me toggle the boolean used for conditional rendering
+                    customButtons={{
+                        viewButton: {
+                            text: "Full Calendar",
+                            click: switchView
+                        }
+                    }}
+                    // This adds the view navigation buttons
+                    headerToolbar={dayView ?
+                        { center: "viewButton" } :
+                        {}
                     }
-                }}
-                // This adds the view navigation buttons
-                headerToolbar={dayView ?
-                    { center: "viewButton" } :
-                    {}
-                }
-            />
-            {dayView && <button onClick={() => setAddNewEventIsOpen(true)}>Schedule a Practice Session</button>}
+                />
+                {dayView && <button onClick={() => setAddNewEventIsOpen(true)}>Schedule a Practice Session</button>}
+                <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} responses={responses} />
+                <EditEventDialog open={editEventIsOpen} closeEditedEvent={closeEditedEvent} selectedDate={selectedDate} />
+            </div>
             <DashboardFooter />
-            <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} responses={responses} />
-            <EditEventDialog open={editEventIsOpen} closeEditedEvent={closeEditedEvent} selectedDate={selectedDate} />
-        </div>
+        </Box>
     );
 
 }
