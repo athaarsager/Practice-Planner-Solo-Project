@@ -10,6 +10,7 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     // Don't use startTime and endTime because those create a recurring event
     const selectedPiece = useSelector(store => store.selectedPiece);
     const pieces = useSelector(store => store.pieces);
+    const selectedPlan = useSelector(store => store.selectedPlan);
 
     const [newEvent, setNewEvent] = useState({
         title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : "",
@@ -39,22 +40,21 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
 
     const addEvent = (e) => {
         e.preventDefault();
-        console.log("This is the newEvent.title:", newEvent.title);
         const payload = {
             title: newEvent.title,
             date: selectedDate ? selectedDate : newEvent.date,
             start: selectedDate ? selectedDate + "T" + newEvent.start : newEvent.date + "T" + newEvent.start,
-            end: selectedDate ? selectedDate + "T" + newEvent.end : newEvent.date + "T" + newEvent.end
+            end: selectedDate ? selectedDate + "T" + newEvent.end : newEvent.date + "T" + newEvent.end,
+            practice_plan_id: selectedPlan ? selectedPlan.id : null
         }
 
-        // Make this all ONE dispatch
+        // For adding plan and event at same time:
         if (Object.keys(responses).length !== 0) {
             dispatch({type: "ADD_PLAN_AND_EVENT", payload: {newPlan: responses, newEvent: payload}});
             closeNewEvent();
             history.goBack();
         } else {
-    
-
+        console.log("This is the payload being sent to the add event saga:", payload);
         dispatch({ type: "ADD_CALENDAR_EVENT", payload });
         setNewEvent({
             title: "",
@@ -62,7 +62,7 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
             start: "",
             end: "",
         });
-
+        // Need something here or on ReviewPlan page to refresh the page on submit so button disappears
         closeNewEvent();
     }
     }

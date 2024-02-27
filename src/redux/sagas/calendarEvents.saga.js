@@ -31,8 +31,6 @@ function* addCalendarEvent(action) {
     }
 }
 
-// Add calendar event for EXISTING Practice Plan
-
 function* editCalendarEvent(action) {
     try {
         console.log("This is the action.payload:", action.payload);

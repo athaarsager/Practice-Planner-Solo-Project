@@ -42,8 +42,7 @@ function ReviewPlan() {
     useEffect(() => {
         dispatch({ type: "FETCH_SELECTED_PLAN", payload: planId });
         console.log("This is the selectedPlan:", selectedPlan);
-        // Need to reach out to a saga and/or route and check if the selected plan has a calendar event associated with it
-    }, []);
+    }, [selectedPlan]);
 
     return (
         <div>
