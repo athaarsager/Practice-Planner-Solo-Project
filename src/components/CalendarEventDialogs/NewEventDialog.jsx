@@ -11,6 +11,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
+
 
 function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     const history = useHistory();
@@ -59,65 +65,67 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
 
         // For adding plan and event at same time:
         if (Object.keys(responses).length !== 0) {
-            dispatch({type: "ADD_PLAN_AND_EVENT", payload: {newPlan: responses, newEvent: payload}});
+            dispatch({ type: "ADD_PLAN_AND_EVENT", payload: { newPlan: responses, newEvent: payload } });
             closeNewEvent();
             history.goBack();
             Swal.fire({
                 title: "Success!",
                 text: "Calendar Event Created!",
                 icon: "success"
-              });
+            });
         } else {
-        console.log("This is the payload being sent to the add event saga:", payload);
-        dispatch({ type: "ADD_CALENDAR_EVENT", payload });
-        setNewEvent({
-            title: "",
-            date: selectedDate ? selectedDate : "",
-            start: "",
-            end: "",
-        });
-        closeNewEvent();
-        Swal.fire({
-            title: "Success!",
-            text: "Calendar Event Created!",
-            icon: "success"
-          });
-    }
+            console.log("This is the payload being sent to the add event saga:", payload);
+            dispatch({ type: "ADD_CALENDAR_EVENT", payload });
+            setNewEvent({
+                title: "",
+                date: selectedDate ? selectedDate : "",
+                start: "",
+                end: "",
+            });
+            closeNewEvent();
+            Swal.fire({
+                title: "Success!",
+                text: "Calendar Event Created!",
+                icon: "success"
+            });
+        }
     }
 
     useEffect(() => {
-        setNewEvent((state) => ({ ...state, title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : ""}));
+        setNewEvent((state) => ({ ...state, title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : "" }));
     }, [selectedPiece]);
 
     return (
         <>
 
             <Dialog open={open}
-             onClose={closeNewEvent}
-             PaperProps={{
-                component: "form",
-                onSubmit: addEvent
-             }}
-             >
+                onClose={closeNewEvent}
+                PaperProps={{
+                    component: "form",
+                    onSubmit: addEvent
+                }}
+            >
                 <DialogContent>
                     <DialogTitle>Add Calendar Event</DialogTitle>
                     <InputLabel id="title-label">Select Piece</InputLabel>
                     {/* <input id="title" name="title" type="text" placeholder="Piece to Practice" value={newEvent.title} onChange={handleChange} /><br /> */}
-                    <Select sx={{minWidth: 200}} size="small" name="title" id="title" labelId="title-label" value={newEvent.title} onChange={handleChange}>
+                    <Select sx={{ minWidth: 200 }} size="small" name="title" id="title" labelId="title-label" value={newEvent.title} onChange={handleChange}>
                         {pieces.map(piece => (
                             <MenuItem key={piece.id} value={piece.title}>{piece.title}</MenuItem>
                         ))}
                     </Select><br />
                     {!selectedDate && <>
-                        <label htmlFor="date">Date</label><br />
-                        <input id="date" name="date" type="date" value={newEvent.date} onChange={handleChange} /><br />
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <InputLabel htmlFor="date">Date</InputLabel><br />
+                            <DatePicker label="Date" id="date" name="date" type="date" value={newEvent.date} onChange={handleChange} /><br />
+                        </LocalizationProvider>
                     </>}
                     <label htmlFor="start">Start</label><br />
                     <input id="start" name="start" type="time" value={newEvent.start} onChange={handleChange} /><br />
                     <label htmlFor="end">End</label><br />
                     <input id="end" name="end" type="time" value={newEvent.end} onChange={handleChange} /><br />
                     <Button type="button" color="warning" onClick={() => closeNewEvent()}>Cancel</Button>
-                    <input type="submit" />
+                    <Button type="submit">Submit</Button>
                 </DialogContent>
             </Dialog>
 
