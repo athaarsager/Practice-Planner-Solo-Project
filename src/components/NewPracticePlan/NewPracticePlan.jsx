@@ -47,6 +47,7 @@ function NewPracticePlan() {
         }
         console.log("In NewPracticePlan.jsx. This is the selectedPiece:", selectedPiece);
         console.log("This is the pieceId:", pieceId);
+        // Would need to make a new GET route for a single piece if I want the piece to be retained on refresh...could be worth it
         return () => dispatch({ type: "CLEAR_NEW_PLAN_PROBLEMS"});
     }, [newPlanProblems]);
 

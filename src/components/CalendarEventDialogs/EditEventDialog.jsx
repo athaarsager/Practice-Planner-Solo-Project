@@ -8,6 +8,14 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
 
 function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     const dispatch = useDispatch();
@@ -40,6 +48,18 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
         // currentInfo is another name for state. maybe just call it state in the future
         setEditedEvent((currentInfo) => ({ ...currentInfo, [name]: value }));
 
+    }
+
+    const handleDateChange = (date) => {
+        setEditedEvent((state) => ({ ...state, date }));
+    }
+
+    const handleStartChange = (time) => {
+        setEditedEvent((state) => ({ ...state, start: time }));
+    }
+
+    const handleEndChange = (time) => {
+        setEditedEvent((state) => ({ ...state, end: time }));
     }
 
     // check if editedEvent.title === selectedEvent.title
@@ -130,46 +150,63 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     useEffect(() => {
 
         if (Object.keys(selectedEvent).length !== 0) {
-
+            console.log("this is the selectedEvent.date:", selectedEvent.date);
+            console.log("this is the value of selectedEvent.start:", selectedEvent.start);
+            console.log("this is the formatted version of selectedEvent.start:", formatTime(selectedEvent.start));
+            console.log("this is the value of selectedEvent.end:", selectedEvent.end);
             setEditedEvent({
                 id: selectedEvent.id,
                 piece_id: selectedEvent.piece_id,
                 title: selectedEvent.title,
-                date: selectedEvent ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "",
-                start: formatTime(selectedEvent.start),
-                end: formatTime(selectedEvent.end)
+                date: dayjs(selectedEvent.date),
+                // date: selectedEvent ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "",
+                start: selectedEvent.start,
+                // start: formatTime(selectedEvent.start),
+                end: selectedEvent.end
+                // end: formatTime(selectedEvent.end)
             });
         }
         console.log("This is the selectedEvent:", selectedEvent);
+        console.log("This is the value of open:", open);
     }, [selectedEvent]); // Need to put selectedEvent here so it actually displays in dialog. Page must not load with it yet?
 
     return (
-        <div>
-            <dialog open={open} onClose={closeEditedEvent}>
-                <form onSubmit={submitEdits}>
-                    <label htmlFor="title">Piece</label><br />
-                    <select name="title" id="title" value={editedEvent.title} onChange={handleChange}>
+        <>
+            <Dialog open={open}
+                onClose={closeEditedEvent}
+                PaperProps={{
+                    component: "form",
+                    onSubmit: submitEdits
+                }}
+            >
+                <DialogContent>
+                    <DialogTitle>Edit Calendar Event</DialogTitle>
+                    <InputLabel htmlFor="title-label">Piece</InputLabel><br />
+                    <Select sx={{ minWidth: 200, mb: 2 }} size="small" name="title" id="title" labelId="title-label" value={editedEvent.title} onChange={handleChange}>
                         {pieces.map(piece => (
-                            <option key={piece.id} value={piece.title}>{piece.title}</option>
+                            <MenuItem key={piece.id} value={piece.title}>{piece.title}</MenuItem>
                         ))}
-                    </select><br />
-                    <label htmlFor="date">Date</label><br />
-                    <input id="date" name="date" type="date" value={editedEvent.date} onChange={handleChange} /><br />
-                    <label htmlFor="start">Start</label><br />
-                    <input id="start" name="start" type="time" value={editedEvent.start} onChange={handleChange} /><br />
-                    <label htmlFor="end">End</label><br />
-                    <input id="end" name="end" type="time" value={editedEvent.end} onChange={handleChange} /><br />
-                    <button type="button" onClick={closeEditedEvent}>Cancel</button>
-                    <button onClick={deleteEvent} type="button">Delete Event</button>
-                    <button type="submit">Submit Changes</button>
+                    </Select><br />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker sx={{ mb: 2 }} slotProps={{ textField: { required: true, name: "date" } }} id="date" name="date" label="Date" type="date" value={editedEvent.date} onChange={handleDateChange} /><br />
+                    </LocalizationProvider>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <TimePicker sx={{ mb: 2 }} slotProps={{ textField: { required: true, name: "start" } }} id="start" name="start" label="Start" type="time" value={editedEvent.start} onChange={handleStartChange} /><br />
+                    </LocalizationProvider>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <TimePicker sx={{ mb: 2 }} slotProps={{ textField: { required: true, name: "end" } }} id="end" name="end" label="End" type="time" value={editedEvent.end} onChange={handleEndChange} /><br />
+                    </LocalizationProvider>
+                    <Button type="button" onClick={closeEditedEvent}>Cancel</Button>
+                    <Button color="error" onClick={deleteEvent} type="button">Delete Event</Button>
+                    <Button type="submit">Submit Changes</Button>
                     {selectedEvent.practice_plan_id ?
-                        <button type="button" onClick={goToPracticePlan}>Go to Practice Plan</button> :
-                        <button type="button" onClick={addPracticePlan}>Add Practice Plan</button>
+                        <Button type="button" onClick={goToPracticePlan}>Go to Practice Plan</Button> :
+                        <Button type="button" onClick={addPracticePlan}>Add Practice Plan</Button>
                     }
-                </form>
-            </dialog>
+                </DialogContent>
+            </Dialog>
 
-        </div>
+        </>
     );
 }
 

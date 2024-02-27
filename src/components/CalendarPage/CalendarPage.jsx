@@ -12,6 +12,7 @@ import NewEventDialog from '../CalendarEventDialogs/NewEventDialog';
 import EditEventDialog from '../CalendarEventDialogs/EditEventDialog';
 import "./CalendarPage.css"
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 
 
@@ -46,9 +47,7 @@ export default function CalendarPage() {
         setSelectedEvent(eventInfo.event.id); // just grab the id from here? eventInfo.event.id?
         // is this even the right action type? What am I trying to do here?
         dispatch({ type: "FETCH_SELECTED_EVENT", payload: parseInt(eventInfo.event.id) });
-        // In final version, the dispatch above will be to a saga
-        // Then will useHistory here to push to the EditEvent component
-        // Will then put the showModal in the useEffect of EditEvent
+       
         setEditEventIsOpen(true);
 
     }
@@ -96,6 +95,7 @@ export default function CalendarPage() {
         dispatch({ type: "CLEAR_SELECTED_PIECE" });
         dispatch({ type: "FETCH_PIECES" }); // Need to do this so that the dropdowns in the dialogs load correctly even on refresh
         console.log("This is the value of dayView:", dayView);
+        console.log("This is the value of editEventIsOpen:", editEventIsOpen);
         // calendarDateInfo is the inputDate, which is equal to the dateClickInfo
         goToCalendarDay(dayView, calendarDateInfo);
     }, [dayView, calendarDateInfo]); // update page based on value of dayView and calendarDateInfo
@@ -131,7 +131,7 @@ export default function CalendarPage() {
                         {}
                     }
                 />
-                {dayView && <button onClick={() => setAddNewEventIsOpen(true)}>Schedule a Practice Session</button>}
+                {dayView && <Button onClick={() => setAddNewEventIsOpen(true)}>Schedule a Practice Session</Button>}
                 <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} responses={responses} />
                 <EditEventDialog open={editEventIsOpen} closeEditedEvent={closeEditedEvent} selectedDate={selectedDate} />
             </Box>
