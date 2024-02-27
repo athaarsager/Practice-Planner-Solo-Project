@@ -27,8 +27,8 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
         title: Object.keys(selectedEvent).length !== 0 ? selectedEvent.title : "",
         // This line seems to be giving me the "component changing from uncontrolled to controlled" warning, but can't figure out what's causing it...
         date: Object.keys(selectedEvent).length !== 0 ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "",
-        start: selectedEvent.start,
-        end: selectedEvent.end
+        start: Object.keys(selectedEvent).length !== 0 ? selectedEvent.start : "",
+        end: Object.keys(selectedEvent).length !== 0 ? selectedEvent.end : ""
     });
 
     const [pieceId, setPieceId] = useState("");
@@ -156,9 +156,9 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                 title: selectedEvent.title,
                 date: dayjs(selectedEvent.date),
                 // date: selectedEvent ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "",
-                start: selectedEvent.start,
+                start: dayjs(selectedEvent.start),
                 // start: formatTime(selectedEvent.start),
-                end: selectedEvent.end
+                end: dayjs(selectedEvent.end)
                 // end: formatTime(selectedEvent.end)
             });
         }
