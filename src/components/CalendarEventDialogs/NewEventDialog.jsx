@@ -8,6 +8,9 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
 
 function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     const history = useHistory();
@@ -87,19 +90,24 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     }, [selectedPiece]);
 
     return (
-        <div>
+        <>
 
-            <dialog open={open} onClose={closeNewEvent}>
-                <form onSubmit={addEvent}>
-                    <label htmlFor="title">Piece</label><br />
-                    {/* Need to make this a dropdown */}
+            <Dialog open={open}
+             onClose={closeNewEvent}
+             PaperProps={{
+                component: "form",
+                onSubmit: addEvent
+             }}
+             >
+                <DialogContent>
+                    <DialogTitle>Add Calendar Event</DialogTitle>
+                    <InputLabel id="title-label">Select Piece</InputLabel>
                     {/* <input id="title" name="title" type="text" placeholder="Piece to Practice" value={newEvent.title} onChange={handleChange} /><br /> */}
-                    <select name="title" id="title" value={newEvent.title} onChange={handleChange}>
-                        <option value="" disabled hidden selected>Select Piece</option>
+                    <Select sx={{minWidth: 200}} size="small" name="title" id="title" labelId="title-label" value={newEvent.title} onChange={handleChange}>
                         {pieces.map(piece => (
-                            <option key={piece.id} value={piece.title}>{piece.title}</option>
+                            <MenuItem key={piece.id} value={piece.title}>{piece.title}</MenuItem>
                         ))}
-                    </select><br />
+                    </Select><br />
                     {!selectedDate && <>
                         <label htmlFor="date">Date</label><br />
                         <input id="date" name="date" type="date" value={newEvent.date} onChange={handleChange} /><br />
@@ -108,12 +116,12 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
                     <input id="start" name="start" type="time" value={newEvent.start} onChange={handleChange} /><br />
                     <label htmlFor="end">End</label><br />
                     <input id="end" name="end" type="time" value={newEvent.end} onChange={handleChange} /><br />
-                    <button type="button" onClick={() => closeNewEvent()}>Cancel</button>
+                    <Button type="button" color="warning" onClick={() => closeNewEvent()}>Cancel</Button>
                     <input type="submit" />
-                </form>
-            </dialog>
+                </DialogContent>
+            </Dialog>
 
-        </div>
+        </>
     );
 }
 
