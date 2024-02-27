@@ -4,6 +4,16 @@ import DashboardFooter from "../DashboardFooter/DashboardFooter";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import AddPieceDialog from "../AddPieceDialog/AddPieceDialog";
 import Swal from "sweetalert2";
+import Container from  '@mui/material/Container'
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import { CardActionArea } from '@mui/material';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+
+
 
 function Dashboard() {
     const dispatch = useDispatch();
@@ -47,21 +57,25 @@ function Dashboard() {
     }, []);
 
     return (
-        <>
-            <h1>Welcome to the Dashboard, {username}!</h1>
+        <Box display="flex" flexDirection="column" alignItems="center">
+            <Typography variant="h4" sx={{ mb: 1.5 }}>Welcome to your Dashboard, {username}!</Typography>
             {pieces.map(piece => (
-                <>
-                    <div className="piece-icon" key={piece.id} data-pieceid={piece.id} data-piecetitle={piece.title} onClick={goToPiecePlans}>
-                        <p data-pieceid={piece.id} data-piecetitle={piece.title}>{piece.title}</p>
-                        <p data-pieceid={piece.id} data-piecetitle={piece.title}>{piece.composer}</p>
-                    </div>
-                    <button data-pieceid={piece.id} onClick={deletePiece}>Delete Piece</button><br />
-                </>
+                <Box>
+                    <Card variant="outlined" sx={{ mb: 1.5, width: 300, display: "flex", flexDirection: "column", alignItems: "center" }} className="piece-icon" key={piece.id} >
+                        <CardActionArea data-pieceid={piece.id} data-piecetitle={piece.title} onClick={goToPiecePlans}>
+                            <CardContent sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                            <Typography variant="body1" data-pieceid={piece.id} data-piecetitle={piece.title}>{piece.title}</Typography>
+                            <Typography variant="body1" data-pieceid={piece.id} data-piecetitle={piece.title}>By {piece.composer}</Typography>
+                            </CardContent>
+                        </CardActionArea>
+                        <Button data-pieceid={piece.id} onClick={deletePiece}>Delete Piece</Button><br />
+                    </Card>
+                </Box>
             ))}
-            <button onClick={() => setAddPieceIsOpen(true)}>Add a New Piece Here!</button>
+            <Button onClick={() => setAddPieceIsOpen(true)}>Add a New Piece Here!</Button><br />
             <AddPieceDialog open={addPieceIsOpen} closeAddPiece={closeAddPiece} />
             <DashboardFooter />
-        </>
+        </Box>
     );
 }
 export default Dashboard;
