@@ -24,7 +24,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     const pieces = useSelector(store => store.pieces);
     // Don't use startTime and endTime because those create a recurring event
     const [editedEvent, setEditedEvent] = useState({
-        title: selectedEvent.title,
+        title: Object.keys(selectedEvent).length !== 0 ? selectedEvent.title : "",
         // This line seems to be giving me the "component changing from uncontrolled to controlled" warning, but can't figure out what's causing it...
         date: Object.keys(selectedEvent).length !== 0 ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "",
         start: selectedEvent.start,
@@ -150,10 +150,6 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     useEffect(() => {
 
         if (Object.keys(selectedEvent).length !== 0) {
-            console.log("this is the selectedEvent.date:", selectedEvent.date);
-            console.log("this is the value of selectedEvent.start:", selectedEvent.start);
-            console.log("this is the formatted version of selectedEvent.start:", formatTime(selectedEvent.start));
-            console.log("this is the value of selectedEvent.end:", selectedEvent.end);
             setEditedEvent({
                 id: selectedEvent.id,
                 piece_id: selectedEvent.piece_id,
@@ -166,8 +162,8 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                 // end: formatTime(selectedEvent.end)
             });
         }
+        console.log("This is the editedEvent:", editedEvent);
         console.log("This is the selectedEvent:", selectedEvent);
-        console.log("This is the value of open:", open);
     }, [selectedEvent]); // Need to put selectedEvent here so it actually displays in dialog. Page must not load with it yet?
 
     return (
