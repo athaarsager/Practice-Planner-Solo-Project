@@ -126,7 +126,7 @@ export default function CalendarPage() {
                     {}
                 }
             />
-            {dayView && <button onClick={() => setAddNewEventIsOpen(true)}>Add Practice Session</button>}
+            {dayView && <button onClick={() => setAddNewEventIsOpen(true)}>Schedule a Practice Session</button>}
             <DashboardFooter />
             <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} responses={responses} />
             <EditEventDialog open={editEventIsOpen} closeEditedEvent={closeEditedEvent} selectedDate={selectedDate} />

@@ -53,6 +53,11 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
             dispatch({type: "ADD_PLAN_AND_EVENT", payload: {newPlan: responses, newEvent: payload}});
             closeNewEvent();
             history.goBack();
+            Swal.fire({
+                title: "Success!",
+                text: "Calendar Event Created!",
+                icon: "success"
+              });
         } else {
         console.log("This is the payload being sent to the add event saga:", payload);
         dispatch({ type: "ADD_CALENDAR_EVENT", payload });
@@ -62,8 +67,12 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
             start: "",
             end: "",
         });
-        // Need something here or on ReviewPlan page to refresh the page on submit so button disappears
         closeNewEvent();
+        Swal.fire({
+            title: "Success!",
+            text: "Calendar Event Created!",
+            icon: "success"
+          });
     }
     }
 
