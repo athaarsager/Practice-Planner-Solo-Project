@@ -54,6 +54,7 @@ function Dashboard() {
 
     useEffect(() => {
         dispatch({ type: "FETCH_PIECES" });
+        console.log("These are the pieces:", pieces);
     }, []);
 
     return (
@@ -62,8 +63,8 @@ function Dashboard() {
             {pieces.map(piece => (
                 <Box>
                     <Card variant="outlined" sx={{ mb: 1.5, width: 300, display: "flex", flexDirection: "column", alignItems: "center" }} className="piece-icon" key={piece.id} >
-                        <CardActionArea data-pieceid={piece.id} data-piecetitle={piece.title} onClick={goToPiecePlans}>
-                            <CardContent sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                        <CardActionArea>
+                            <CardContent sx={{ display: "flex", flexDirection: "column", alignItems: "center" }} data-pieceid={piece.id} data-piecetitle={piece.title} onClick={goToPiecePlans}>
                             <Typography variant="body1" data-pieceid={piece.id} data-piecetitle={piece.title}>{piece.title}</Typography>
                             <Typography variant="body1" data-pieceid={piece.id} data-piecetitle={piece.title}>By {piece.composer}</Typography>
                             </CardContent>

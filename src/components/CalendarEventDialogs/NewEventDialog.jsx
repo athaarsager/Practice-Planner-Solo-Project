@@ -18,6 +18,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 
 
+
 function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     const history = useHistory();
     const dispatch = useDispatch();
@@ -109,21 +110,22 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
                     <DialogTitle>Add Calendar Event</DialogTitle>
                     <InputLabel id="title-label">Select Piece</InputLabel>
                     {/* <input id="title" name="title" type="text" placeholder="Piece to Practice" value={newEvent.title} onChange={handleChange} /><br /> */}
-                    <Select sx={{ minWidth: 200 }} size="small" name="title" id="title" labelId="title-label" value={newEvent.title} onChange={handleChange}>
+                    <Select sx={{ minWidth: 200, mb: 2 }} size="small" name="title" id="title" labelId="title-label" value={newEvent.title} onChange={handleChange}>
                         {pieces.map(piece => (
                             <MenuItem key={piece.id} value={piece.title}>{piece.title}</MenuItem>
                         ))}
                     </Select><br />
                     {!selectedDate && <>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <InputLabel htmlFor="date">Date</InputLabel><br />
-                            <DatePicker label="Date" id="date" name="date" type="date" value={newEvent.date} onChange={handleChange} /><br />
+                            <DatePicker sx={{mb: 2}} label="Date" id="date" name="date" type="date" value={newEvent.date} onChange={handleChange} /><br/>
                         </LocalizationProvider>
                     </>}
-                    <label htmlFor="start">Start</label><br />
-                    <input id="start" name="start" type="time" value={newEvent.start} onChange={handleChange} /><br />
-                    <label htmlFor="end">End</label><br />
-                    <input id="end" name="end" type="time" value={newEvent.end} onChange={handleChange} /><br />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <TimePicker sx={{mb: 2}} label="Start" id="start" name="start" type="time" value={newEvent.start} onChange={handleChange} /><br/>
+                    </LocalizationProvider>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <TimePicker sx={{mb: 2}} label="End" id="end" name="end" type="time" value={newEvent.end} onChange={handleChange} /> 
+                    </LocalizationProvider>< br />
                     <Button type="button" color="warning" onClick={() => closeNewEvent()}>Cancel</Button>
                     <Button type="submit">Submit</Button>
                 </DialogContent>
