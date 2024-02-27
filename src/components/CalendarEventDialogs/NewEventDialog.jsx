@@ -2,6 +2,12 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Swal from "sweetalert2";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
 
 function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     const history = useHistory();
