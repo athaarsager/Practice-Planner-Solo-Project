@@ -37,6 +37,22 @@ router.get("/:id", rejectUnauthenticated, (req, res) => {
         });
 });
 
+// Get single event based off of associated plan id (purely for navigating to calendar from plan edit screen)
+router.get("/plan/:id", rejectUnauthenticated, (req, res) => {
+    const planId = req.params.id;
+    const queryText =  `
+    SELECT "calendar_events"."id", "calendar_events"."piece_id", "calendar_events"."title", "calendar_events"."date", "calendar_events"."start", "calendar_events"."end", "calendar_events"."practice_plan_id"
+    FROM "calendar_events" WHERE "calendar_events"."practice_plan_id" = $1 AND "user_id" = $2;
+    `;
+    pool.query(queryText, [planId, req.user.id])
+    .then((result) => {
+        res.send(result.rows);
+    }).catch((error) => {
+        console.log("ERROR in getting calendar event based off of practice plan id:", error);
+        res.sendStatus(500);
+    });
+});
+
 router.post("/", rejectUnauthenticated, (req, res) => {
     console.log("This is the req.body.title:", req.body.title);
     const queryText = `

@@ -10,10 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
-
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-
-import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
@@ -80,14 +77,6 @@ function App() {
             <ReflectionForm />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
-            exact
-            path="/info"
-          >
-            <InfoPage />
-          </ProtectedRoute>
-
           <Route
             exact
             path="/login"
@@ -123,7 +112,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect them to the /dashboard page
-              <Redirect to="/dashboard'pieces" />
+              <Redirect to="/dashboard/pieces" />
               :
               // Otherwise, show the Landing page
               <LandingPage />

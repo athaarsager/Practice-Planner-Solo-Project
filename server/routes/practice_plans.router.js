@@ -26,8 +26,9 @@ router.get("/:id", rejectUnauthenticated, (req, res) => {
 router.get("/plan/:id", rejectUnauthenticated, (req, res) => {
     const planId = req.params.id;
     const queryText = `
-    SELECT "practice_plans"."id", "practice_plans"."piece_id", "practice_plans"."section", "practice_plans"."problems", "practice_plans"."plan", "practice_plans"."goal" FROM "practice_plans"
+    SELECT "practice_plans"."id", "practice_plans"."piece_id", "practice_plans"."section", "practice_plans"."problems", "practice_plans"."plan", "practice_plans"."goal", "calendar_events"."id" AS "calendar_event_id" FROM "practice_plans"
     JOIN "pieces" ON "pieces"."id" = "practice_plans"."piece_id"
+    LEFT JOIN "calendar_events" ON "calendar_events"."practice_plan_id" = "practice_plans"."id"
     WHERE "pieces"."user_id" = $1 AND "practice_plans"."id" = $2; 
     `;
     pool.query(queryText, [req.user.id, planId])
@@ -135,17 +136,30 @@ router.put("/:id", rejectUnauthenticated, (req, res) => {
 
 // PUT change plan when calendar event is changed
 router.put("/change_piece/:id", rejectUnauthenticated, (req, res) => {
-    // grab this from selectedEvent?
-    const planId = req.params.id;
-    const pieceId = req.body;
+
+    // req.body.new_piece_title, practice_plan_id
+
+    const pieceTitle = req.body.new_piece_title
     const queryText = `
+    SELECT "id" FROM "pieces" WHERE "title" = $1;
+    `;
+    pool.query(queryText, [pieceTitle])
+        .then((result) => {
+            const pieceId = result.rows[0].id;
+            const planId = req.params.id;
+            const newQueryText = `
     UPDATE "practice_plans" SET "piece_id" = $1 WHERE "id" = $2;
     `;
-    pool.query(queryText, [pieceId, planId])
-        .then(() => {
-            res.sendStatus(200);
+            pool.query(newQueryText, [pieceId, planId])
+                .then(() => {
+                    res.sendStatus(200);
+                }).catch((error) => {
+                    console.log("ERROR in practice_plans change piece_id:", error);
+                    res.sendStatus(500);
+                });
         }).catch((error) => {
-            console.log("ERROR in practice_plans change piece_id:", error);
+            console.log("ERROR in retrieveing piece id:", error);
+            res.sendStatus(500);
         });
 });
 

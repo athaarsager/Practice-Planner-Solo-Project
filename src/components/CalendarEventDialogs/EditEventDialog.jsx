@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Swal from "sweetalert2";
 
 function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     const dispatch = useDispatch();
@@ -52,7 +53,9 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
             console.log("This is the editedEvent's title:", editedEvent.title);
             console.log("This is the selectedEvent's title:", selectedEvent.title);
             // Need to do a GET, first?
-            dispatch({ type: "EDIT_PLAN_PIECE", payload: selectedEvent.practice_plan_id });
+            // Need to send over new piece id
+            console.log("This is the payload I'm sending to update piece name:",);
+            dispatch({ type: "EDIT_PLAN_PIECE", payload: { new_piece_title: editedEvent.title, plan_id: selectedEvent.practice_plan_id } });
         }
 
         dispatch({ type: "EDIT_CALENDAR_EVENT", payload });
@@ -67,16 +70,36 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     }
 
     const deleteEvent = () => {
-        dispatch({ type: "DELETE_CALENDAR_EVENT", payload: selectedEvent.id });
-        closeEditedEvent();
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch({ type: "DELETE_CALENDAR_EVENT", payload: selectedEvent.id });
+                closeEditedEvent();
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your practice session has been deleted.",
+                    icon: "success"
+                });
+            }
+        });
+
     }
 
     const addPracticePlan = () => {
-        dispatch( {type: "SET_SELECTED_PIECE", payload:{id: selectedEvent.piece_id, title: editedEvent.title, event_exists: true, event_id: selectedEvent.id} });
+        dispatch({ type: "SET_SELECTED_PIECE", payload: { id: selectedEvent.piece_id, title: editedEvent.title, event_exists: true, event_id: selectedEvent.id } });
         history.push(`/${selectedEvent.piece_id}/practice_entries/new_plan`);
     }
 
     const goToPracticePlan = () => {
+        dispatch({ type: "SET_SELECTED_PIECE", payload: { id: selectedEvent.piece_id, title: editedEvent.title, event_exists: true, event_id: selectedEvent.id } });
         history.push(`/${selectedEvent.piece_id}/practice_entries/review_plan/${selectedEvent.practice_plan_id}`);
     }
 

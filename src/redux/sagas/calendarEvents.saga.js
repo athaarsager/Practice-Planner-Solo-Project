@@ -22,6 +22,18 @@ function* fetchSelectedEvent(action) {
     }
 }
 
+function* getEventFromPlanId(action) {
+    try {
+        // action.payload will be the plan id
+        const getEventFromPlanIdResponse = yield axios.get(`/api/calendar_events/plan/${action.payload}`);
+        console.log("this is the result of getting the event from the plan id:", getEventFromPlanIdResponse);
+        const eventDate = new Date(getEventFromPlanIdResponse.data[0].date);
+        yield put({ type: "SET_CALENDAR_DATE_INFO", payload: { date: eventDate, dateStr: eventDate.toJSON()}});
+    } catch (error) {
+        console.error("ERROR in getEventFromPlanId saga:", error);
+    }
+}
+
 function* addCalendarEvent(action) {
     try {
         yield axios.post("/api/calendar_events", action.payload);
@@ -53,6 +65,7 @@ function* deleteCalendarEvent(action) {
 function* calendarEventsSaga() {
     yield takeLatest("FETCH_CALENDAR_EVENTS", fetchCalendarEvents);
     yield takeLatest("FETCH_SELECTED_EVENT", fetchSelectedEvent);
+    yield takeLatest("GET_EVENT_FROM_PLAN_ID", getEventFromPlanId);
     yield takeLatest("ADD_CALENDAR_EVENT", addCalendarEvent);
     yield takeLatest("EDIT_CALENDAR_EVENT", editCalendarEvent);
     yield takeLatest("DELETE_CALENDAR_EVENT", deleteCalendarEvent);
