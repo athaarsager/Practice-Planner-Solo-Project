@@ -46,6 +46,7 @@ function NewPracticePlan() {
             setResponses((state) => ({ ...state, problems: newPlanProblems}));
         }
         console.log("In NewPracticePlan.jsx. This is the selectedPiece:", selectedPiece);
+        console.log("This is the pieceId:", pieceId);
         return () => dispatch({ type: "CLEAR_NEW_PLAN_PROBLEMS"});
     }, [newPlanProblems]);
 

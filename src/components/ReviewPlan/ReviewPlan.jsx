@@ -51,9 +51,11 @@ function ReviewPlan() {
     }
 
     useEffect(() => {
+    
         dispatch({ type: "FETCH_SELECTED_PLAN", payload: planId });
         console.log("This is the selectedPlan:", selectedPlan);
-    }, [selectedPlan]);
+        
+    }, [dispatch]); // Putting dispatch here fixes infinite loop. Not 100% sure on the logic...
 
     return (
         <div>

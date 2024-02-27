@@ -66,7 +66,9 @@ router.post("/", rejectUnauthenticated, (req, res) => {
     INSERT INTO "calendar_events" ("piece_id", "title", "date", "start", "end", "user_id", "practice_plan_id")
     VALUES ($1, $2, $3, $4, $5, $6, $7);
     `;
-            console.log(req.body.date);
+            console.log("This is the date:", req.body.date);
+            console.log("This is the start:", req.body.start);
+            console.log("This is the end:", req.body.end);
             pool.query(newQueryText, [pieceId, req.body.title, req.body.date, req.body.start, req.body.end, req.user.id, req.body.practice_plan_id])
         .then(() => {
             res.sendStatus(201);

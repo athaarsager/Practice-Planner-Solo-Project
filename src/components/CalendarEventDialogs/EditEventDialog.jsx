@@ -109,7 +109,6 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
         history.push(`/${selectedEvent.piece_id}/practice_entries/review_plan/${selectedEvent.practice_plan_id}`);
     }
 
-    // This function may or may not be necessary in the final version
     const formatTime = (input) => {
         const hours = JSON.stringify(input).split("T")[1].substring(0, 2);
         //alert(`startHours: ${startHours}`);

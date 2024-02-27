@@ -44,6 +44,7 @@ function* addPlanAndEvent(action) {
     // payload is object containing two objects
     try {
         const pieceId = action.payload.newPlan.piece_id;
+        console.log("This is the pieceId the saga received:", pieceId);
         yield axios.post("/api/practice_plans/event", action.payload);
         yield put({ type: "FETCH_PLANS", payload: pieceId });
     } catch (error) {
