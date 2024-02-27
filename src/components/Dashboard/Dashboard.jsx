@@ -58,7 +58,7 @@ function Dashboard() {
 
     return (
         <Box display="flex" flexDirection="column" alignItems="center">
-            <Typography variant="h4" sx={{ mb: 1.5 }}>Welcome to your Dashboard, {username}!</Typography>
+            <Typography variant="h4" sx={{ mb: 5 }}>Welcome to your Dashboard, {username}!</Typography>
             {pieces.map(piece => (
                 <Box>
                     <Card variant="outlined" sx={{ mb: 1.5, width: 300, display: "flex", flexDirection: "column", alignItems: "center" }} className="piece-icon" key={piece.id} >
@@ -68,7 +68,7 @@ function Dashboard() {
                             <Typography variant="body1" data-pieceid={piece.id} data-piecetitle={piece.title}>By {piece.composer}</Typography>
                             </CardContent>
                         </CardActionArea>
-                        <Button data-pieceid={piece.id} onClick={deletePiece}>Delete Piece</Button><br />
+                        <Button color="error" data-pieceid={piece.id} onClick={deletePiece}>Delete Piece</Button><br />
                     </Card>
                 </Box>
             ))}

@@ -1,5 +1,7 @@
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 function DashboardFooter() {
     const history = useHistory();
@@ -10,10 +12,10 @@ function DashboardFooter() {
         history.push("/dashboard/calendar");
     }
     return (
-        <>
-        <button onClick={() => history.push("/dashboard/pieces")}>Pieces</button>
-        <button onClick={goToCalendar}>Calendar</button>
-        </>
+        <Box>
+            <Button color="secondary" onClick={() => history.push("/dashboard/pieces")}>Pieces</Button>
+            <Button color="secondary" onClick={goToCalendar}>Calendar</Button>
+        </Box>
     );
 }
 
