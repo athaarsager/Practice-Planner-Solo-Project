@@ -106,7 +106,7 @@ export default function CalendarPage() {
         // Can also use aspectRatio to adjust height
         // Apparently you don't even need to re-size the height if you have the width selected
         <Box display="flex" flexDirection="column" alignItems="center">
-            <div className="calendar-container">
+            <Box className="calendar-container">
                 <FullCalendar
                     ref={calendarRef}
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -134,7 +134,7 @@ export default function CalendarPage() {
                 {dayView && <button onClick={() => setAddNewEventIsOpen(true)}>Schedule a Practice Session</button>}
                 <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} responses={responses} />
                 <EditEventDialog open={editEventIsOpen} closeEditedEvent={closeEditedEvent} selectedDate={selectedDate} />
-            </div>
+            </Box>
             <DashboardFooter />
         </Box>
     );
