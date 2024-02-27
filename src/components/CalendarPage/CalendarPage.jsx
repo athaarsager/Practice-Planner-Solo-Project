@@ -75,7 +75,7 @@ export default function CalendarPage() {
     }
 
     const goToCalendarDay = (dayView, dateInfo) => {
-        if (!dayView) {
+        if (!dayView || Object.keys(dateInfo).length === 0) {
             return;
         } // since this always runs on page start, need to make sure it returns immediately if dayView is false
         console.log("This is the dateInfo:", dateInfo);
@@ -84,6 +84,7 @@ export default function CalendarPage() {
         .getApi()
         .changeView("timeGridDay", dateInfo.date);
         setSelectedDate(JSON.stringify(dateInfo.dateStr).substring(1, 11));
+        console.log("This is the dateClickInfo:", dateInfo);
     }
 
     // need to GET all the calendar events on page load
@@ -94,7 +95,7 @@ export default function CalendarPage() {
         console.log("This is the value of dayView:", dayView);
         // calendarDateInfo is the inputDate, which is equal to the dateClickInfo
         goToCalendarDay(dayView, calendarDateInfo);
-    }, [dayView]); // update page based on value of dayView
+    }, [dayView, calendarDateInfo]); // update page based on value of dayView and calendarDateInfo
 
     return (
         // Calendar will always take up its entire container width 

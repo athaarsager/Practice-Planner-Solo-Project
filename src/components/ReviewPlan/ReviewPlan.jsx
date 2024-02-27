@@ -16,6 +16,17 @@ function ReviewPlan() {
     const selectedDate = "";
     const responses = {};
 
+    // steps for navigating to correct calendar day/event from this page
+    // set calendarDateInfo to correct date somehow...
+    const goToCalendarPage = () => {
+        // set dayView to true
+        dispatch({ type: "SET_TO_DAYVIEW" });
+        // set selectedEvent to correct event
+        dispatch({ type: "GET_EVENT_FROM_PLAN_ID", payload: selectedPlan.id });
+        // This grabs the event and sets calendarDateInfo to the event's date. Theoretically
+        history.push("/dashboard/calendar");
+    }
+
     const deletePlan = (e) => {
         Swal.fire({
             title: "Are you sure?",
@@ -58,8 +69,9 @@ function ReviewPlan() {
             <button onClick={() => history.goBack()}>Back</button>
             <button data-planid={selectedPlan.id} onClick={deletePlan}>Delete Plan</button>
             <button onClick={() => history.push(`/${pieceId}/practice_entries/review_plan/${planId}/edit`)}>Edit Plan</button>
-            {!selectedPlan.calendar_event_id &&
-                <button onClick={() => setAddNewEventIsOpen(true)}>Add Calendar Event</button>
+            {!selectedPlan.calendar_event_id ?
+                <button onClick={() => setAddNewEventIsOpen(true)}>Add Calendar Event</button> :
+                <button onClick={goToCalendarPage}>View Calendar Event</button>
             }
             <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} onPracticePlanScreen={onPracticePlanScreen} responses={responses} />
 
