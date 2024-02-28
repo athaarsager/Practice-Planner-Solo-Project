@@ -65,14 +65,36 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     // check if editedEvent.title === selectedEvent.title
     // if different, check if selectedEvent had a plan_id.
     // if it did, send off a PUT request to change the piece_id to the new piece_id
+
+    const formatDate = (input) => {
+        return String(input).substring(0, 15);
+    }
+
+    const formatTime = (input) => {
+        const hours = JSON.stringify(input).split("T")[1].substring(0, 2);
+        //alert(`startHours: ${startHours}`);
+        const minutes = JSON.stringify(input).split("T")[1].substring(3, 5);
+        //alert(`startMinutes: ${startMinutes}`);
+        const date = new Date();
+        let offset = date.getTimezoneOffset();
+        offset = offset / 60;
+        let decimal = (parseFloat(`${hours}.${minutes}`) - offset).toFixed(2);
+        if (parseFloat(decimal) < 0) {
+            decimal = (parseFloat(decimal) + 24).toFixed(2);
+            decimal = String(decimal);
+        }
+        const formattedTime = decimal.split(".")[0] + ":" + decimal.split(".")[1];
+        return formattedTime;
+    }
+
     const submitEdits = (e) => {
         e.preventDefault();
         const payload = {
             id: selectedEvent.id,
             title: editedEvent.title,
-            date: editedEvent.date,
-            start: editedEvent.date + "T" + editedEvent.start,
-            end: editedEvent.date + "T" + editedEvent.end
+            date: editedEvent.date.$d,
+            start: formatDate(editedEvent.date.$d) + "T" + formatTime(editedEvent.start.$d),
+            end: formatDate(editedEvent.date.$d) + "T" + formatTime(editedEvent.end.$d)
         }
 
         if (editedEvent.title !== selectedEvent.title && selectedEvent.piece_id) {
@@ -127,24 +149,6 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     const goToPracticePlan = () => {
         dispatch({ type: "SET_SELECTED_PIECE", payload: { id: selectedEvent.piece_id, title: editedEvent.title, event_exists: true, event_id: selectedEvent.id } });
         history.push(`/${selectedEvent.piece_id}/practice_entries/review_plan/${selectedEvent.practice_plan_id}`);
-    }
-
-    const formatTime = (input) => {
-        const hours = JSON.stringify(input).split("T")[1].substring(0, 2);
-        //alert(`startHours: ${startHours}`);
-        const minutes = JSON.stringify(input).split("T")[1].substring(3, 5);
-        //alert(`startMinutes: ${startMinutes}`);
-        const date = new Date();
-        let offset = date.getTimezoneOffset();
-        offset = offset / 60;
-        let decimal = (parseFloat(`${hours}.${minutes}`) - offset).toFixed(2);
-        if (parseFloat(decimal) < 0) {
-            decimal = (parseFloat(decimal) + 24).toFixed(2);
-            decimal = String(decimal);
-        }
-        const formattedTime = decimal.split(".")[0] + ":" + decimal.split(".")[1];
-        //alert(`formattedStart: ${formattedStart}`);
-        return formattedTime;
     }
 
     useEffect(() => {
