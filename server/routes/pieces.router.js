@@ -19,11 +19,9 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 // GET single piece from Database so all form pages have access to the piece title
 router.get("/:id", rejectUnauthenticated, (req, res) => {
     const pieceId = req.params.id;
-    console.log("This is the pieceId:", pieceId);
     const queryText = `SELECT "title" FROM "pieces" WHERE "user_id" = $1 AND "id" = $2;`;
     pool.query(queryText, [req.user.id, pieceId])
     .then((result) => {
-        console.log("This is the result.rows in the database:", result.rows);
         res.send(result.rows);
     }).catch((error) => {
         console.log("ERROR in fetchSinglePiece route:", error);
