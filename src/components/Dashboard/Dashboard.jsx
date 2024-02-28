@@ -59,7 +59,7 @@ function Dashboard() {
 
     return (
         <Box display="flex" flexDirection="column" alignItems="center">
-            <Typography variant="h4" sx={{ mb: 5 }}>Welcome to your Dashboard, {username}!</Typography>
+            <Typography variant="h4" sx={{ mb: 5, textAlign: "center", mx: "auto" }}>Welcome to your Dashboard, {username}!</Typography>
             {pieces.map(piece => (
                 <Box>
                     <Card variant="outlined" sx={{ mb: 1.5, width: 300, display: "flex", flexDirection: "column", alignItems: "center" }} className="piece-icon" key={piece.id} >
@@ -73,7 +73,7 @@ function Dashboard() {
                     </Card>
                 </Box>
             ))}
-            <Button onClick={() => setAddPieceIsOpen(true)}>Add a New Piece Here!</Button><br />
+            <Button sx={{ mt: 2 }} variant="outlined" onClick={() => setAddPieceIsOpen(true)}>Add a New Piece Here!</Button><br />
             <AddPieceDialog open={addPieceIsOpen} closeAddPiece={closeAddPiece} />
             <DashboardFooter />
         </Box>
