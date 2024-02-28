@@ -32,7 +32,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     });
 
     const [pieceId, setPieceId] = useState("");
-
+    const [localOpen, setLocalOpen] = useState(open);
     // event object can contain keys such as the following (more can be found at: https://fullcalendar.io/docs/event-parsing ):
     // {
     // id: maybe just grab from database? crap, need table for events...
@@ -118,7 +118,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     }
 
     const deleteEvent = () => {
-
+        setLocalOpen(false);
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -137,6 +137,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                     icon: "success"
                 });
             }
+            setLocalOpen(true);
         });
 
     }
@@ -166,13 +167,14 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                 // end: formatTime(selectedEvent.end)
             });
         }
+        setLocalOpen(open);
         console.log("This is the editedEvent:", editedEvent);
         console.log("This is the selectedEvent:", selectedEvent);
-    }, [selectedEvent]); // Need to put selectedEvent here so it actually displays in dialog. Page must not load with it yet?
+    }, [selectedEvent, open]); // Need to put selectedEvent here so it actually displays in dialog. Page must not load with it yet?
 
     return (
         <>
-            <Dialog open={open}
+            <Dialog open={localOpen}
                 onClose={closeEditedEvent}
                 PaperProps={{
                     component: "form",
@@ -181,7 +183,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
             >
                 <DialogContent>
                     <DialogTitle>Edit Calendar Event</DialogTitle>
-                    <InputLabel htmlFor="title-label">Piece</InputLabel><br />
+                    <InputLabel id="title-label">Piece</InputLabel><br />
                     <Select sx={{ minWidth: 200, mb: 2 }} size="small" name="title" id="title" labelId="title-label" value={editedEvent.title} onChange={handleChange}>
                         {pieces.map(piece => (
                             <MenuItem key={piece.id} value={piece.title}>{piece.title}</MenuItem>
@@ -196,7 +198,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <TimePicker sx={{ mb: 2 }} slotProps={{ textField: { required: true, name: "end" } }} id="end" name="end" label="End" type="time" value={editedEvent.end} onChange={handleEndChange} /><br />
                     </LocalizationProvider>
-                    <Button type="button" onClick={closeEditedEvent}>Cancel</Button>
+                    <Button type="button" onClick={() => setLocalOpen(false)}>Cancel</Button>
                     <Button color="error" onClick={deleteEvent} type="button">Delete Event</Button>
                     <Button type="submit">Submit Changes</Button>
                     {selectedEvent.practice_plan_id ?
