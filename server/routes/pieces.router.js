@@ -16,6 +16,18 @@ router.get("/", rejectUnauthenticated, (req, res) => {
     });
 });
 
+// GET single piece from Database so all form pages have access to the piece title
+router.get("/:id", rejectUnauthenticated, (req, res) => {
+    const pieceId = req.params.id;
+    const queryText = `SELECT "title" FROM "pieces" WHERE "user_id" = $1 AND "id" = "$2;`;
+    pool.query(queryText, [req.user.id, pieceId])
+    .then((result) => {
+        res.send(result.rows);
+    }).catch((error) => {
+        res.sendStatus(500);
+    });
+});
+
 // POST new piece to the database
 router.post("/", rejectUnauthenticated, (req, res) => {
     const queryText = `
