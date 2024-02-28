@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 function ReflectionForm() {
     const dispatch = useDispatch();
@@ -53,20 +57,22 @@ function ReflectionForm() {
     }, [selectedReflection]);
 
     return (
-        <>
-            <form onSubmit={submitReflection}>
-                <label htmlFor="went-well">What went well this session?</label><br />
-                <input id="went-well" name="went-well" type="text" placeholder="Your Answer Here!" value={wentWell} onChange={(e) => setWentWell(e.target.value)} /><br />
-                <label htmlFor="needs_work">What still needs work?</label><br />
-                <input id="needs_work" name="needs_work" type="text" placeholder="Your Answer Here!" value={needsWork} onChange={(e) => setNeedsWork(e.target.value)} /><br />
-                <button type="button" onClick={() => history.goBack()}>Back</button>
-                <button onClick={exportToNewPlan}>Export to New Practice Plan</button>
-                {Object.keys(selectedReflection).length === 0 ?
-                    <button>Save Reflection!</button> :
-                    <button>Save Edits!</button>
-                }
-            </form>
-        </>
+        <Box display="flex" flexDirection="column" alignItems="center">
+            <Typography sx={{ mb: 2 }} variant="h4">Reflection</Typography>
+            <Box>
+                
+                <Box component="form" onSubmit={submitReflection}>
+                    <TextField sx={{ mb: 2 }} fullWidth multiline minRows={4} id="went-well" name="went-well" label="What went well this session?" type="text" placeholder="Your Answer Here!" value={wentWell} onChange={(e) => setWentWell(e.target.value)} required/>
+                    <TextField sx={{ mb: 2 }} fullWidth multiline minRows={4} id="needs_work" name="needs_work" label="What still needs work?" type="text" placeholder="Your Answer Here!" value={needsWork} onChange={(e) => setNeedsWork(e.target.value)} required/><br />
+                    <Button color="error" type="button" onClick={() => history.goBack()}>Back</Button>
+                    <Button onClick={exportToNewPlan}>Export to New Practice Plan</Button>
+                    {Object.keys(selectedReflection).length === 0 ?
+                        <Button type="submit">Save Reflection!</Button> :
+                        <Button type="submit">Save Edits!</Button>
+                    }
+                </Box>
+            </Box>
+        </Box>
     );
 }
 
