@@ -26,6 +26,9 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
+import { createTheme, ThemeProvider} from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+
 
 import './App.css';
 
@@ -34,11 +37,34 @@ function App() {
 
   const user = useSelector(store => store.user);
 
+const themeOption = {
+  palette: {
+    mode: 'light',
+    primary: {
+      main: '#2680A6',
+    },
+    secondary: {
+      main: '#4c26a6',
+    },
+    success: {
+      main: '#26a68c',
+    },
+    background: {
+      default: '#ffffff',
+      paper: '#f7f7f7',
+    },
+  },
+};
+
+const theme = createTheme(themeOption);
+
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
   }, [dispatch]);
 
   return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
     <Router>
       <div>
         <Nav />
@@ -132,6 +158,7 @@ function App() {
         <Footer />
       </div>
     </Router>
+    </ThemeProvider>
   );
 }
 
