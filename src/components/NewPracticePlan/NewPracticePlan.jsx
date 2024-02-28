@@ -73,11 +73,11 @@ function NewPracticePlan() {
                     {!selectedPiece.event_exists &&
                         <Box sx={{ mb: 2 }}>
                             <Typography sx={{ mb: 1 }} variant="body1">Create Calendar Event? Optional</Typography>
-                            <Button variant="contained" type="button" onClick={() => setAddNewEventIsOpen(true)}>Yes</Button>
+                            <Button variant="outlined" type="button" onClick={() => setAddNewEventIsOpen(true)}>Yes</Button>
                         </Box>
                     }
-                    <Button color="error" type="button" onClick={() => history.goBack()}>Cancel</Button>
-                    <Button type="submit">Finish Plan!</Button>
+                    <Button sx={{ mr: 1 }} color="error" type="button" onClick={() => history.goBack()}>Cancel</Button>
+                    <Button variant="contained" type="submit">Finish Plan!</Button>
                 </Box>
                 <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} onPracticePlanScreen={onPracticePlanScreen} responses={responses} />
             </Box>

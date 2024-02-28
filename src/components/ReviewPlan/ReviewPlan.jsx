@@ -75,12 +75,12 @@ function ReviewPlan() {
                 <Typography variant="body1"><strong>What is your goal for the end of the practice session?</strong></Typography>
                 <Typography sx={{ mb: 1 }} variant="body2">{selectedPlan.goal}</Typography>
                 <Button onClick={() => history.goBack()}>Back</Button>
-                <Button color="error" data-planid={selectedPlan.id} onClick={deletePlan}>Delete Plan</Button>
                 <Button onClick={() => history.push(`/${pieceId}/practice_entries/review_plan/${planId}/edit`)}>Edit Plan</Button>
                 {!selectedPlan.calendar_event_id ?
                     <Button onClick={() => setAddNewEventIsOpen(true)}>Add Calendar Event</Button> :
                     <Button onClick={goToCalendarPage}>View Calendar Event</Button>
                 }
+                <Button color="error" data-planid={selectedPlan.id} onClick={deletePlan}>Delete Plan</Button>
             </Paper>
             <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} onPracticePlanScreen={onPracticePlanScreen} responses={responses} />
         </Box>

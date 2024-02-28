@@ -27,7 +27,7 @@ function PracticeEntries() {
     return (
         <Box display="flex" flexDirection="column" alignItems="center">
             <Typography sx={{ mb: 2 }} variant="h4">Your Practice Plans for {selectedPiece.title}</Typography>
-            <Button sx={{ mb: 2 }} onClick={() => history.push(`/${pieceId}/practice_entries/new_plan`)}>Add a New Practice Plan!</Button>
+            <Button variant="outlined" sx={{ mb: 2 }} onClick={() => history.push(`/${pieceId}/practice_entries/new_plan`)}>Add a New Practice Plan!</Button>
             {plans.map(plan => (
                 <Paper sx={{ padding: 5, mb: 2 }} key={plan.id}>
                     <Typography sx={{ mb: 2 }} variant="h6">Prior Plan</Typography>
