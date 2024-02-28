@@ -1,6 +1,11 @@
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 function EditPlan() {
     const dispatch = useDispatch();
@@ -37,21 +42,21 @@ function EditPlan() {
     }, []);
 
     return (
-        <>
-            <h2>Edit Plan</h2>
-            <form onSubmit={submitEdits}>
-                <label htmlFor="section">What section are you working on?</label><br />
-                <input id="section" name="section" type="text" placeholder="Your Answer Here" size="100" value={responses.section} onChange={handleChange} /><br />
-                <label htmlFor="problems">What are the problems you need to solve/issues you need to address in this section?</label><br />
-                <input id="problems" name="problems" type="text" placeholder="Your Answer Here" size="100" value={responses.problems} onChange={handleChange} /><br />
-                <label htmlFor="plan">How will you solve these problems/address these issues?</label><br />
-                <input id="plan" name="plan" type="text" placeholder="Your Answer Here" size="100" value={responses.plan} onChange={handleChange} /><br />
-                <label htmlFor="goal">What is your goal for the end of the practice session? e.g. runs without mistakes, target metronome marking, etc.</label><br />
-                <input id="goal" name="goal" type="text" placeholder="Your Answer Here" size="100" value={responses.goal} onChange={handleChange} /><br />
-                <button type="button" onClick={() => history.goBack()}>Back</button>
-                <button type="submit">Submit Changes</button>
-            </form>
-        </>
+        <Box display="flex" flexDirection="column" alignItems="center">
+            <Typography variant="h4">Edit Plan</Typography>
+            <Box component="form" onSubmit={submitEdits}>
+                <InputLabel sx={{ mb: .5 }} id="section-label">What section are you working on?</InputLabel>
+                <TextField sx={{ mb: 2 }} id="section" name="section" fullWidth multiline minRows={2} type="text" placeholder="Your Answer Here" size="100" value={responses.section} onChange={handleChange} />
+                <InputLabel sx={{ mb: .5 }} id="problems-label">What are the problems you need to solve/issues you need to address in this section?</InputLabel>
+                <TextField sx={{ mb: 2 }} id="problems" name="problems" fullWidth multiline minRows={3} type="text" placeholder="Your Answer Here" size="100" value={responses.problems} onChange={handleChange} />
+                <InputLabel sx={{ mb: .5 }} id="plan-label">How will you solve these problems/address these issues?</InputLabel>
+                <TextField sx={{ mb: 2 }} id="plan" name="plan" fullWidth multiline minRows={3} type="text" placeholder="Your Answer Here" size="100" value={responses.plan} onChange={handleChange} />
+                <InputLabel sx={{ mb: .5 }} id="goal-label">What is your goal for the end of the practice session? e.g. runs without mistakes, target metronome marking, etc.</InputLabel>
+                <TextField sx={{ mb: 2 }} id="goal" name="goal" fullWidth multiline minRows={3} type="text" placeholder="Your Answer Here" size="100" value={responses.goal} onChange={handleChange} /><br />
+                <Button color="error" type="button" onClick={() => history.goBack()}>Back</Button>
+                <Button type="submit">Submit Changes</Button>
+            </Box>
+        </Box>
     );
 }
 
