@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -63,10 +62,8 @@ function ReflectionForm() {
             <Box>
                 
                 <Box component="form" onSubmit={submitReflection}>
-                    <InputLabel sx={{ mb: .5 }} id="went-well-label">What went well this session?</InputLabel>
-                    <TextField sx={{ mb: 2 }} fullWidth multiline minRows={4} id="went-well" name="went-well" type="text" placeholder="Your Answer Here!" value={wentWell} onChange={(e) => setWentWell(e.target.value)} required/>
-                    <InputLabel sx={{ mb: .5 }} id="needs_work-label">What still needs work?</InputLabel>
-                    <TextField sx={{ mb: 2 }} fullWidth multiline minRows={4} id="needs_work" name="needs_work" type="text" placeholder="Your Answer Here!" value={needsWork} onChange={(e) => setNeedsWork(e.target.value)} required/><br />
+                    <TextField sx={{ mb: 2 }} fullWidth multiline minRows={4} id="went-well" name="went-well" label="What went well this session?" type="text" placeholder="Your Answer Here!" value={wentWell} onChange={(e) => setWentWell(e.target.value)} required/>
+                    <TextField sx={{ mb: 2 }} fullWidth multiline minRows={4} id="needs_work" name="needs_work" label="What still needs work?" type="text" placeholder="Your Answer Here!" value={needsWork} onChange={(e) => setNeedsWork(e.target.value)} required/><br />
                     <Button color="error" type="button" onClick={() => history.goBack()}>Back</Button>
                     <Button onClick={exportToNewPlan}>Export to New Practice Plan</Button>
                     {Object.keys(selectedReflection).length === 0 ?
