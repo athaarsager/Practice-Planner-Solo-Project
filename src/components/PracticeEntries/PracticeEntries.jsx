@@ -19,6 +19,11 @@ function PracticeEntries() {
         history.push(`/${pieceId}/practice_entries/write_reflection/${e.target.dataset.planid}`);
     }
 
+    const toNewReflection = (e) => {
+        dispatch({ type: "CLEAR_SELECTED_REFLECTION"});
+        history.push(`/${pieceId}/practice_entries/write_reflection/${e.target.dataset.planid}`)
+    }
+
     useEffect(() => {
         console.log("This is the selected piece:", selectedPiece);
         dispatch({ type: "FETCH_PLANS", payload: pieceId });
@@ -42,7 +47,7 @@ function PracticeEntries() {
                     <Button color="secondary" data-planid={plan.id} onClick={(e) => history.push(`/${pieceId}/practice_entries/review_plan/${e.target.dataset.planid}`)}>Review Full Plan</Button>
                     {plan.reflection_written ?
                         <Button data-planid={plan.id} onClick={goToEditPage}>Edit Reflection</Button> :
-                        <Button data-planid={plan.id} onClick={(e) => history.push(`/${pieceId}/practice_entries/write_reflection/${e.target.dataset.planid}`)}>Write Refelction</Button>
+                        <Button data-planid={plan.id} onClick={toNewReflection}>Write Refelction</Button>
                     }
 
                 </Paper>
