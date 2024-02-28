@@ -13,6 +13,7 @@ function EditPlan() {
     const planId = useParams().plan_id;
     const pieceId = useParams().id;
     const selectedPlan = useSelector(store => store.selectedPlan);
+    const selectedPiece = useSelector(store => store.selectedPiece);
 
     const [responses, setResponses] = useState(
         {
@@ -39,11 +40,15 @@ function EditPlan() {
 
     useEffect(() => {
         dispatch({ type: "FETCH_SELECTED_PLAN", payload: planId });
+        if (Object.keys(selectedPiece).length === 0)
+        {
+            dispatch({ type: "FETCH_SINGLE_PIECE", payload: pieceId });
+        }
     }, []);
 
     return (
         <Box display="flex" flexDirection="column" alignItems="center">
-            <Typography variant="h4">Edit Plan</Typography>
+            <Typography sx={{ mb: 2 }} variant="h4">Edit Plan for {selectedPiece.title}</Typography>
             <Box component="form" onSubmit={submitEdits}>
                 <InputLabel sx={{ mb: .5 }} id="section-label">What section are you working on?</InputLabel>
                 <TextField sx={{ mb: 2 }} id="section" name="section" fullWidth multiline minRows={2} type="text" placeholder="Your Answer Here" size="100" value={responses.section} onChange={handleChange} />

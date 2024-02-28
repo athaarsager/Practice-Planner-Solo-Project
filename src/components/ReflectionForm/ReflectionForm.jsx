@@ -59,8 +59,9 @@ function ReflectionForm() {
 
     return (
         <Box display="flex" flexDirection="column" alignItems="center">
+            <Typography sx={{ mb: 2 }} variant="h4">Reflection</Typography>
             <Box>
-                <Typography variant="h4">Practice Reflectiton</Typography>
+                
                 <Box component="form" onSubmit={submitReflection}>
                     <InputLabel sx={{ mb: .5 }} id="went-well-label">What went well this session?</InputLabel>
                     <TextField sx={{ mb: 2 }} fullWidth multiline minRows={4} id="went-well" name="went-well" type="text" placeholder="Your Answer Here!" value={wentWell} onChange={(e) => setWentWell(e.target.value)} required/>

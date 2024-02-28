@@ -59,6 +59,10 @@ function ReviewPlan() {
 
         dispatch({ type: "FETCH_SELECTED_PLAN", payload: planId });
         console.log("This is the selectedPlan:", selectedPlan);
+        if (Object.keys(selectedPiece).length === 0)
+        {
+            dispatch({ type: "FETCH_SINGLE_PIECE", payload: pieceId });
+        }
 
     }, [dispatch]); // Putting dispatch here fixes infinite loop. Not 100% sure on the logic...
 
