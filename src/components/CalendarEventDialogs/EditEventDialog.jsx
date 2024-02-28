@@ -32,6 +32,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     });
 
     const [pieceId, setPieceId] = useState("");
+    // Need this localOpen so that the dialog closes and opens based on if the sweet alert has been activated or not
     const [localOpen, setLocalOpen] = useState(open);
     // event object can contain keys such as the following (more can be found at: https://fullcalendar.io/docs/event-parsing ):
     // {
