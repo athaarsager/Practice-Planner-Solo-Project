@@ -24,6 +24,22 @@ function PracticeEntries() {
         history.push(`/${pieceId}/practice_entries/write_reflection/${e.target.dataset.planid}`)
     }
 
+    // Creating function to limit the characters shown in the responses on this page (courtesy of ChatGPT)
+    const truncateText = (text) => {
+        // 94 happens to be the response character length that matches the question character length
+        // Want these to match for consistent Card widths
+        if (text.length > 94) {
+            return text.substring(0, 94) + "...";
+        }
+        return text;
+    }
+
+    // create custom style variable to hide overflow text using css
+    const textLimitStyle = {
+        overflow: "hidden",
+        textOverflow: "ellpises"
+    };
+
     useEffect(() => {
         console.log("This is the selected piece:", selectedPiece);
         dispatch({ type: "FETCH_PLANS", payload: pieceId });
@@ -41,13 +57,13 @@ function PracticeEntries() {
                 <Paper sx={{ padding: 5, mb: 2 }} key={plan.id}>
                     <Typography sx={{ mb: 2 }} variant="h6">Prior Plan</Typography>
                     <Typography variant="body1"><strong>What section are you working on?</strong></Typography>
-                    <Typography sx={{ mb: 1 }} variant="body2">{plan.section}</Typography>
+                    <Typography sx={{ ...textLimitStyle, mb: 1 }} variant="body2">{truncateText(plan.section)}</Typography>
                     <Typography variant="body1"><strong>What are the problems you need to solve/issues you need to address in this section?</strong></Typography>
-                    <Typography sx={{ mb: 1 }} variant="body2">{plan.problems}</Typography>
+                    <Typography sx={{ ...textLimitStyle, mb: 1 }} variant="body2">{truncateText(plan.problems)}</Typography>
                     <Typography variant="body1"><strong>How will you solve these problems/adderss these issues?</strong></Typography>
-                    <Typography sx={{ mb: 1 }} variant="body2">{plan.plan}</Typography>
+                    <Typography sx={{ ...textLimitStyle, mb: 1 }} variant="body2">{truncateText(plan.plan)}</Typography>
                     <Typography variant="body1"><strong>What is your goal for the end of the practice session?</strong></Typography>
-                    <Typography sx={{ mb: 1 }} variant="body2">{plan.goal}</Typography>
+                    <Typography sx={{ ...textLimitStyle, mb: 1 }} variant="body2">{truncateText(plan.goal)}</Typography>
                     <Button color="secondary" data-planid={plan.id} onClick={(e) => history.push(`/${pieceId}/practice_entries/review_plan/${e.target.dataset.planid}`)}>Review Full Plan</Button>
                     {plan.reflection_written ?
                         <Button data-planid={plan.id} onClick={goToEditPage}>Edit Reflection</Button> :
