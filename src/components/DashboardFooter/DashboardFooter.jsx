@@ -12,7 +12,7 @@ function DashboardFooter() {
         history.push("/dashboard/calendar");
     }
     return (
-        <Box>
+        <Box sx={{ mb: 2 }}>
             <Button color="secondary" onClick={() => history.push("/dashboard/pieces")}>Dashboard</Button>
             <Button color="secondary" onClick={goToCalendar}>Calendar</Button>
         </Box>
