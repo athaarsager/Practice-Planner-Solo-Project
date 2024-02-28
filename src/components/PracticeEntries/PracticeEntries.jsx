@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect } from "react";
-import PracticeEntriesFooter from "./PracticeEntriesFooter";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -48,7 +47,6 @@ function PracticeEntries() {
 
                 </Paper>
             ))}
-            <PracticeEntriesFooter />
         </Box>
     );
 }
