@@ -3,6 +3,11 @@ import { useParams, useHistory } from "react-router-dom/cjs/react-router-dom.min
 import { useEffect, useState } from "react";
 import NewEventDialog from "../CalendarEventDialogs/NewEventDialog";
 import Swal from "sweetalert2";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
 function ReviewPlan() {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -51,33 +56,34 @@ function ReviewPlan() {
     }
 
     useEffect(() => {
-    
+
         dispatch({ type: "FETCH_SELECTED_PLAN", payload: planId });
         console.log("This is the selectedPlan:", selectedPlan);
-        
+
     }, [dispatch]); // Putting dispatch here fixes infinite loop. Not 100% sure on the logic...
 
     return (
-        <div>
-            <h1>Review plan for {selectedPiece.title}</h1>
-            <p><strong>What section are you working on?</strong></p>
-            <p>{selectedPlan.section}</p>
-            <p><strong>What are the problems you need to solve/issues you need to address in this section?</strong></p>
-            <p>{selectedPlan.problems}</p>
-            <p><strong>How will you solve these problems/adderss these issues?</strong></p>
-            <p>{selectedPlan.plan}</p>
-            <p><strong>What is your goal for the end of the practice session?</strong></p>
-            <p>{selectedPlan.goal}</p>
-            <button onClick={() => history.goBack()}>Back</button>
-            <button data-planid={selectedPlan.id} onClick={deletePlan}>Delete Plan</button>
-            <button onClick={() => history.push(`/${pieceId}/practice_entries/review_plan/${planId}/edit`)}>Edit Plan</button>
-            {!selectedPlan.calendar_event_id ?
-                <button onClick={() => setAddNewEventIsOpen(true)}>Add Calendar Event</button> :
-                <button onClick={goToCalendarPage}>View Calendar Event</button>
-            }
+        <Box display="flex" flexDirection="column" alignItems="center">
+            <Typography sx={{ mb: 3 }} variant="h4">Review plan for {selectedPiece.title}</Typography>
+            <Paper sx={{ paddingInline: 5, paddingTop: 2 }}>
+                <Typography variant="body1"><strong>What section are you working on?</strong></Typography>
+                <Typography sx={{ mb: 1 }} variant="body2">{selectedPlan.section}</Typography>
+                <Typography variant="body1"><strong>What are the problems you need to solve/issues you need to address in this section?</strong></Typography>
+                <Typography sx={{ mb: 1 }} variant="body2">{selectedPlan.problems}</Typography>
+                <Typography variant="body1"><strong>How will you solve these problems/adderss these issues?</strong></Typography>
+                <Typography sx={{ mb: 1}} variant="body2">{selectedPlan.plan}</Typography>
+                <Typography variant="body1"><strong>What is your goal for the end of the practice session?</strong></Typography>
+                <Typography sx={{ mb: 1 }} variant="body2">{selectedPlan.goal}</Typography>
+                <Button onClick={() => history.goBack()}>Back</Button>
+                <Button color="error" data-planid={selectedPlan.id} onClick={deletePlan}>Delete Plan</Button>
+                <Button onClick={() => history.push(`/${pieceId}/practice_entries/review_plan/${planId}/edit`)}>Edit Plan</Button>
+                {!selectedPlan.calendar_event_id ?
+                    <Button onClick={() => setAddNewEventIsOpen(true)}>Add Calendar Event</Button> :
+                    <Button onClick={goToCalendarPage}>View Calendar Event</Button>
+                }
+            </Paper>
             <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} onPracticePlanScreen={onPracticePlanScreen} responses={responses} />
-
-        </div>
+        </Box>
     );
 }
 export default ReviewPlan;
