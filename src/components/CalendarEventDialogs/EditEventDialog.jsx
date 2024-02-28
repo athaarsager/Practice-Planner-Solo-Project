@@ -2,6 +2,20 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Swal from "sweetalert2";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
 
 function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     const dispatch = useDispatch();
@@ -10,15 +24,16 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     const pieces = useSelector(store => store.pieces);
     // Don't use startTime and endTime because those create a recurring event
     const [editedEvent, setEditedEvent] = useState({
-        title: selectedEvent.title,
+        title: Object.keys(selectedEvent).length !== 0 ? selectedEvent.title : "",
         // This line seems to be giving me the "component changing from uncontrolled to controlled" warning, but can't figure out what's causing it...
         date: Object.keys(selectedEvent).length !== 0 ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "",
-        start: selectedEvent.start,
-        end: selectedEvent.end
+        start: Object.keys(selectedEvent).length !== 0 ? selectedEvent.start : "",
+        end: Object.keys(selectedEvent).length !== 0 ? selectedEvent.end : ""
     });
 
     const [pieceId, setPieceId] = useState("");
-
+    // Need this localOpen so that the dialog closes and opens based on if the sweet alert has been activated or not
+    const [localOpen, setLocalOpen] = useState(open);
     // event object can contain keys such as the following (more can be found at: https://fullcalendar.io/docs/event-parsing ):
     // {
     // id: maybe just grab from database? crap, need table for events...
@@ -36,17 +51,51 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
 
     }
 
+    const handleDateChange = (date) => {
+        setEditedEvent((state) => ({ ...state, date }));
+    }
+
+    const handleStartChange = (time) => {
+        setEditedEvent((state) => ({ ...state, start: time }));
+    }
+
+    const handleEndChange = (time) => {
+        setEditedEvent((state) => ({ ...state, end: time }));
+    }
+
     // check if editedEvent.title === selectedEvent.title
     // if different, check if selectedEvent had a plan_id.
     // if it did, send off a PUT request to change the piece_id to the new piece_id
+
+    const formatDate = (input) => {
+        return String(input).substring(0, 15);
+    }
+
+    const formatTime = (input) => {
+        const hours = JSON.stringify(input).split("T")[1].substring(0, 2);
+        //alert(`startHours: ${startHours}`);
+        const minutes = JSON.stringify(input).split("T")[1].substring(3, 5);
+        //alert(`startMinutes: ${startMinutes}`);
+        const date = new Date();
+        let offset = date.getTimezoneOffset();
+        offset = offset / 60;
+        let decimal = (parseFloat(`${hours}.${minutes}`) - offset).toFixed(2);
+        if (parseFloat(decimal) < 0) {
+            decimal = (parseFloat(decimal) + 24).toFixed(2);
+            decimal = String(decimal);
+        }
+        const formattedTime = decimal.split(".")[0] + ":" + decimal.split(".")[1];
+        return formattedTime;
+    }
+
     const submitEdits = (e) => {
         e.preventDefault();
         const payload = {
             id: selectedEvent.id,
             title: editedEvent.title,
-            date: editedEvent.date,
-            start: editedEvent.date + "T" + editedEvent.start,
-            end: editedEvent.date + "T" + editedEvent.end
+            date: editedEvent.date.$d,
+            start: formatDate(editedEvent.date.$d) + "T" + formatTime(editedEvent.start.$d),
+            end: formatDate(editedEvent.date.$d) + "T" + formatTime(editedEvent.end.$d)
         }
 
         if (editedEvent.title !== selectedEvent.title && selectedEvent.piece_id) {
@@ -70,7 +119,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
     }
 
     const deleteEvent = () => {
-
+        setLocalOpen(false);
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -89,6 +138,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                     icon: "success"
                 });
             }
+            setLocalOpen(true);
         });
 
     }
@@ -103,68 +153,63 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
         history.push(`/${selectedEvent.piece_id}/practice_entries/review_plan/${selectedEvent.practice_plan_id}`);
     }
 
-    // This function may or may not be necessary in the final version
-    const formatTime = (input) => {
-        const hours = JSON.stringify(input).split("T")[1].substring(0, 2);
-        //alert(`startHours: ${startHours}`);
-        const minutes = JSON.stringify(input).split("T")[1].substring(3, 5);
-        //alert(`startMinutes: ${startMinutes}`);
-        const date = new Date();
-        let offset = date.getTimezoneOffset();
-        offset = offset / 60;
-        let decimal = (parseFloat(`${hours}.${minutes}`) - offset).toFixed(2);
-        if (parseFloat(decimal) < 0) {
-            decimal = (parseFloat(decimal) + 24).toFixed(2);
-            decimal = String(decimal);
-        }
-        const formattedTime = decimal.split(".")[0] + ":" + decimal.split(".")[1];
-        //alert(`formattedStart: ${formattedStart}`);
-        return formattedTime;
-    }
-
     useEffect(() => {
 
         if (Object.keys(selectedEvent).length !== 0) {
-
             setEditedEvent({
                 id: selectedEvent.id,
                 piece_id: selectedEvent.piece_id,
                 title: selectedEvent.title,
-                date: selectedEvent ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "",
-                start: formatTime(selectedEvent.start),
-                end: formatTime(selectedEvent.end)
+                date: dayjs(selectedEvent.date),
+                // date: selectedEvent ? JSON.stringify(selectedEvent.start).split("T")[0].slice(1) : "",
+                start: dayjs(selectedEvent.start),
+                // start: formatTime(selectedEvent.start),
+                end: dayjs(selectedEvent.end)
+                // end: formatTime(selectedEvent.end)
             });
         }
+        setLocalOpen(open);
+        console.log("This is the editedEvent:", editedEvent);
         console.log("This is the selectedEvent:", selectedEvent);
-    }, [selectedEvent]); // Need to put selectedEvent here so it actually displays in dialog. Page must not load with it yet?
+    }, [selectedEvent, open]); // Need to put selectedEvent here so it actually displays in dialog. Page must not load with it yet?
 
     return (
-        <div>
-            <dialog open={open} onClose={closeEditedEvent}>
-                <form onSubmit={submitEdits}>
-                    <label htmlFor="title">Piece</label><br />
-                    <select name="title" id="title" value={editedEvent.title} onChange={handleChange}>
+        <>
+            <Dialog open={localOpen}
+                onClose={closeEditedEvent}
+                PaperProps={{
+                    component: "form",
+                    onSubmit: submitEdits
+                }}
+            >
+                <DialogContent>
+                    <DialogTitle>Edit Calendar Event</DialogTitle>
+                    <InputLabel id="title-label">Piece</InputLabel><br />
+                    <Select sx={{ minWidth: 200, mb: 2 }} size="small" name="title" id="title" labelId="title-label" value={editedEvent.title} onChange={handleChange}>
                         {pieces.map(piece => (
-                            <option key={piece.id} value={piece.title}>{piece.title}</option>
+                            <MenuItem key={piece.id} value={piece.title}>{piece.title}</MenuItem>
                         ))}
-                    </select><br />
-                    <label htmlFor="date">Date</label><br />
-                    <input id="date" name="date" type="date" value={editedEvent.date} onChange={handleChange} /><br />
-                    <label htmlFor="start">Start</label><br />
-                    <input id="start" name="start" type="time" value={editedEvent.start} onChange={handleChange} /><br />
-                    <label htmlFor="end">End</label><br />
-                    <input id="end" name="end" type="time" value={editedEvent.end} onChange={handleChange} /><br />
-                    <button type="button" onClick={closeEditedEvent}>Cancel</button>
-                    <button onClick={deleteEvent} type="button">Delete Event</button>
-                    <button type="submit">Submit Changes</button>
+                    </Select><br />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker sx={{ mb: 2 }} slotProps={{ textField: { required: true, name: "date" } }} id="date" name="date" label="Date" type="date" value={editedEvent.date} onChange={handleDateChange} /><br />
+                    </LocalizationProvider>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <TimePicker sx={{ mb: 2 }} slotProps={{ textField: { required: true, name: "start" } }} id="start" name="start" label="Start" type="time" value={editedEvent.start} onChange={handleStartChange} /><br />
+                    </LocalizationProvider>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <TimePicker sx={{ mb: 2 }} slotProps={{ textField: { required: true, name: "end" } }} id="end" name="end" label="End" type="time" value={editedEvent.end} onChange={handleEndChange} /><br />
+                    </LocalizationProvider>
+                    <Button type="button" onClick={() => setLocalOpen(false)}>Cancel</Button>
+                    <Button color="error" onClick={deleteEvent} type="button">Delete Event</Button>
+                    <Button type="submit">Submit Changes</Button>
                     {selectedEvent.practice_plan_id ?
-                        <button type="button" onClick={goToPracticePlan}>Go to Practice Plan</button> :
-                        <button type="button" onClick={addPracticePlan}>Add Practice Plan</button>
+                        <Button type="button" onClick={goToPracticePlan}>Go to Practice Plan</Button> :
+                        <Button type="button" onClick={addPracticePlan}>Add Practice Plan</Button>
                     }
-                </form>
-            </dialog>
+                </DialogContent>
+            </Dialog>
 
-        </div>
+        </>
     );
 }
 

@@ -102,10 +102,10 @@ router.post("/event", rejectUnauthenticated, (req, res) => {
             // the retrieve id = result.rows[0].id
             const newPlanId = result.rows[0].id;
             const newQueryText = `
-        INSERT INTO "calendar_events" ("title", "date", "start", "end", "user_id", "practice_plan_id")
-        VALUES ($1, $2, $3, $4, $5, $6);
+        INSERT INTO "calendar_events" ("title", "date", "start", "end", "user_id", "practice_plan_id", "piece_id")
+        VALUES ($1, $2, $3, $4, $5, $6, $7);
         `;
-            pool.query(newQueryText, [newEvent.title, newEvent.date, newEvent.start, newEvent.end, req.user.id, newPlanId])
+            pool.query(newQueryText, [newEvent.title, newEvent.date, newEvent.start, newEvent.end, req.user.id, newPlanId, newPlan.piece_id])
                 .then((result) => {
                     res.sendStatus(201);
                 }).catch((error) => {
