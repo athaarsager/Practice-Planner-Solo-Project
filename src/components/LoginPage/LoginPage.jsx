@@ -11,7 +11,7 @@ function LoginPage() {
   return (
     <Grid container display="flex" flexDirection="column" alignItems="center">
       <Grid item xs={10}>
-        <Box display="flex" flexDirection="column" justifyContent="center" sx={{ mt: 18 }}>
+        <Box display="flex" flexDirection="column" justifyContent="center" sx={{ mt: 14 }}>
           <LoginForm />
 
           <center>
