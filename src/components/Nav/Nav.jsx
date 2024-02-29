@@ -35,8 +35,13 @@ function Nav() {
     history.push("/dashboard/calendar");
   }
 
+  const logOut = () => {
+    dispatch({ type: "LOGOUT" });
+    history.push("/dashboard/pieces");
+  }
+
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+    <Box sx={{ width: 130 }} role="presentation" onClick={toggleDrawer(false)}>
       {/* If no user is logged in, show these links */}
       {!user.id && (
         // If there's no user, show login/registration links
@@ -47,15 +52,17 @@ function Nav() {
       {user.id &&
         <List>
           {["Pieces", "Calendar"].map((text, index) => (
-            <Link to={`/dashboard/${text}`}>
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            </Link>
+            <ListItem key={text} disablePadding>
+              <ListItemButton onClick={() => history.push(`/dashboard/${text}`)}>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
           ))}
-          <LogOutButton className="navLink" />
+          <ListItem disablePadding>
+            <ListItemButton onClick={logOut}>
+              <ListItemText primary="Log Out" />
+            </ListItemButton>
+          </ListItem>
         </List>
       }
     </Box>
@@ -64,18 +71,19 @@ function Nav() {
   return (
     <Box className="nav">
       <Typography variant="h5" className="nav-title">Practice Planner</Typography>
+      {/* The sx props passed to the box here create conditional rendering for the hamburger menu */}
       <Box sx={{ display: { xs: "block", md: "none" } }}>
         <IconButton
           color="inherit"
           aria-label="open drawer"
           onClick={toggleDrawer(true)}>
-          <MenuIcon sx={{ color: "#f7f7f7"}} />
+          <MenuIcon sx={{ color: "#f7f7f7" }} />
         </IconButton>
-        <Drawer open={open} onClose={toggleDrawer(false)}>
+        <Drawer open={open} anchor={"right"} onClose={toggleDrawer(false)}>
           {DrawerList}
         </Drawer>
       </Box>
-      <Box sx={{ display: {xs: "none", md: "block"}}}>
+      <Box sx={{ display: { xs: "none", md: "block" } }}>
         {/* If no user is logged in, show these links */}
         {!user.id && (
           // If there's no user, show login/registration links

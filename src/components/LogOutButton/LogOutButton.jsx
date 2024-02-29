@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import Button from "@mui/material/Button";
 
 function LogOutButton(props) {
   const dispatch = useDispatch();
