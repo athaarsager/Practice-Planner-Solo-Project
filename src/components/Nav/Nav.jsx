@@ -69,7 +69,7 @@ function Nav() {
           color="inherit"
           aria-label="open drawer"
           onClick={toggleDrawer(true)}>
-          <MenuIcon />
+          <MenuIcon sx={{ color: "#f7f7f7"}} />
         </IconButton>
         <Drawer open={open} onClose={toggleDrawer(false)}>
           {DrawerList}
