@@ -61,7 +61,7 @@ function EditPlan() {
                         <TextField sx={{ mb: 2 }} id="plan" name="plan" fullWidth multiline minRows={3} type="text" placeholder="Your Answer Here" size="100" value={responses.plan} onChange={handleChange} />
                         <InputLabel sx={{ mb: .5, textWrap: "wrap" }} id="goal-label">What is your goal for the end of the practice session? e.g. runs without mistakes, target metronome marking, etc.</InputLabel>
                         <TextField sx={{ mb: 2 }} id="goal" name="goal" fullWidth multiline minRows={3} type="text" placeholder="Your Answer Here" size="100" value={responses.goal} onChange={handleChange} /><br />
-                        <Button sx={{ mb: 2 }} type="button" onClick={() => history.goBack()}>Back</Button>
+                        <Button sx={{ mb: 2, mr: 1  }} type="button" onClick={() => history.goBack()}>Back</Button>
                         <Button sx={{ mb: 2 }} variant="contained" type="submit">Submit Changes</Button>
                     </Box>
                     </Grid>
