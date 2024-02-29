@@ -113,7 +113,9 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
             Swal.fire({
                 title: "Success!",
                 text: "Calendar Event Created!",
-                icon: "success"
+                icon: "success",
+                iconColor: "#26a68c",
+                confirmButtonColor: "#2680A6"
             });
         } else {
             console.log("This is the payload being sent to the add event saga:", payload);
