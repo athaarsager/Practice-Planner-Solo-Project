@@ -1,13 +1,14 @@
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import Button from "@mui/material/Button";
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { FeaturedPlayListOutlined } from "@mui/icons-material";
+import { CalendarMonthOutlined } from "@mui/icons-material";
 import Box from "@mui/material/Box";
+import { Link as RouterLink, HashRouter as Router } from "react-router-dom";
+
+
 
 function DashboardFooter() {
     const history = useHistory();
@@ -17,10 +18,10 @@ function DashboardFooter() {
     const goToCalendar = () => {
         dispatch({ type: "UNSET_TO_DAYVIEW" });
         dispatch({ type: "CLEAR_CALENDAR_DATE_INFO" });
-        history.push("/dashboard/calendar");
     }
     return (
         <Box sx={{ mb: 2 }}>
+            <Router>
             <BottomNavigation
                 showLabels
                 value={value}
@@ -28,12 +29,10 @@ function DashboardFooter() {
                     setValue(newValue);
                 }}
                 > 
-                <BottomNavigationAction label="Dashboard" icon={<RestoreIcon />} />
-                <BottomNavigationAction label="Calendar" icon={<FavoriteIcon />} />
-                <BottomNavigationAction label="Login" icon={<LocationOnIcon />} />
-                <Button color="secondary" onClick={() => history.push("/dashboard/pieces")}>Dashboard</Button>
-                <Button color="secondary" onClick={goToCalendar}>Calendar</Button>
+                <BottomNavigationAction component={RouterLink} value="/dashboard/pieces" to="/dashboard/pieces" label="Dashboard" icon={<FeaturedPlayListOutlined />} />
+                <BottomNavigationAction onClick={goToCalendar} component={RouterLink} value="/dashboard/calendar" to="/dashboard/calendar" label="Calendar" icon={<CalendarMonthOutlined />} />
             </BottomNavigation>
+            </Router>
         </Box>
     );
 }
