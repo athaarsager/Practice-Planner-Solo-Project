@@ -39,8 +39,9 @@ function ReviewPlan() {
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
+            iconColor: "#ffa726",
+            confirmButtonColor: "#2680A6",
+            cancelButtonColor: "#f44336",
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
@@ -49,7 +50,9 @@ function ReviewPlan() {
                 Swal.fire({
                     title: "Deleted!",
                     text: "Your practice plan has been deleted.",
-                    icon: "success"
+                    icon: "success",
+                    iconColor: "#26a68c",
+                    confirmButtonColor: "#2680A6"
                 });
             }
         });
