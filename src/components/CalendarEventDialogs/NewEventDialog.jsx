@@ -141,15 +141,8 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
         if (pieceId) {
             dispatch({ type: "FETCH_PIECES"});
             // dispatch({ type: "FETCH_SINGLE_PIECE", payload: pieceId });
-            console.log("In if statement. This is the pieceId:", pieceId);
-            console.log("In if statement. This is the selectedPiece:", selectedPiece);
         }
-        console.log("In useEffect. This is the selectedPiece.title:", selectedPiece.title);
-        console.log("This is the length of selectedPiece:", Object.keys(selectedPiece).length);
         setNewEvent((state) => ({ ...state, title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : "" }));
-        console.log("In useEffect. This is the value of the new event:", newEvent);
-        // console.log("This is the length of selectedPiece:", Object.keys(selectedPiece).length);
-        // console.log("This is the value of selectedPiece:", selectedPiece);
     }, [dispatch, selectedPiece]);
 
     return (
