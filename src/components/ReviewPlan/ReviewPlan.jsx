@@ -82,12 +82,12 @@ function ReviewPlan() {
                         <Typography sx={{ mb: 1 }} variant="body2">{selectedPlan.goal}</Typography>
                         <Button onClick={() => history.goBack()}>Back</Button>
                         <Button onClick={() => history.push(`/${pieceId}/practice_entries/review_plan/${planId}/edit`)}>Edit</Button>
-                        {!selectedPlan.calendar_event_id ?
+                    </Paper>
+                    {!selectedPlan.calendar_event_id ?
                             <Button onClick={() => setAddNewEventIsOpen(true)}>Add To Calendar</Button> :
                             <Button onClick={goToCalendarPage}>View Calendar Event</Button>
                         }
-                    </Paper>
-                    <Button color="error" data-planid={selectedPlan.id} onClick={deletePlan}>Delete Plan</Button>
+                    <Button sx={{ mb: 2 }} color="error" data-planid={selectedPlan.id} onClick={deletePlan}>Delete Plan</Button>
                     <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} onPracticePlanScreen={onPracticePlanScreen} responses={responses} />
                 </Box>
             </Grid>
