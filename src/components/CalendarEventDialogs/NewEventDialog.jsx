@@ -173,7 +173,7 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
                         <TimePicker sx={{ mb: 2 }} slotProps={{ textField: { required: true, name: "start" } }} label="Start" id="start" type="time" value={newEvent.start} onChange={handleStartChange} required /><br />
                     </LocalizationProvider>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <TimePicker sx={{ mb: 2 }} slotProps={{ textField: { required: true, name: "end" } }} label="End" id="end" type="time" value={newEvent.end} onChange={handleEndChange} />
+                        <TimePicker sx={{ mb: 2 }} slotProps={{ textField: { required: true, name: "end" } }} label="End" id="end" type="time" value={newEvent.end} onChange={handleEndChange} required/>
                     </LocalizationProvider>< br />
                     <Button type="button" color="warning" onClick={() => closeNewEvent()}>Cancel</Button>
                     <Button type="submit">Submit</Button>
