@@ -64,16 +64,18 @@ function Nav() {
   return (
     <Box className="nav">
       <Typography variant="h5" className="nav-title">Practice Planner</Typography>
-      <IconButton
-      color="inherit"
-      aria-label="open drawer"
-      onClick={toggleDrawer(true)}>
-        <MenuIcon />
-      </IconButton>
-      <Drawer open={open} onClose={toggleDrawer(false)}>
-        {DrawerList}
-      </Drawer>
-      <Box>
+      <Box sx={{ display: { xs: "block", md: "none" } }}>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={toggleDrawer(true)}>
+          <MenuIcon />
+        </IconButton>
+        <Drawer open={open} onClose={toggleDrawer(false)}>
+          {DrawerList}
+        </Drawer>
+      </Box>
+      <Box sx={{ display: {xs: "none", md: "block"}}}>
         {/* If no user is logged in, show these links */}
         {!user.id && (
           // If there's no user, show login/registration links
