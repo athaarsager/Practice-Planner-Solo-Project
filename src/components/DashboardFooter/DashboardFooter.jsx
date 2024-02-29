@@ -9,8 +9,6 @@ import { CalendarMonthOutlined } from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import { Link as RouterLink, HashRouter as Router } from "react-router-dom";
 
-
-
 function DashboardFooter() {
     const history = useHistory();
     const dispatch = useDispatch();
