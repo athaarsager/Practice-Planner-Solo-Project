@@ -17,7 +17,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { FeaturedPlayListOutlined } from "@mui/icons-material";
 import { CalendarMonthOutlined } from "@mui/icons-material";
-import { LogoutOutlined } from '@mui/icons-material';
+import { LogoutOutlined } from '@mui/icons-material/';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
@@ -71,6 +71,14 @@ function Nav() {
                 <LogoutOutlined />
               </ListItemIcon>
               <ListItemText primary="Log Out" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton onClick={toggleDrawer}>
+              <ListItemIcon>
+                <CloseIcon />
+              </ListItemIcon>
+              <ListItemText primary="Close" />
             </ListItemButton>
           </ListItem>
         </List>
