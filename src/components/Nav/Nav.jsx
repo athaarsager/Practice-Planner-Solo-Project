@@ -11,9 +11,13 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import { FeaturedPlayListOutlined } from "@mui/icons-material";
+import { CalendarMonthOutlined } from "@mui/icons-material";
+import { LogoutOutlined } from '@mui/icons-material';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
@@ -41,7 +45,7 @@ function Nav() {
   }
 
   const DrawerList = (
-    <Box sx={{ width: 130 }} role="presentation" onClick={toggleDrawer(false)}>
+    <Box sx={{ width: 180 }} role="presentation" onClick={toggleDrawer(false)}>
       {/* If no user is logged in, show these links */}
       {!user.id && (
         // If there's no user, show login/registration links
@@ -54,12 +58,18 @@ function Nav() {
           {["Pieces", "Calendar"].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton onClick={() => history.push(`/dashboard/${text}`)}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <FeaturedPlayListOutlined /> : <CalendarMonthOutlined />}
+                </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>
           ))}
           <ListItem disablePadding>
             <ListItemButton onClick={logOut}>
+              <ListItemIcon>
+                <LogoutOutlined />
+              </ListItemIcon>
               <ListItemText primary="Log Out" />
             </ListItemButton>
           </ListItem>
