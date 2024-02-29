@@ -51,8 +51,8 @@ function NewPracticePlan() {
         if (newPlanProblems !== "") {
             setResponses((state) => ({ ...state, problems: newPlanProblems }));
         }
-        console.log("In NewPracticePlan.jsx. This is the selectedPiece:", selectedPiece);
-        console.log("This is the pieceId:", pieceId);
+        // console.log("In NewPracticePlan.jsx. This is the selectedPiece:", selectedPiece);
+        // console.log("This is the pieceId:", pieceId);
         if (Object.keys(selectedPiece).length === 0) {
             dispatch({ type: "FETCH_SINGLE_PIECE", payload: pieceId });
         }
