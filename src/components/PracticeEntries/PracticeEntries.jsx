@@ -58,12 +58,10 @@ function PracticeEntries() {
     };
 
     useEffect(() => {
-        console.log("This is the selected piece:", selectedPiece);
         dispatch({ type: "FETCH_PLANS", payload: pieceId });
         if (Object.keys(selectedPiece).length === 0) {
             dispatch({ type: "FETCH_SINGLE_PIECE", payload: pieceId });
         }
-        console.log("In useEffect, updating character limit")
         updateCharacterLimit();
         // Update the character limit when the window is resized
 
