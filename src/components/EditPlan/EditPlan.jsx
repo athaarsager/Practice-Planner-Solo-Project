@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 
 function EditPlan() {
     const dispatch = useDispatch();
@@ -40,28 +41,33 @@ function EditPlan() {
 
     useEffect(() => {
         dispatch({ type: "FETCH_SELECTED_PLAN", payload: planId });
-        if (Object.keys(selectedPiece).length === 0)
-        {
+        if (Object.keys(selectedPiece).length === 0) {
             dispatch({ type: "FETCH_SINGLE_PIECE", payload: pieceId });
         }
     }, []);
 
     return (
-        <Box display="flex" flexDirection="column" alignItems="center">
-            <Typography sx={{ mb: 2 }} variant="h4">Edit Plan for {selectedPiece.title}</Typography>
-            <Box component="form" onSubmit={submitEdits}>
-                <InputLabel sx={{ mb: .5 }} id="section-label">What section are you working on?</InputLabel>
-                <TextField sx={{ mb: 2 }} id="section" name="section" fullWidth multiline minRows={2} type="text" placeholder="Your Answer Here" size="100" value={responses.section} onChange={handleChange} />
-                <InputLabel sx={{ mb: .5 }} id="problems-label">What are the problems you need to solve/issues you need to address in this section?</InputLabel>
-                <TextField sx={{ mb: 2 }} id="problems" name="problems" fullWidth multiline minRows={3} type="text" placeholder="Your Answer Here" size="100" value={responses.problems} onChange={handleChange} />
-                <InputLabel sx={{ mb: .5 }} id="plan-label">How will you solve these problems/address these issues?</InputLabel>
-                <TextField sx={{ mb: 2 }} id="plan" name="plan" fullWidth multiline minRows={3} type="text" placeholder="Your Answer Here" size="100" value={responses.plan} onChange={handleChange} />
-                <InputLabel sx={{ mb: .5 }} id="goal-label">What is your goal for the end of the practice session? e.g. runs without mistakes, target metronome marking, etc.</InputLabel>
-                <TextField sx={{ mb: 2 }} id="goal" name="goal" fullWidth multiline minRows={3} type="text" placeholder="Your Answer Here" size="100" value={responses.goal} onChange={handleChange} /><br />
-                <Button type="button" onClick={() => history.goBack()}>Back</Button>
-                <Button variant="contained" type="submit">Submit Changes</Button>
-            </Box>
-        </Box>
+        <Grid container display="flex" flexDirection="column" alignItems="center">
+            <Grid item xs={10}>
+                <Box display="flex" flexDirection="column" alignItems="center">
+                    <Grid item xs={10}>
+                    <Typography sx={{ mb: 2 }} variant="h4">Edit Plan for {selectedPiece.title}</Typography>
+                    <Box component="form" onSubmit={submitEdits}>
+                        <InputLabel sx={{ mb: .5, textWrap: "wrap" }} id="section-label">What section are you working on?</InputLabel>
+                        <TextField sx={{ mb: 2 }} id="section" name="section" fullWidth multiline minRows={2} type="text" placeholder="Your Answer Here" size="100" value={responses.section} onChange={handleChange} />
+                        <InputLabel sx={{ mb: .5, textWrap: "wrap" }} id="problems-label">What are the problems you need to solve/issues you need to address in this section?</InputLabel>
+                        <TextField sx={{ mb: 2 }} id="problems" name="problems" fullWidth multiline minRows={3} type="text" placeholder="Your Answer Here" size="100" value={responses.problems} onChange={handleChange} />
+                        <InputLabel sx={{ mb: .5, textWrap: "wrap" }} id="plan-label">How will you solve these problems/address these issues?</InputLabel>
+                        <TextField sx={{ mb: 2 }} id="plan" name="plan" fullWidth multiline minRows={3} type="text" placeholder="Your Answer Here" size="100" value={responses.plan} onChange={handleChange} />
+                        <InputLabel sx={{ mb: .5, textWrap: "wrap" }} id="goal-label">What is your goal for the end of the practice session? e.g. runs without mistakes, target metronome marking, etc.</InputLabel>
+                        <TextField sx={{ mb: 2 }} id="goal" name="goal" fullWidth multiline minRows={3} type="text" placeholder="Your Answer Here" size="100" value={responses.goal} onChange={handleChange} /><br />
+                        <Button sx={{ mb: 2 }} type="button" onClick={() => history.goBack()}>Back</Button>
+                        <Button sx={{ mb: 2 }} variant="contained" type="submit">Submit Changes</Button>
+                    </Box>
+                    </Grid>
+                </Box>
+            </Grid>
+        </Grid>
     );
 }
 
