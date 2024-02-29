@@ -114,7 +114,7 @@ function Nav() {
         {user.id && (
           <>
             <Link className="navLink" to="/dashboard/pieces">
-              Dashboard
+              Pieces
             </Link>
 
             <NavLink className="navLink" onClick={goToCalendar} to="/dashboard/calendar">

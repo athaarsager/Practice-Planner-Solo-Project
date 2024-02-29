@@ -43,7 +43,7 @@ function DashboardFooter() {
                     setValue(newValue);
                 }}
                 > 
-                <BottomNavigationAction component={RouterLink} value={0} to="/dashboard/pieces" label="Dashboard" icon={<FeaturedPlayListOutlined />} />
+                <BottomNavigationAction component={RouterLink} value={0} to="/dashboard/pieces" label="Pieces" icon={<FeaturedPlayListOutlined />} />
                 <BottomNavigationAction onClick={goToCalendar} component={RouterLink} value={1} to="/dashboard/calendar" label="Calendar" icon={<CalendarMonthOutlined />} />
             </BottomNavigation>
             </Router>
