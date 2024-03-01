@@ -20,6 +20,7 @@ import { getFormControlLabelUtilityClasses } from "@mui/material";
 
 
 
+
 function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     const history = useHistory();
     const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     const pieces = useSelector(store => store.pieces);
     const selectedPlan = useSelector(store => store.selectedPlan);
     const pieceId = useParams().id;
+
 
     const [newEvent, setNewEvent] = useState({
         title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : "",
