@@ -68,13 +68,13 @@ function NewPracticePlan() {
                         <Typography sx={{ mb: 2 }} variant="h4">New Practice Plan for {selectedPiece.title}</Typography>
                         {/* Use css to inrease size of inputs. Also see what MUI provides */}
                         <Box component="form" onSubmit={submitPlan}>
-                            <InputLabel sx={{ mb: .5, textWrap: "wrap" }} id="section-label">What section are you working on?</InputLabel>
+                            <InputLabel sx={{ mb: 2, textWrap: "wrap" }} id="section-label">What section are you working on?</InputLabel>
                             <TextField sx={{ mb: 2 }} fullWidth multiline minRows={2} id="section" name="section" label="What section?" type="text" placeholder="Your Answer Here" size="100" value={responses.section} onChange={handleChange} required />
-                            <InputLabel sx={{ mb: .5, textWrap: "wrap" }} id="problems-label">What are the problems you need to solve/issues you need to address in this section?</InputLabel>
+                            <InputLabel sx={{ mb: 2, textWrap: "wrap" }} id="problems-label">What are the problems you need to solve/issues you need to address in this section?</InputLabel>
                             <TextField sx={{ mb: 2 }} fullWidth multiline minRows={3} id="problems" name="problems" label="What problem?" type="text" placeholder="Your Answer Here" size="100" value={responses.problems} onChange={handleChange} required />
-                            <InputLabel sx={{ mb: .5, textWrap: "wrap" }} id="plan-label">How will you solve these problems/address these issues?</InputLabel>
+                            <InputLabel sx={{ mb: 2, textWrap: "wrap" }} id="plan-label">How will you solve these problems/address these issues?</InputLabel>
                             <TextField sx={{ mb: 2 }} fullWidth multiline minRows={3} id="plan" name="plan" label="How to solve?" type="text" placeholder="Your Answer Here" size="100" value={responses.plan} onChange={handleChange} required />
-                            <InputLabel sx={{ mb: .5, textWrap: "wrap" }} id="goal-label">What is your goal for the end of the practice session? e.g. runs without mistakes, target metronome marking, etc.</InputLabel>
+                            <InputLabel sx={{ mb: 2, textWrap: "wrap" }} id="goal-label">What is your goal for the end of the practice session? e.g. runs without mistakes, target metronome marking, etc.</InputLabel>
                             <TextField sx={{ mb: 2 }} fullWidth multiline minRows={3} id="goal" name="goal" label="Your goal?" type="text" placeholder="Your Answer Here" size="100" value={responses.goal} onChange={handleChange} required />
                             {!selectedPiece.event_exists &&
                                 <Box sx={{ mb: 2 }}>
