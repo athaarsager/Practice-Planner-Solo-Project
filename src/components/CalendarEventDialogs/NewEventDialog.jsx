@@ -144,6 +144,8 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
             dispatch({ type: "FETCH_PIECES"});
             // dispatch({ type: "FETCH_SINGLE_PIECE", payload: pieceId });
         }
+        console.log("In newEvent useEffect");
+        console.log("This is the selected plan", selectedPlan);
         setNewEvent((state) => ({ ...state, title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : "" }));
     }, [dispatch, selectedPiece]);
 

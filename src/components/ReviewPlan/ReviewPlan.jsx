@@ -66,6 +66,7 @@ function ReviewPlan() {
         if (Object.keys(selectedPiece).length === 0) {
             dispatch({ type: "FETCH_SINGLE_PIECE", payload: pieceId });
         }
+        return () => dispatch( {type: "CLEAR_SELECTED_PLAN"} );
 
     }, [dispatch]); // Putting dispatch here fixes infinite loop. Not 100% sure on the logic...
 
