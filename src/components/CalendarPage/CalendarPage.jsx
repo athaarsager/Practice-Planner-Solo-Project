@@ -45,6 +45,9 @@ export default function CalendarPage() {
     const calendarEvents = useSelector(store => store.calendarEvents);
 
     const viewEventDetails = (eventInfo) => {
+        if (!dayView) {
+            return;
+        }
         setSelectedEvent(eventInfo.event.id); // just grab the id from here? eventInfo.event.id?
         // is this even the right action type? What am I trying to do here?
         dispatch({ type: "FETCH_SELECTED_EVENT", payload: parseInt(eventInfo.event.id) });
