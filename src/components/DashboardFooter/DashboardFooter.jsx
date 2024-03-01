@@ -28,6 +28,7 @@ function DashboardFooter() {
     const goToCalendar = () => {
         dispatch({ type: "UNSET_TO_DAYVIEW" });
         dispatch({ type: "CLEAR_CALENDAR_DATE_INFO" });
+        history.push("/dashboard/calendar");
     }
 
     useEffect(() => {
