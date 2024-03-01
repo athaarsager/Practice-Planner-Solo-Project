@@ -67,7 +67,7 @@ function Dashboard() {
                         <CardActionArea>
                             <CardContent sx={{ display: "flex", flexDirection: "column", alignItems: "center" }} data-pieceid={piece.id} data-piecetitle={piece.title} onClick={goToPiecePlans}>
                             <Typography variant="body1" data-pieceid={piece.id} data-piecetitle={piece.title}>{piece.title}</Typography>
-                            <Typography variant="body1" data-pieceid={piece.id} data-piecetitle={piece.title}>By {piece.composer}</Typography>
+                            <Typography variant="body2" data-pieceid={piece.id} data-piecetitle={piece.title}>By {piece.composer}</Typography>
                             </CardContent>
                         </CardActionArea>
                         <Button color="error" data-pieceid={piece.id} onClick={deletePiece}>Delete Piece</Button><br />
