@@ -1,9 +1,11 @@
 :root {
     --fc-daygrid-event-dot-width: 5px;
+    --fc-button-bg-color: #2680A6;
+    --fc-button-border-color: #2680A6;
 }
 
 .calendar-container {
-    width: 80vh;
+    width: 90vh;
 }
 
 .container-container {
