@@ -15,6 +15,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import Box from "@mui/material/Box";
 import dayjs from "dayjs";
 
 function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
@@ -125,8 +126,9 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
+            iconColor: "#ffa726",
+            confirmButtonColor: "#2680A6",
+            cancelButtonColor: "#f44336",
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
@@ -135,7 +137,9 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                 Swal.fire({
                     title: "Deleted!",
                     text: "Your practice session has been deleted.",
-                    icon: "success"
+                    icon: "success",
+                    iconColor: "#26a68c",
+                    confirmButtonColor: "#2680A6"
                 });
             }
             setLocalOpen(true);
@@ -183,6 +187,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                 }}
             >
                 <DialogContent>
+
                     <DialogTitle>Edit Calendar Event</DialogTitle>
                     <InputLabel id="title-label">Piece</InputLabel><br />
                     <Select sx={{ minWidth: 200, mb: 2 }} size="small" name="title" id="title" labelId="title-label" value={editedEvent.title} onChange={handleChange}>
@@ -199,16 +204,18 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <TimePicker sx={{ mb: 2 }} slotProps={{ textField: { required: true, name: "end" } }} id="end" name="end" label="End" type="time" value={editedEvent.end} onChange={handleEndChange} /><br />
                     </LocalizationProvider>
-                    <Button type="button" onClick={() => setLocalOpen(false)}>Cancel</Button>
-                    <Button color="error" onClick={deleteEvent} type="button">Delete Event</Button>
                     <Button type="submit">Submit Changes</Button>
                     {selectedEvent.practice_plan_id ?
-                        <Button type="button" onClick={goToPracticePlan}>Go to Practice Plan</Button> :
+                        <Button type="button" onClick={goToPracticePlan}>View Practice Plan</Button> :
                         <Button type="button" onClick={addPracticePlan}>Add Practice Plan</Button>
                     }
+                    <Box>
+                        <Button type="button" onClick={() => setLocalOpen(false)}>Cancel</Button>
+                        <Button color="error" onClick={deleteEvent} type="button">Delete Event</Button>
+                    </Box>
+
                 </DialogContent>
             </Dialog>
-
         </>
     );
 }

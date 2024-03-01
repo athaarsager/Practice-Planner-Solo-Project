@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import Swal from "sweetalert2";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -16,6 +16,7 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
+import { getFormControlLabelUtilityClasses } from "@mui/material";
 
 
 
@@ -27,6 +28,7 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     const selectedPiece = useSelector(store => store.selectedPiece);
     const pieces = useSelector(store => store.pieces);
     const selectedPlan = useSelector(store => store.selectedPlan);
+    const pieceId = useParams().id;
 
     const [newEvent, setNewEvent] = useState({
         title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : "",
@@ -113,7 +115,9 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
             Swal.fire({
                 title: "Success!",
                 text: "Calendar Event Created!",
-                icon: "success"
+                icon: "success",
+                iconColor: "#26a68c",
+                confirmButtonColor: "#2680A6"
             });
         } else {
             console.log("This is the payload being sent to the add event saga:", payload);
@@ -134,8 +138,12 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     }
 
     useEffect(() => {
+        if (pieceId) {
+            dispatch({ type: "FETCH_PIECES"});
+            // dispatch({ type: "FETCH_SINGLE_PIECE", payload: pieceId });
+        }
         setNewEvent((state) => ({ ...state, title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : "" }));
-    }, [selectedPiece]);
+    }, [dispatch, selectedPiece]);
 
     return (
         <>
@@ -165,7 +173,7 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
                         <TimePicker sx={{ mb: 2 }} slotProps={{ textField: { required: true, name: "start" } }} label="Start" id="start" type="time" value={newEvent.start} onChange={handleStartChange} required /><br />
                     </LocalizationProvider>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <TimePicker sx={{ mb: 2 }} slotProps={{ textField: { required: true, name: "end" } }} label="End" id="end" type="time" value={newEvent.end} onChange={handleEndChange} />
+                        <TimePicker sx={{ mb: 2 }} slotProps={{ textField: { required: true, name: "end" } }} label="End" id="end" type="time" value={newEvent.end} onChange={handleEndChange} required/>
                     </LocalizationProvider>< br />
                     <Button type="button" color="warning" onClick={() => closeNewEvent()}>Cancel</Button>
                     <Button type="submit">Submit</Button>

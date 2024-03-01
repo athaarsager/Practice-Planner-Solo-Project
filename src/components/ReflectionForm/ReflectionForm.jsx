@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 
 function ReflectionForm() {
     const dispatch = useDispatch();
@@ -57,22 +58,31 @@ function ReflectionForm() {
     }, [selectedReflection]);
 
     return (
-        <Box display="flex" flexDirection="column" alignItems="center">
-            <Typography sx={{ mb: 2 }} variant="h4">Reflection</Typography>
-            <Box>
-                
-                <Box component="form" onSubmit={submitReflection}>
-                    <TextField sx={{ mb: 2 }} fullWidth multiline minRows={4} id="went-well" name="went-well" label="What went well this session?" type="text" placeholder="Your Answer Here!" value={wentWell} onChange={(e) => setWentWell(e.target.value)} required/>
-                    <TextField sx={{ mb: 2 }} fullWidth multiline minRows={4} id="needs_work" name="needs_work" label="What still needs work?" type="text" placeholder="Your Answer Here!" value={needsWork} onChange={(e) => setNeedsWork(e.target.value)} required/><br />
-                    <Button color="error" type="button" onClick={() => history.goBack()}>Back</Button>
-                    <Button onClick={exportToNewPlan}>Export to New Practice Plan</Button>
-                    {Object.keys(selectedReflection).length === 0 ?
-                        <Button type="submit">Save Reflection!</Button> :
-                        <Button type="submit">Save Edits!</Button>
-                    }
+        <Grid container display="flex" flexDirection="column" alignItems="center">
+            <Grid item xs={10}>
+                <Box display="flex" flexDirection="column" alignItems="center">
+                    <Grid item xs={10}>
+                        <Typography sx={{ mb: 2 }} variant="h4">Reflection</Typography>
+                        <Box>
+                            <Box component="form" onSubmit={submitReflection}>
+                                <TextField sx={{ mb: 2 }} fullWidth multiline minRows={4} id="went-well" name="went-well" label="What went well this session?" type="text" placeholder="Your Answer Here!" value={wentWell} onChange={(e) => setWentWell(e.target.value)} required />
+                                <TextField sx={{ mb: 2 }} fullWidth multiline minRows={4} id="needs_work" name="needs_work" label="What still needs work?" type="text" placeholder="Your Answer Here!" value={needsWork} onChange={(e) => setNeedsWork(e.target.value)} required /><br />
+                                <Box sx={{ mb: 1 }} display="flex" justifyContent="center">
+                                    <Button color="error" type="button" onClick={() => history.goBack()}>Back</Button>
+                                    <Button onClick={exportToNewPlan}>Export to New Plan</Button>
+                                </Box>
+                                <Box display="flex" justifyContent="center">
+                                    {Object.keys(selectedReflection).length === 0 ?
+                                        <Button variant="contained" type="submit">Save Reflection!</Button> :
+                                        <Button variant="contained" type="submit">Save Edits!</Button>
+                                    }
+                                </Box>
+                            </Box>
+                        </Box>
+                    </Grid>
                 </Box>
-            </Box>
-        </Box>
+            </Grid>
+        </Grid>
     );
 }
 

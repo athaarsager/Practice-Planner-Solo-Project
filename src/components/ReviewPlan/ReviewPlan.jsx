@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 
 function ReviewPlan() {
     const dispatch = useDispatch();
@@ -38,8 +39,9 @@ function ReviewPlan() {
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
+            iconColor: "#ffa726",
+            confirmButtonColor: "#2680A6",
+            cancelButtonColor: "#f44336",
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
@@ -48,7 +50,9 @@ function ReviewPlan() {
                 Swal.fire({
                     title: "Deleted!",
                     text: "Your practice plan has been deleted.",
-                    icon: "success"
+                    icon: "success",
+                    iconColor: "#26a68c",
+                    confirmButtonColor: "#2680A6"
                 });
             }
         });
@@ -59,35 +63,38 @@ function ReviewPlan() {
 
         dispatch({ type: "FETCH_SELECTED_PLAN", payload: planId });
         console.log("This is the selectedPlan:", selectedPlan);
-        if (Object.keys(selectedPiece).length === 0)
-        {
+        if (Object.keys(selectedPiece).length === 0) {
             dispatch({ type: "FETCH_SINGLE_PIECE", payload: pieceId });
         }
 
     }, [dispatch]); // Putting dispatch here fixes infinite loop. Not 100% sure on the logic...
 
     return (
-        <Box display="flex" flexDirection="column" alignItems="center">
-            <Typography sx={{ mb: 3 }} variant="h4">Review plan for {selectedPiece.title}</Typography>
-            <Paper sx={{ paddingInline: 5, paddingTop: 2 }}>
-                <Typography variant="body1"><strong>What section are you working on?</strong></Typography>
-                <Typography sx={{ mb: 1 }} variant="body2">{selectedPlan.section}</Typography>
-                <Typography variant="body1"><strong>What are the problems you need to solve/issues you need to address in this section?</strong></Typography>
-                <Typography sx={{ mb: 1 }} variant="body2">{selectedPlan.problems}</Typography>
-                <Typography variant="body1"><strong>How will you solve these problems/adderss these issues?</strong></Typography>
-                <Typography sx={{ mb: 1}} variant="body2">{selectedPlan.plan}</Typography>
-                <Typography variant="body1"><strong>What is your goal for the end of the practice session?</strong></Typography>
-                <Typography sx={{ mb: 1 }} variant="body2">{selectedPlan.goal}</Typography>
-                <Button onClick={() => history.goBack()}>Back</Button>
-                <Button onClick={() => history.push(`/${pieceId}/practice_entries/review_plan/${planId}/edit`)}>Edit Plan</Button>
-                {!selectedPlan.calendar_event_id ?
-                    <Button onClick={() => setAddNewEventIsOpen(true)}>Add Calendar Event</Button> :
-                    <Button onClick={goToCalendarPage}>View Calendar Event</Button>
-                }
-                <Button color="error" data-planid={selectedPlan.id} onClick={deletePlan}>Delete Plan</Button>
-            </Paper>
-            <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} onPracticePlanScreen={onPracticePlanScreen} responses={responses} />
-        </Box>
+        <Grid container display="flex" flexDirection="column" alignItems="center">
+            <Grid item xs={10}>
+                <Box display="flex" flexDirection="column" alignItems="center">
+                    <Typography sx={{ mb: 3 }} variant="h4">Review plan for {selectedPiece.title}</Typography>
+                    <Paper sx={{ paddingInline: 5, paddingTop: 2, maxWidth: 800, mb: 2 }}>
+                        <Typography variant="body1"><strong>What section are you working on?</strong></Typography>
+                        <Typography sx={{ mb: 1 }} variant="body2">{selectedPlan.section}</Typography>
+                        <Typography variant="body1"><strong>What are the problems you need to solve/issues you need to address in this section?</strong></Typography>
+                        <Typography sx={{ mb: 1 }} variant="body2">{selectedPlan.problems}</Typography>
+                        <Typography variant="body1"><strong>How will you solve these problems/adderss these issues?</strong></Typography>
+                        <Typography sx={{ mb: 1 }} variant="body2">{selectedPlan.plan}</Typography>
+                        <Typography variant="body1"><strong>What is your goal for the end of the practice session?</strong></Typography>
+                        <Typography sx={{ mb: 1 }} variant="body2">{selectedPlan.goal}</Typography>
+                        <Button onClick={() => history.goBack()}>Back</Button>
+                        <Button onClick={() => history.push(`/${pieceId}/practice_entries/review_plan/${planId}/edit`)}>Edit</Button>
+                    </Paper>
+                    {!selectedPlan.calendar_event_id ?
+                            <Button onClick={() => setAddNewEventIsOpen(true)}>Add To Calendar</Button> :
+                            <Button onClick={goToCalendarPage}>View Calendar Event</Button>
+                        }
+                    <Button sx={{ mb: 2 }} color="error" data-planid={selectedPlan.id} onClick={deletePlan}>Delete Plan</Button>
+                    <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} onPracticePlanScreen={onPracticePlanScreen} responses={responses} />
+                </Box>
+            </Grid>
+        </Grid>
     );
 }
 export default ReviewPlan;
