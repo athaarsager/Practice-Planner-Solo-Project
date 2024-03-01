@@ -1,9 +1,14 @@
 :root {
     --fc-daygrid-event-dot-width: 5px;
+    --fc-daygrid-event-dot-color: #2680A6;
+    --fc-button-bg-color: rgb(26, 89, 116);
+    --fc-button-border-color:rgb(26, 89, 116);
+    --fc-event-bg-color: #2680A6;
+    --fc-event-border-color: #2680A6;
 }
 
 .calendar-container {
-    width: 80vh;
+    width: 90vh;
 }
 
 .container-container {
@@ -15,4 +20,22 @@
 .fc .fc-daygrid-event {
     font-size: 10px;
     text-wrap: wrap;
+}
+
+div.fc-toolbar-chunk {
+    display: flex;
+}
+
+div.fc-header-toolbar.fc-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+button.fc-viewButton-button.fc-button.fc-button-primary {
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+
+#fc-dom-947.fc-toolbar-title {
+    margin-right: 10px;
 }

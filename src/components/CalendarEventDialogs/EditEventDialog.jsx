@@ -175,6 +175,7 @@ function EditEventDialog({ open, closeEditedEvent, selectedDate }) {
         setLocalOpen(open);
         console.log("This is the editedEvent:", editedEvent);
         console.log("This is the selectedEvent:", selectedEvent);
+        console.log("This is the event's practice plan id:", selectedEvent.practice_plan_id);
     }, [selectedEvent, open]); // Need to put selectedEvent here so it actually displays in dialog. Page must not load with it yet?
 
     return (

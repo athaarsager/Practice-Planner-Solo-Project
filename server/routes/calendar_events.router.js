@@ -69,6 +69,7 @@ router.post("/", rejectUnauthenticated, (req, res) => {
             console.log("This is the date:", req.body.date);
             console.log("This is the start:", req.body.start);
             console.log("This is the end:", req.body.end);
+            console.log("This is the practice plan id:", req.body.practice_plan_id);
             pool.query(newQueryText, [pieceId, req.body.title, req.body.date, req.body.start, req.body.end, req.user.id, req.body.practice_plan_id])
         .then(() => {
             res.sendStatus(201);

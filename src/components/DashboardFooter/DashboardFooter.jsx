@@ -28,17 +28,19 @@ function DashboardFooter() {
     const goToCalendar = () => {
         dispatch({ type: "UNSET_TO_DAYVIEW" });
         dispatch({ type: "CLEAR_CALENDAR_DATE_INFO" });
+        history.push("/dashboard/calendar");
     }
 
     useEffect(() => {
         setValue(routeToValue[location.pathname] || 0);
     }, [location]);
     return (
-        <Box sx={{ mb: 2 }}>
+        <Box sx={{ position: "fixed", bottom: 20 }}>
             <Router>
             <BottomNavigation
                 showLabels
                 value={value}
+                sx={{ border: "1px solid #2680A6", borderRadius: "10px" }}
                 onChange={(event, newValue) => {
                     setValue(newValue);
                 }}

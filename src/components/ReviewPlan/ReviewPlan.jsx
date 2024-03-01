@@ -16,6 +16,7 @@ function ReviewPlan() {
     const pieceId = useParams().id;
     const selectedPlan = useSelector(store => store.selectedPlan);
     const selectedPiece = useSelector(store => store.selectedPiece);
+    const calendarEvents = useSelector(store => store.calendarEvents);
     const [addNewEventIsOpen, setAddNewEventIsOpen] = useState(false);
     const closeNewEvent = () => setAddNewEventIsOpen(false);
     const onPracticePlanScreen = true; // Technically this is the review page, but this variable controls the functionality I want
@@ -66,8 +67,9 @@ function ReviewPlan() {
         if (Object.keys(selectedPiece).length === 0) {
             dispatch({ type: "FETCH_SINGLE_PIECE", payload: pieceId });
         }
+        return () => dispatch( {type: "CLEAR_SELECTED_PLAN"} );
 
-    }, [dispatch]); // Putting dispatch here fixes infinite loop. Not 100% sure on the logic...
+    }, [dispatch, calendarEvents]); // Putting dispatch here fixes infinite loop. Not 100% sure on the logic...
 
     return (
         <Grid container display="flex" flexDirection="column" alignItems="center">

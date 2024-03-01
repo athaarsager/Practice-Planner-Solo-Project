@@ -20,6 +20,7 @@ import { getFormControlLabelUtilityClasses } from "@mui/material";
 
 
 
+
 function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     const history = useHistory();
     const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
     const pieces = useSelector(store => store.pieces);
     const selectedPlan = useSelector(store => store.selectedPlan);
     const pieceId = useParams().id;
+
 
     const [newEvent, setNewEvent] = useState({
         title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : "",
@@ -132,7 +134,9 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
             Swal.fire({
                 title: "Success!",
                 text: "Calendar Event Created!",
-                icon: "success"
+                icon: "success",
+                iconColor: "#26a68c",
+                confirmButtonColor: "#2680A6"
             });
         }
     }
@@ -142,6 +146,8 @@ function NewEventDialog({ open, closeNewEvent, selectedDate, responses }) {
             dispatch({ type: "FETCH_PIECES"});
             // dispatch({ type: "FETCH_SINGLE_PIECE", payload: pieceId });
         }
+        console.log("In newEvent useEffect");
+        console.log("This is the selected plan", selectedPlan);
         setNewEvent((state) => ({ ...state, title: Object.keys(selectedPiece).length !== 0 ? selectedPiece.title : "" }));
     }, [dispatch, selectedPiece]);
 

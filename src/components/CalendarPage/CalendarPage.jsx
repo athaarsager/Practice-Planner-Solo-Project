@@ -13,6 +13,7 @@ import EditEventDialog from '../CalendarEventDialogs/EditEventDialog';
 import "./CalendarPage.css"
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 
 
 
@@ -47,7 +48,7 @@ export default function CalendarPage() {
         setSelectedEvent(eventInfo.event.id); // just grab the id from here? eventInfo.event.id?
         // is this even the right action type? What am I trying to do here?
         dispatch({ type: "FETCH_SELECTED_EVENT", payload: parseInt(eventInfo.event.id) });
-       
+
         setEditEventIsOpen(true);
 
     }
@@ -105,38 +106,46 @@ export default function CalendarPage() {
         // Can manually set height via props
         // Can also use aspectRatio to adjust height
         // Apparently you don't even need to re-size the height if you have the width selected
-        <Box display="flex" flexDirection="column" alignItems="center">
-            <Box className="calendar-container">
-                <FullCalendar
-                    ref={calendarRef}
-                    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                    initialView={dayView ? "timeGridDay" : "dayGridMonth"}
-                    events={calendarEvents}
-                    eventClick={viewEventDetails}
-                    // making the time display false here because it messes up the display if the event is on a Saturday
-                    // user will click event to view time
-                    displayEventTime={false}
-                    dateClick={switchView}
-                    // Creates custom button that I can use to toggle calendar view
-                    // has clearer text than the built-in button and lets me toggle the boolean used for conditional rendering
-                    customButtons={{
-                        viewButton: {
-                            text: "Full Calendar",
-                            click: switchView
+        <Grid container display="flex" flexDirection="column" alignItems="center">
+            <Grid item xs={10} >
+                <Box display="flex" flexDirection="column" alignItems="center">
+                    <Grid xs={12} sx={{ mb: 2 }} item className="calendar-container">
+                        <FullCalendar
+                            ref={calendarRef}
+                            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                            initialView={dayView ? "timeGridDay" : "dayGridMonth"}
+                            events={calendarEvents}
+                            eventClick={viewEventDetails}
+                            // making the time display false here because it messes up the display if the event is on a Saturday
+                            // user will click event to view time
+                            displayEventTime={false}
+                            dateClick={switchView}
+                            // Creates custom button that I can use to toggle calendar view
+                            // has clearer text than the built-in button and lets me toggle the boolean used for conditional rendering
+                            customButtons={{
+                                viewButton: {
+                                    text: "Back to Full Calendar",
+                                    click: switchView
+                                }
+                            }}
+                            // This adds the view navigation buttons
+                            headerToolbar={dayView ?
+                                { center: "viewButton" } :
+                                {}
+                            }
+                        />
+                        {dayView && 
+                        <Box display="flex" justifyContent="center">
+                        <Button color="success" variant="outlined" sx={{ mt: 2, mb: 10 }} onClick={() => setAddNewEventIsOpen(true)}>Schedule a Practice Session!</Button>
+                        </Box>
                         }
-                    }}
-                    // This adds the view navigation buttons
-                    headerToolbar={dayView ?
-                        { center: "viewButton" } :
-                        {}
-                    }
-                />
-                {dayView && <Button onClick={() => setAddNewEventIsOpen(true)}>Schedule a Practice Session</Button>}
-                <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} responses={responses} />
-                <EditEventDialog open={editEventIsOpen} closeEditedEvent={closeEditedEvent} selectedDate={selectedDate} />
-            </Box>
-            <DashboardFooter />
-        </Box>
+                        <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} responses={responses} />
+                        <EditEventDialog open={editEventIsOpen} closeEditedEvent={closeEditedEvent} selectedDate={selectedDate} />
+                    </Grid>
+                    <DashboardFooter />
+                </Box>
+            </Grid>
+        </Grid>
     );
 
 }
