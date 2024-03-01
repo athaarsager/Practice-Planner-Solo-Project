@@ -136,7 +136,7 @@ export default function CalendarPage() {
                         />
                         {dayView && 
                         <Box display="flex" justifyContent="center">
-                        <Button color="success" variant="outlined" sx={{ mt: 2 }} onClick={() => setAddNewEventIsOpen(true)}>Schedule a Practice Session!</Button>
+                        <Button color="success" variant="outlined" sx={{ mt: 2, mb: 10 }} onClick={() => setAddNewEventIsOpen(true)}>Schedule a Practice Session!</Button>
                         </Box>
                         }
                         <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} responses={responses} />
