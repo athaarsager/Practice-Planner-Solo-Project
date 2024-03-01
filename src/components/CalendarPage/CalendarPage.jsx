@@ -124,7 +124,7 @@ export default function CalendarPage() {
                             // has clearer text than the built-in button and lets me toggle the boolean used for conditional rendering
                             customButtons={{
                                 viewButton: {
-                                    text: "Full Calendar",
+                                    text: "Back to Full Calendar",
                                     click: switchView
                                 }
                             }}

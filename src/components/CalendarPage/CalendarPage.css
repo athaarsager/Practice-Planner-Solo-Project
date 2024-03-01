@@ -21,3 +21,17 @@
     font-size: 10px;
     text-wrap: wrap;
 }
+
+div.fc-toolbar-chunk {
+    display: flex;
+}
+
+div.fc-header-toolbar.fc-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+button.fc-viewButton-button.fc-button.fc-button-primary {
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
