@@ -1,8 +1,8 @@
 :root {
     --fc-daygrid-event-dot-width: 5px;
     --fc-daygrid-event-dot-color: #2680A6;
-    --fc-button-bg-color: #2680A6;
-    --fc-button-border-color: #2680A6;
+    --fc-button-bg-color: rgb(26, 89, 116);
+    --fc-button-border-color:rgb(26, 89, 116);
     --fc-event-bg-color: #2680A6;
     --fc-event-border-color: #2680A6;
 }
