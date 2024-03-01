@@ -74,7 +74,7 @@ function Dashboard() {
                     </Card>
                 </Box>
             ))}
-            <Button sx={{ mt: 2 }} variant="outlined" onClick={() => setAddPieceIsOpen(true)}>Add a New Piece Here!</Button><br />
+            <Button sx={{ mb: 8 }} variant="outlined" onClick={() => setAddPieceIsOpen(true)}>Add a New Piece Here!</Button><br />
             <AddPieceDialog open={addPieceIsOpen} closeAddPiece={closeAddPiece} />
             <DashboardFooter />
         </Box>

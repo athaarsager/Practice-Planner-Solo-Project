@@ -35,11 +35,12 @@ function DashboardFooter() {
         setValue(routeToValue[location.pathname] || 0);
     }, [location]);
     return (
-        <Box sx={{ mb: 2 }}>
+        <Box sx={{ position: "fixed", bottom: 20 }}>
             <Router>
             <BottomNavigation
                 showLabels
                 value={value}
+                sx={{ border: "1px solid #2680A6", borderRadius: "10px" }}
                 onChange={(event, newValue) => {
                     setValue(newValue);
                 }}
