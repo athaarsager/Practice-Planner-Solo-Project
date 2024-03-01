@@ -109,7 +109,7 @@ export default function CalendarPage() {
         <Grid container display="flex" flexDirection="column" alignItems="center">
             <Grid item xs={10} >
                 <Box display="flex" flexDirection="column" alignItems="center">
-                    <Grid xs={12} sx={{ mb: 3 }} item className="calendar-container">
+                    <Grid xs={12} sx={{ mb: 2 }} item className="calendar-container">
                         <FullCalendar
                             ref={calendarRef}
                             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -134,7 +134,7 @@ export default function CalendarPage() {
                                 {}
                             }
                         />
-                        {dayView && <Button onClick={() => setAddNewEventIsOpen(true)}>Schedule a Practice Session</Button>}
+                        {dayView && <Button variant="outlined" sx={{ mt: 2 }} onClick={() => setAddNewEventIsOpen(true)}>Schedule a Practice Session</Button>}
                         <NewEventDialog open={addNewEventIsOpen} closeNewEvent={closeNewEvent} selectedDate={selectedDate} responses={responses} />
                         <EditEventDialog open={editEventIsOpen} closeEditedEvent={closeEditedEvent} selectedDate={selectedDate} />
                     </Grid>
