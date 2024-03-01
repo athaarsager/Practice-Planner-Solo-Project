@@ -44,7 +44,7 @@ function NewPracticePlan() {
         } else {
             dispatch({ type: "ADD_PLAN", payload: responses });
         }
-        history.goBack();
+        history.push(`/${pieceId}/practice_entries`);
     }
 
     useEffect(() => {
