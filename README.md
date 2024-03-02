@@ -19,3 +19,19 @@ Note: calendar events and practice plans can be created independently of one ano
 ![New Practice Plan Page](./public/screenshots/new_plan_page.png)
 ![Reflection Page](./public/screenshots/reflection_page.png)
 ![Calendar Day View](./public/screenshots/calendar_day_view.png)
+
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/en/)
+- [Postgres](https://www.postgresql.org/download/)
+- [Postico](https://eggerapps.at/postico/v1.php)
+
+### Installation
+1. Create a database named `practice_planner`
+2. Use the queries in the `database.sql` file to create all the necessary tables. I recommend using Postico (linked above) to run those queries as that is what was used to create the queries. 
+3. Open up your editor of choice and run `npm install`.
+4. Run `npm run server` in your terminal.
+5. Run `npm run client` in your terminal.
+6. Click the link given by `npm run client` to opena new tab with the running project!
