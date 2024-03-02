@@ -1,124 +1,76 @@
-# Prime Solo Project - Starting Repo
+# PRACTICE PLANNER
 
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
+### Helpful Music Terminology (Appearing in this Document or the App Itself)
+* Piece: General term for any "piece of music," such as a song, etude, concerto, etc.
+* Practice Session: Time set aside to practice a piece of music.
+* Metronome: A device for helping musicians "keep time", that is, play at a consistent speed. Speed is notated in "bpm" (beats per minute).
+* Run: Can refer to either a long string of notes that must be played quickly (typically with difficulty), or a play-through of a section or entire piece of music.
 
-We **STRONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
+## Description
 
-## Use the Template for This Repository (Don't Clone)
+_Duration: 2 Weeks_
 
-- Don't Fork or Clone. Instead, click the `Use this Template` button, and make a copy to your personal account. Make the project `PUBLIC`!
+This application is a planner/organizer made to help musicians better plan and schedule their practice sessions. To that end, the app provides three major features: practice plans, reflections, and calendar events. 
 
-## Prerequisites
+A practice plan is essentially a journal entry where users can pre-plan what they wish to accomplish in a given practice session. For each plan, the user will have four questions to answer that will help them clarify and break down what they need to accomplish in their practice session so they can make the best use of their time. 
 
-Before you get started, make sure you have the following software installed on your computer:
+Reflections are exactly what they sound like. After a user has finished their practice session in real life, they can open the practice plan they wrote for that session and write a reflection. Reflections are broken down into two prompts: "What went well?" and "What still needs work?" If the user would like, they can click the "Export to New Plan" button at the end of the reflection to immediately begin writing their next practice plan with one of the fields filled out based on what they wrote in their reflection.
 
-- [Node.js](https://nodejs.org/en)
-- [PostgreSQL](https://www.postgresql.org)
-- [Nodemon](https://nodemon.io)
+Calendar events are used to schedule when a user would like to practice a particular piece of music. By simply clicking on a given day on the calendar and pressing the "Schedule a Practice Session!" button, users can add an event, representing a real-life practice session to the app's calendar. Calendar events are simply titled with the name of the piece the user wishes to practice.
 
-## Create Database and Table
+Note: calendar events and practice plans can be created independently of one another OR created simultaneously and connected together. This application was made with flexibility in mind, so it does not matter which is created first. Both the Calendar screen and New Practice Plan screen provide options for connecting practice plans and calendar events together if the user wishes.
 
-Create a new database called `prime_app` and create a `user` table:
+## Screen Shots
 
-```SQL
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
-```
+![Pieces Screen](./public/screenshots/image.png)
+![New Practice Plan Page](./public/screenshots/new_plan_page.png)
+![Reflection Page](./public/screenshots/reflection_page.png)
+![Calendar Day View](./public/screenshots/calendar_day_view.png)
 
-If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`.
+## Getting Started
 
-## Development Setup Instructions
+### Prerequisites
 
-- Run `npm install`.
-    - Be sure to take stock of `package.json` to see which dependencies you'll need to add.
-- Create a `.env` file at the root of the project and paste this line into the file:
+- [Node.js](https://nodejs.org/en/)
+- [Postgres](https://www.postgresql.org/download/)
+- [Postico](https://eggerapps.at/postico/v1.php)
 
-```plaintext
-SERVER_SESSION_SECRET=superDuperSecret
-```
+### Installation
 
-While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [Password Generator Plus](https://passwordsgenerator.net). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
+1. Create a database named `practice_planner`
+2. Use the queries in the `database.sql` file to create all the necessary tables. I recommend using Postico (linked above) to run those queries as that is what was used to create the queries. 
+3. Open up your editor of choice and run `npm install`.
+4. Run `npm run server` in your terminal.
+5. Run `npm run client` in your terminal.
+6. Click the link given by `npm run client` to opena new tab with the running project!
 
-- Start postgres if not running already by using opening up the [Postgres.app](https://postgresapp.com), or if using [Homebrew](https://brew.sh) you can use the command `brew services start postgresql`.
-- Run `npm run server` to start the server.
-- Run `npm run client` to start the client.
-- Navigate to `localhost:5173`.
+## Usage
 
-## Debugging
+1. The home page displays a list of pieces the user has added. Click "Add a New Piece Here!" to add a new piece. You can click the title of any piece to be taken to its associated "Practice Entries" page, which displays all of the practice plans for that piece.
+2. Click "Add a New Practice Plan" button to be taken to the "New Practice Plan" page. Fill out the associated form to create your first practice plan! Additionally, you can click the "Create Calendar Event" button to create a calendar event that will be connected to this plan.
+3. Back on the "Practice Entries" page, you can click the "Review Full Plan" button to review the plan you just created and edit or delete it if you wish. You can also press the "Write Reflection" button to write a reflection on how your plan went after you have attempted it in real life.
+4. Optional: On the "Reflection" screen, you can click the "Export to New Plan" button to immediately create a new practice plan with the second field filled out with your response to the "What still needs work?" field on the reflection screen.
+5. Click the "Calendar" button, either in the top or bottom navigation to be taken to the "Calendar" page. It defaults to displaying the current month. Click on any day of the month to be taken to a single day view.
+6. In single day view, you have the option of adding a new calendar event to the calendar by pressing the "Schedule a Practice Session!" button.
+7. Once a calendar event is created, you can click on the event on the calendar to view its details. If no practice plan is associated with the event, you can click the "Add Practice Plan" button to immediately create a new practice plan connected to the event. If a practice plan is already connected to the event, you can click the "View Practice Plan" button to view the associated plan.
 
-To debug, you will need to run the client-side separately from the server. Start the client by running the command `npm run client`. Start the debugging server by selecting the Debug button.
+## Built With
 
-![VSCode Toolbar](documentation/images/vscode-toolbar.png)
+* Javascript
+* React
+* Redux
+* Postgres
+* Express
+* Axios
+* Material UI
+* SweetAlerts
+* FullCalendar
 
-Then make sure `Launch Program` is selected from the dropdown, then click the green play arrow.
+## Acknowledgements
 
-![VSCode Debug Bar](documentation/images/vscode-debug-bar.png)
+Thank you to Emerging Digital Academy for equipping me with the knowledge, resources, and support to make this project a reality. In particular, thank you to Blaine Booher and Dave Vinson for their direct feedback and guidance as I worked through the various challenges that sprang up over the course of development.
 
-## Testing Routes with Postman
+## Support
 
-To use Postman with this repo, you will need to set up requests in Postman to register a user and login a user at a minimum.
+If you have any suggestions or encounter any issues, please email me at athaarsager@gmail.com
 
-Keep in mind that once you using the login route, Postman will manage your session cookie for you just like a browser, ensuring it is sent with each subsequent request. If you delete the `localhost` cookie in Postman, it will effectively log you out.
-
-1. Run `npm run server` to start the server.
-2. Import the sample routes JSON file [v2](./PostmanPrimeSoloRoutesv2.json) by clicking `Import` in Postman. Select the file.
-3. Click `Collections` and `Send` the following three calls in order:
-   1. `POST /api/user/register` registers a new user, see body to change username/password.
-   2. `POST /api/user/login` will login a user, see body to change username/password.
-   3. `GET /api/user` will get user information, by default it's not very much.
-
-After running the login route above, you can try any other route you've created that requires a logged in user!
-
-## Production Build
-
-Before pushing to Heroku, run `npm run build` in terminal. This will create a build folder that contains the code Heroku will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
-
-- Start postgres if not running already by using opening up the [Postgres.app](https://postgresapp.com), or if using [Homebrew](https://brew.sh) you can use the command `brew services start postgresql`.
-- Run `npm start`.
-- Navigate to `localhost:5173`.
-
-## Lay of the Land
-
-There are a few videos linked below that show a walkthrough the client and sever setup to help acclimatize to the boilerplate. Please take some time to watch the videos in order to get a better understanding of what the boilerplate is like.
-
-- [Initial Set](https://vimeo.com/453297271)
-- [Server Walkthrough](https://vimeo.com/453297212)
-- [Client Walkthrough](https://vimeo.com/453297124)
-
-Directory Structure:
-
-- `src/` contains the React application.
-- `public/` contains static assets for the client-side.
-- `build/` after you build the project, contains the transpiled code from `src/` and `public/` that will be viewed on the production site.
-- `server/` contains the Express App.
-
-This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
-
-- src/components
-  - App/App
-  - Footer/Footer
-  - Nav/Nav
-  - AboutPage/AboutPage
-  - InfoPage/InfoPage
-  - UserPage/UserPage
-  - LoginPage/LoginPage
-  - RegisterPage/RegisterPage
-  - LogOutButton/LogOutButton
-  - ProtectedRoute/ProtectedRoute
-
-## Deployment
-
-1. Create a new Heroku project.
-1. Link the Heroku project to the project GitHub Repo.
-1. Create an Heroku Postgres database.
-1. Connect to the Heroku Postgres database from Postico.
-1. Create the necessary tables.
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security.
-1. In the deploy section, select manual deploy.
-
-## Update Documentation
-
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2.
