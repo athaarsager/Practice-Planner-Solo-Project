@@ -13,3 +13,9 @@ Reflections are exactly what they sound like. After a user has finished their pr
 Calendar events are used to schedule when a user would like to practice a particular piece of music. By simply clicking on a given day on the calendar and pressing the "Schedule a Practice Session!" button, users can add an event, representing a real-life practice session to the app's calendar. Calendar events are simply titled with the name of the piece the user wishes to practice.
 
 Note: calendar events and practice plans can be created independently of one another OR created simultaneously and connected together. This application was made with flexibility in mind, so it does not matter which is created first. Both the Calendar screen and New Practice Plan screen provide options for connecting practice plans and calendar events together if the user wishes.
+
+## Screen Shots
+![Pieces Screen](./public/screenshots/image.png)
+![New Practice Plan Page](./public/screenshots/new_plan_page.png)
+![Reflection Page](./public/screenshots/reflection_page.png)
+![Calendar Day View](./public/screenshots/calendar_day_view.png)
