@@ -35,3 +35,12 @@ Note: calendar events and practice plans can be created independently of one ano
 4. Run `npm run server` in your terminal.
 5. Run `npm run client` in your terminal.
 6. Click the link given by `npm run client` to opena new tab with the running project!
+
+## Usage
+1. The home page displays a list of pieces the user has added. Click "Add a New Piece Here!" to add a new piece. You can click the title of any piece to be taken to its associated "Practice Entries" page, which displays all of the practice plans for that piece.
+2. Click "Add a New Practice Plan" button to be taken to the "New Practice Plan" page. Fill out the associated form to create your first practice plan! Additionally, you can click the "Create Calendar Event" button to create a calendar event that will be connected to this plan.
+3. Back on the "Practice Entries" page, you can click the "Review Full Plan" button to review the plan you just created and edit or delete it if you wish. You can also press the "Write Reflection" button to write a reflection on how your plan went after you have attempted it in real life.
+4. Optional: On the "Reflection" screen, you can click the "Export to New Plan" button to immediately create a new practice plan with the second field filled out with your response to the "What still needs work?" field on the reflection screen.
+5. Click the "Calendar" button, either in the top or bottom navigation to be taken to the "Calendar" page. It defaults to displaying the current month. Click on any day of the month to be taken to a single day view.
+6. In single day view, you have the option of adding a new calendar event to the calendar by pressing the "Schedule a Practice Session!" button.
+7. Once a calendar event is created, you can click on the event on the calendar to view its details. If no practice plan is associated with the event, you can click the "Add Practice Plan" button to immediately create a new practice plan connected to the event. If a practice plan is already connected to the event, you can click the "View Practice Plan" button to view the associated plan.
