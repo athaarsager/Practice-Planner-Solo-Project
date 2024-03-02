@@ -57,7 +57,7 @@ function Nav() {
         <List>
           {["Pieces", "Calendar"].map((text, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton onClick={() => history.push(`/dashboard/${text}`)}>
+              <ListItemButton onClick={() => history.push(`/dashboard/${text.toLowerCase()}`)}>
                 <ListItemIcon>
                   {index % 2 === 0 ? <FeaturedPlayListOutlined /> : <CalendarMonthOutlined />}
                 </ListItemIcon>
