@@ -70,7 +70,7 @@ function PracticeEntries() {
         return () => {
             window.removeEventListener("resize", updateCharacterLimit);
         }
-    }, [cardRef]);
+    }, [cardRef, plans]);
 
     return (
         <Grid container display="flex" flexDirection="column" alignItems="center">
