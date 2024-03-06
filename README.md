@@ -44,6 +44,10 @@ Note: calendar events and practice plans can be created independently of one ano
 5. Run `npm run client` in your terminal.
 6. Click the link given by `npm run client` to opena new tab with the running project!
 
+## Deployment
+
+You can also find a hosted version of this app by visiting: https://ahaarsager-practice-planner.fly.dev
+
 ## Usage
 
 1. The home page displays a list of pieces the user has added. Click "Add a New Piece Here!" to add a new piece. You can click the title of any piece to be taken to its associated "Practice Entries" page, which displays all of the practice plans for that piece.
