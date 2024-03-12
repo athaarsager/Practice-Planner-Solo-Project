@@ -44,7 +44,7 @@ Note: calendar events and practice plans can be created independently of one ano
 5. Run `npm run client` in your terminal.
 6. Click the link given by `npm run client` to opena new tab with the running project!
 
-## Deployment
+## Live Project
 
 You can also find a hosted version of this app by visiting: https://ahaarsager-practice-planner.fly.dev
 
